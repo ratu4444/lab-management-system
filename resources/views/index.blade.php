@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="assets/bundles/ionicons/css/ionicons.min.css">
     <script src="../../js/frappe-gantt.js"></script>
     <link rel="stylesheet" href="../../css/frappe-gantt.css">
-  <link rel='shortcut icon' type='image/x-icon' href='assets/default/DJL-Construction_Light.png' />
+  <link rel='shortcut icon' type='image/x-icon' href='assets/default/DJL-Construction_Dark.jpg' />
 
   <style>
     .matrix-title {
