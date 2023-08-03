@@ -13,7 +13,14 @@ use App\Http\Controllers\DashboardController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
 
+Route::middleware('auth')->group(function () {
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
+
+});
 
 require __DIR__.'/auth.php';
+
+Route::get('register', function () {
+    return redirect()->route('login');
+});
