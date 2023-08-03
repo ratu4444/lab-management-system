@@ -13,5 +13,7 @@ use App\Http\Controllers\DashboardController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
+
+
+require __DIR__.'/auth.php';
