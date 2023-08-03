@@ -4,7 +4,7 @@
     @hasSection('title')
         @yield('title') |
     @endif
-    {{ config('app.name', 'Laravel') }}
+    {{ config('app.name') }}
 </title>
 
 <!-- General CSS Files -->
@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="{{ asset('assets/css/components.css') }}">
 <!-- Custom style CSS -->
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
-<link rel='shortcut icon' type='image/x-icon' href="{{ asset('default-images/digital-ghotok-logo.png') }}" />
+<link rel='shortcut icon' type='image/x-icon' href="{{ asset('assets/default/DJL-Construction_Dark.jpg') }}" />
 
 {{-- Page Custom CSS --}}
 @stack('css')
