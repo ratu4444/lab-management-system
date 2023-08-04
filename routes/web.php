@@ -16,7 +16,7 @@ use App\Http\Controllers\DashboardController;
 
 Route::middleware('auth')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
-
+    Route::get('/create-project', [DashboardController::class, 'createProject'])->name('create.project');
 });
 
 require __DIR__.'/auth.php';

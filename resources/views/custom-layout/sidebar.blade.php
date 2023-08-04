@@ -15,6 +15,12 @@
                     <span>Dashboard</span>
                 </a>
             </li>
+            <li class="dropdown {{ Route::is('create.project') ? 'active' : '' }}">
+                <a href="{{ route('create.project') }}" class="nav-link">
+                    <i data-feather="monitor"></i>
+                    <span>Create Project</span>
+                </a>
+            </li>
         </ul>
     </aside>
 </div>

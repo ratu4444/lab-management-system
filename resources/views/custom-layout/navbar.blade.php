@@ -143,9 +143,13 @@
                 <!--                Settings-->
                 <!--              </a>-->
                 <div class="dropdown-divider"></div>
-                <a href="" class="dropdown-item has-icon text-danger"> <i class="fas fa-sign-out-alt"></i>
-                    Logout
-                </a>
+
+                <form action="{{route('logout')}}" method="post">
+                    @csrf
+                    <div class="ml-4">
+                        <button class="btn btn-danger" type="submit"> <i class="fas fa-sign-out-alt"></i> Logout</button>
+                    </div>
+                </form>
             </div>
         </li>
     </ul>
