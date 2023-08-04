@@ -21,6 +21,7 @@ class CreatePaymentsTable extends Migration
             $table->bigInteger('amount');
             $table->date('date');
             $table->string('payment_method')->default('Cash');
+            $table->longText('comment')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
