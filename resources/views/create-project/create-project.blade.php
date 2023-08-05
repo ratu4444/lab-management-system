@@ -15,15 +15,16 @@
                             <h5> <b>Client</b> </h5>
 
                             <div class="mt-4">
-                                <button type="button" class="btn btn-primary d-flex justify-content-start" href="">Add Client</button>
+                                <button type="button" class="btn btn-primary d-flex justify-content-start" href="">Add New Client</button>
                             </div>
 
                             <div class="mt-3 mb-5">
                                 <label>Client*</label>
                                 <select class="form-control">
-                                    <option>Mark</option>
-                                    <option>Protik</option>
-                                    <option>Jishan</option>
+                                        @foreach($clients as $client)
+                                    <option>{{ $client->name }}</option>
+                                        @endforeach
+
                                 </select>
                             </div>
 
@@ -32,46 +33,34 @@
                             <div class="form-group form-float mt-4">
                                 <div class="form-line">
                                     <label class="form-label">Name*</label>
-                                    <input type="text" name="project_name" class="form-control" required>
+                                    <input type="text" name="project_name" class="form-control" >
                                 </div>
                             </div>
                             <div class="form-group form-float">
                                 <div class="form-line">
                                     <label class="form-label">Estimated Completion Date*</label>
-                                    <input type="date" name="project_estimated_completion_date" class="form-control" required>
+                                    <input type="date" name="project_estimated_completion_date" class="form-control" >
                                 </div>
                             </div>
                             <div class="form-group form-float">
                                 <div class="form-line">
                                     <label class="form-label">Estimated Budget*</label>
-                                    <input type="number" name="project_estimated_budget" class="form-control" required>
-                                </div>
-                            </div>
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <label class="form-label">Total Budget*</label>
-                                    <input name="project_total_budget" type="text" class="form-control" required>
-                                </div>
-                            </div>
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <label class="form-label">Status*</label>
-                                    <input  type="text" name="project_status" class="form-control" required>
+                                    <input type="number" name="project_estimated_budget" class="form-control" >
                                 </div>
                             </div>
 
-                            <div class="section-title">Select Group Button</div>
                             <div class="form-group">
-                                <label class="form-label">Button Input</label>
+                                <label class="form-label">Status</label>
                                 <div class="selectgroup w-100">
                                     @foreach(config('app.STATUSES') as $label => $status_id)
                                     <label class="selectgroup-item">
-                                        <input type="radio" name="radio1" value="{{ $status_id }}" class="selectgroup-input-radio" {{ $status_id == 1 ? 'checked' : ''}} >
+                                        <input type="radio" name="project_status" value="{{ $status_id }}" class="selectgroup-input-radio" {{ $status_id == 1 ? 'checked' : ''}} >
                                         <span class="selectgroup-button">{{ $label }}</span>
                                     </label>
                                     @endforeach
                                 </div>
                             </div>
+
                         </fieldset>
 {{--                        <fieldset>--}}
 {{--                            <div class="form-group form-float">--}}
@@ -163,109 +152,184 @@
 {{--                        </fieldset>--}}
                         <h3>Task</h3>
                         <fieldset>
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <label class="form-label">Name*</label>
-                                    <input type="text" name="task_name" class="form-control" required>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-md">
+                                        <tr>
+                                            <th>#</th>
+                                            <th class="text-nowrap">Name</th>
+                                            <th class="text-nowrap">Estimated Start Date</th>
+                                            <th class="text-nowrap">Estimated Completion Date</th>
+                                            <th class="text-nowrap">Start Date</th>
+                                            <th class="text-nowrap">Completion Date</th>
+                                            <th class="text-nowrap">Total Budget</th>
+                                            <th class="text-nowrap">Status</th>
+                                        </tr>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>Irwansyah Saputra</td>
+                                            <td>2017-01-09</td>
+                                            <td>2017-01-09</td>
+                                            <td>2017-01-09</td>
+                                            <td>2017-01-09</td>
+                                            <td>2017-01-09</td>
+                                            <td>2017-01-09</td>
+                                            <td>
+                                                <div class="badge badge-success">Active</div>
+                                            </td>
+                                        </tr>
+                                    </table>
                                 </div>
                             </div>
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <label class="form-label">Estimated Start Date*</label>
-                                    <input type="date" name="task_estimated_start_date" class="form-control" required>
-                                </div>
-                            </div>
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <label class="form-label">Estimated Completion Date*</label>
-                                    <input type="date" name="task_estimated_completion_date" class="form-control" required>
-                                </div>
-                            </div>
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <label class="form-label">Start Date*</label>
-                                    <input type="date" name="task_start_date" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <label class="form-label">Completion Date*</label>
-                                    <input type="date" name="task_completion_date" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <label class="form-label">Total Budget*</label>
-                                    <input name="task_total_budget" type="text" class="form-control" required>
-                                </div>
-                            </div>
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <label class="form-label">Status*</label>
-                                    <input  type="textr" name="task_status" class="form-control" required>
-                                </div>
-                                <div class="help-info">The warning step will show up if age is less than 18</div>
-                            </div>
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <label class="form-label">Completion Percentage*</label>
-                                    <input type="number" name="completion_percentage" min="0" max="100" class="form-control"  required>
-                                </div>
-                            </div>
+{{--                            <div class="form-group form-float">--}}
+{{--                                <div class="form-line">--}}
+{{--                                    <label class="form-label">Name*</label>--}}
+{{--                                    <input type="text" name="task_name" class="form-control" required>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="form-group form-float">--}}
+{{--                                <div class="form-line">--}}
+{{--                                    <label class="form-label">Estimated Start Date*</label>--}}
+{{--                                    <input type="date" name="task_estimated_start_date" class="form-control" required>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="form-group form-float">--}}
+{{--                                <div class="form-line">--}}
+{{--                                    <label class="form-label">Estimated Completion Date*</label>--}}
+{{--                                    <input type="date" name="task_estimated_completion_date" class="form-control" required>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="form-group form-float">--}}
+{{--                                <div class="form-line">--}}
+{{--                                    <label class="form-label">Start Date*</label>--}}
+{{--                                    <input type="date" name="task_start_date" class="form-control">--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="form-group form-float">--}}
+{{--                                <div class="form-line">--}}
+{{--                                    <label class="form-label">Completion Date*</label>--}}
+{{--                                    <input type="date" name="task_completion_date" class="form-control">--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="form-group form-float">--}}
+{{--                                <div class="form-line">--}}
+{{--                                    <label class="form-label">Total Budget*</label>--}}
+{{--                                    <input name="task_total_budget" type="text" class="form-control" required>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="form-group">--}}
+{{--                                <label class="form-label">Status</label>--}}
+{{--                                <div class="selectgroup w-100">--}}
+{{--                                    @foreach(config('app.STATUSES') as $label => $status_id)--}}
+{{--                                        <label class="selectgroup-item">--}}
+{{--                                            <input type="radio" name="radio1" value="{{ $status_id }}" class="selectgroup-input-radio" {{ $status_id == 1 ? 'checked' : ''}} >--}}
+{{--                                            <span class="selectgroup-button">{{ $label }}</span>--}}
+{{--                                        </label>--}}
+{{--                                    @endforeach--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+
                         </fieldset>
                         <h3>Payment</h3>
                         <fieldset>
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <label class="form-label">Name*</label>
-                                    <input type="text" name="name" class="form-control">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-md">
+                                        <tr>
+                                            <th>#</th>
+                                            <th class="text-nowrap">Name</th>
+                                            <th class="text-nowrap">Amount</th>
+                                            <th class="text-nowrap">Date</th>
+                                            <th class="text-nowrap">Payment Method</th>
+                                        </tr>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>Irwansyah Saputra</td>
+                                            <td>2017-01-09</td>
+                                            <td>2017-01-09</td>
+                                            <td>2017-01-09</td>
+                                        </tr>
+                                    </table>
                                 </div>
                             </div>
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <label class="form-label">Amount*</label>
-                                    <input type="text" name="amount" class="form-control" required>
-                                </div>
-                            </div>
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <label class="form-label">Date*</label>
-                                    <input type="date" name="date" class="form-control" required>
-                                </div>
-                            </div>
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <label class="form-label">Payment Date*</label>
-                                    <input type="date" name="payment_date" class="form-control" required>
-                                </div>
-                            </div>
+{{--                            <div class="form-group form-float">--}}
+{{--                                <div class="form-line">--}}
+{{--                                    <label class="form-label">Name*</label>--}}
+{{--                                    <input type="text" name="name" class="form-control">--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="form-group form-float">--}}
+{{--                                <div class="form-line">--}}
+{{--                                    <label class="form-label">Amount*</label>--}}
+{{--                                    <input type="text" name="amount" class="form-control" required>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="form-group form-float">--}}
+{{--                                <div class="form-line">--}}
+{{--                                    <label class="form-label">Date*</label>--}}
+{{--                                    <input type="date" name="date" class="form-control" required>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="form-group form-float">--}}
+{{--                                <div class="form-line">--}}
+{{--                                    <label class="form-label">Payment Date*</label>--}}
+{{--                                    <input type="date" name="payment_date" class="form-control" required>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
                         </fieldset>
                         <h3>Inspection</h3>
                         <fieldset>
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <label class="form-label">Name*</label>
-                                    <input type="text" name="inspection_name" class="form-control">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-md">
+                                        <tr>
+                                            <th>#</th>
+                                            <th class="text-nowrap">Name</th>
+                                            <th class="text-nowrap">Schedule Date</th>
+                                            <th class="text-nowrap">Date</th>
+                                            <th class="text-nowrap">Status</th>
+                                        </tr>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>Irwansyah Saputra</td>
+                                            <td>2017-01-09</td>
+                                            <td>2017-01-09</td>
+                                            <td>
+                                                <div class="badge badge-success">Active</div>
+                                            </td>
+                                        </tr>
+                                    </table>
                                 </div>
                             </div>
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <label class="form-label">Schedule Date*</label>
-                                    <input type="date" name="inspection_schedule_date" class="form-control" required>
-                                </div>
-                            </div>
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <label class="form-label">Date*</label>
-                                    <input type="date" name="inspection_date" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <label class="form-label">Status*</label>
-                                    <input type="text" name="inspection_status" class="form-control" required>
-                                </div>
-                            </div>
+{{--                            <div class="form-group form-float">--}}
+{{--                                <div class="form-line">--}}
+{{--                                    <label class="form-label">Name*</label>--}}
+{{--                                    <input type="text" name="inspection_name" class="form-control">--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="form-group form-float">--}}
+{{--                                <div class="form-line">--}}
+{{--                                    <label class="form-label">Schedule Date*</label>--}}
+{{--                                    <input type="date" name="inspection_schedule_date" class="form-control" required>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="form-group form-float">--}}
+{{--                                <div class="form-line">--}}
+{{--                                    <label class="form-label">Date*</label>--}}
+{{--                                    <input type="date" name="inspection_date" class="form-control">--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="form-group">--}}
+{{--                                <label class="form-label">Status</label>--}}
+{{--                                <div class="selectgroup w-100">--}}
+{{--                                    @foreach(config('app.STATUSES') as $label => $status_id)--}}
+{{--                                        <label class="selectgroup-item">--}}
+{{--                                            <input type="radio" name="radio1" value="{{ $status_id }}" class="selectgroup-input-radio" {{ $status_id == 1 ? 'checked' : ''}} >--}}
+{{--                                            <span class="selectgroup-button">{{ $label }}</span>--}}
+{{--                                        </label>--}}
+{{--                                    @endforeach--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
                         </fieldset>
                     </form>
                 </div>

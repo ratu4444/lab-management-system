@@ -11,7 +11,5 @@ class DashboardController extends Controller
         return view('index');
     }
 
-    public function createProject(){
-        return view('create-project.create-project');
-    }
+
 }

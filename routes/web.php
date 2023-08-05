@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProjectController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,7 +17,7 @@ use App\Http\Controllers\DashboardController;
 
 Route::middleware('auth')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
-    Route::get('/create-project', [DashboardController::class, 'createProject'])->name('create.project');
+    Route::get('/create-project', [\App\Http\Controllers\ProjectController::class, 'create'])->name('create.project');
 });
 
 require __DIR__.'/auth.php';
