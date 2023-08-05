@@ -49,11 +49,10 @@
                                     <div class="form-label">Is Client*</div>
                                     <label class="custom-switch mt-2">
                                         <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input">
+                                        <span class="custom-switch-indicator d-flex justify-content-start"></span>
                                     </label>
-                                    <div class="custom-switch-indicator d-flex justify-content-start"></div>
                                 </div>
                             </div>
-
                         </fieldset>
                         <h3>Project</h3>
                         <fieldset>
