@@ -9,54 +9,27 @@
                 </div>
                 <div class="card-body">
                     <form id="wizard_with_validation" method="POST">
-                        <h3>User</h3>
-                        <fieldset>
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <label class="form-label">Name*</label>
-                                    <input type="text" class="form-control" name="user_name" required>
-                                </div>
-                            </div>
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <label class="form-label">Email*</label>
-                                    <input type="text" class="form-control" name="email" required>
-                                </div>
-                            </div>
-
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <label class="form-label">Mobile*</label>
-                                    <input type="number" class="form-control" name="mobile">
-                                </div>
-                            </div>
-
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <label class="form-label">Password*</label>
-                                    <input type="password" class="form-control" name="password" id="password" required>
-                                </div>
-                            </div>
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <label class="form-label">Company Name*</label>
-                                    <input type="text" class="form-control" name="company_name">
-                                </div>
-                            </div>
-
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <div class="form-label">Is Client*</div>
-                                    <label class="custom-switch mt-2">
-                                        <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input">
-                                        <span class="custom-switch-indicator d-flex justify-content-start"></span>
-                                    </label>
-                                </div>
-                            </div>
-                        </fieldset>
                         <h3>Project</h3>
+
                         <fieldset>
-                            <div class="form-group form-float">
+                            <h5> <b>Client</b> </h5>
+
+                            <div class="mt-4">
+                                <button type="button" class="btn btn-primary d-flex justify-content-start" href="">Add Client</button>
+                            </div>
+
+                            <div class="mt-3 mb-5">
+                                <label>Client*</label>
+                                <select class="form-control">
+                                    <option>Mark</option>
+                                    <option>Protik</option>
+                                    <option>Jishan</option>
+                                </select>
+                            </div>
+
+                            <h5> <b>Project</b> </h5>
+
+                            <div class="form-group form-float mt-4">
                                 <div class="form-line">
                                     <label class="form-label">Name*</label>
                                     <input type="text" name="project_name" class="form-control" required>
@@ -86,7 +59,108 @@
                                     <input  type="text" name="project_status" class="form-control" required>
                                 </div>
                             </div>
+
+                            <div class="section-title">Select Group Button</div>
+                            <div class="form-group">
+                                <label class="form-label">Button Input</label>
+                                <div class="selectgroup w-100">
+                                    @foreach(config('app.STATUSES') as $label => $status_id)
+                                    <label class="selectgroup-item">
+                                        <input type="radio" name="radio1" value="{{ $status_id }}" class="selectgroup-input-radio" {{ $status_id == 1 ? 'checked' : ''}} >
+                                        <span class="selectgroup-button">{{ $label }}</span>
+                                    </label>
+                                    @endforeach
+                                </div>
+                            </div>
                         </fieldset>
+{{--                        <fieldset>--}}
+{{--                            <div class="form-group form-float">--}}
+{{--                                <div class="form-line">--}}
+{{--                                    <label class="form-label"> Client Name*</label>--}}
+{{--                                    <input type="text" class="form-control" name="client_name" required>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="form-group form-float">--}}
+{{--                                <div class="form-line">--}}
+{{--                                    <label class="form-label">Client Email*</label>--}}
+{{--                                    <input type="text" class="form-control" name="client_email" required>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+
+{{--                            <div class="form-group form-float">--}}
+{{--                                <div class="form-line">--}}
+{{--                                    <label class="form-label">Client Mobile*</label>--}}
+{{--                                    <input type="number" class="form-control" name="client_mobile">--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+
+{{--                            <div class="form-group form-float">--}}
+{{--                                <div class="form-line">--}}
+{{--                                    <label class="form-label">Client Password*</label>--}}
+{{--                                    <input type="password" class="form-control" name="client_password" id="password" required>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="form-group form-float">--}}
+{{--                                <div class="form-line">--}}
+{{--                                    <label class="form-label">Company Name</label>--}}
+{{--                                    <input type="text" class="form-control" name="client_company_name">--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+
+{{--                            <div class="form-group form-float">--}}
+{{--                                <div class="form-line">--}}
+{{--                                    <label class="form-label">Name*</label>--}}
+{{--                                    <input type="text" name="project_name" class="form-control" required>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="form-group form-float">--}}
+{{--                                <div class="form-line">--}}
+{{--                                    <label class="form-label">Estimated Completion Date*</label>--}}
+{{--                                    <input type="date" name="project_estimated_completion_date" class="form-control" required>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="form-group form-float">--}}
+{{--                                <div class="form-line">--}}
+{{--                                    <label class="form-label">Estimated Budget*</label>--}}
+{{--                                    <input type="number" name="project_estimated_budget" class="form-control" required>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="form-group form-float">--}}
+{{--                                <div class="form-line">--}}
+{{--                                    <label class="form-label">Total Budget*</label>--}}
+{{--                                    <input name="project_total_budget" type="text" class="form-control" required>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="form-group form-float">--}}
+{{--                                <div class="form-line">--}}
+{{--                                    <label class="form-label">Status*</label>--}}
+{{--                                    <input  type="text" name="project_status" class="form-control" required>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+
+{{--                            <div class="section-title">Select Group Button</div>--}}
+{{--                            <div class="form-group">--}}
+{{--                                <label class="form-label">Button Input</label>--}}
+{{--                                <div class="selectgroup w-100">--}}
+{{--                                    <label class="selectgroup-item">--}}
+{{--                                        <input type="radio" name="radio1" value="1" class="selectgroup-input-radio" checked>--}}
+{{--                                        <span class="selectgroup-button">S</span>--}}
+{{--                                    </label>--}}
+{{--                                    <label class="selectgroup-item">--}}
+{{--                                        <input type="radio" name="radio1" value="2" class="selectgroup-input-radio">--}}
+{{--                                        <span class="selectgroup-button">M</span>--}}
+{{--                                    </label>--}}
+{{--                                    <label class="selectgroup-item">--}}
+{{--                                        <input type="radio" name="radio1" value="3" class="selectgroup-input-radio">--}}
+{{--                                        <span class="selectgroup-button">L</span>--}}
+{{--                                    </label>--}}
+{{--                                    <label class="selectgroup-item">--}}
+{{--                                        <input type="radio" name="radio1" value="4" class="selectgroup-input-radio">--}}
+{{--                                        <span class="selectgroup-button">XL</span>--}}
+{{--                                    </label>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </fieldset>--}}
                         <h3>Task</h3>
                         <fieldset>
                             <div class="form-group form-float">
@@ -203,9 +277,9 @@
 @endsection
 
 @push('js')
-    <script src="assets/bundles/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="{{ asset('assets/bundles/jquery-validation/dist/jquery.validate.min.js') }}"></script>
     <!-- JS Libraies -->
-    <script src="assets/bundles/jquery-steps/jquery.steps.min.js"></script>
+    <script src="{{ asset('assets/bundles/jquery-steps/jquery.steps.min.js') }}"></script>
     <!-- Page Specific JS File -->
     <script src="{{ asset('assets/js/page/form-wizard.js') }}"></script>
 @endpush

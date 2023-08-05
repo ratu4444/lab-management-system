@@ -1,3 +1,4 @@
+
 <?php
 
 return [
@@ -231,5 +232,12 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
     ],
+
+    'STATUSES' => [
+        'Pending'       => 1,
+        'In Progress'   => 2,
+        'Completed'     => 3,
+        'Canceled'      => 4,
+    ]
 
 ];

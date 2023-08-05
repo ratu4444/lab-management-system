@@ -9,10 +9,10 @@
     <div id="app">
         <div class="main-wrapper main-wrapper-1">
 
-{{--            @auth--}}
+            @auth
                 @include('custom-layout.navbar')
                 @include('custom-layout.sidebar')
-{{--            @endauth--}}
+            @endauth
 
     {{--        @include('custom-layout.alert')--}}
             <!-- Main Content -->
