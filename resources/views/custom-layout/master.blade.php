@@ -22,7 +22,7 @@
                         @yield('content')
                     </div>
                 </section>
-    {{--            @yield('modal')--}}
+                @yield('modal')
             </div>
         </div>
     </div>
