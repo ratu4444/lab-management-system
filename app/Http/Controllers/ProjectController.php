@@ -15,12 +15,38 @@ use Illuminate\Support\Facades\DB;
 
 class ProjectController extends Controller
 {
-    public function create()
+    public function createProject()
     {
         $clients = User::where('is_client', true)->get();
         $access_token = auth()->user()->createToken('accessToken')->plainTextToken;
 
-        return view('project.create', compact('clients', 'access_token'));
+        return view('project.create-project', compact('clients', 'access_token'));
+    }
+
+    public function createTask()
+    {
+//        $clients = User::where('is_client', true)->get();
+//        $access_token = auth()->user()->createToken('accessToken')->plainTextToken;
+
+        return view('project.create-task');
+    }
+
+    public function createPayment()
+    {
+//        $clients = User::where('is_client', true)->get();
+//        $access_token = auth()->user()->createToken('accessToken')->plainTextToken;
+
+        return view('project.create-payment');
+    }
+
+
+
+    public function createInspection()
+    {
+//        $clients = User::where('is_client', true)->get();
+//        $access_token = auth()->user()->createToken('accessToken')->plainTextToken;
+
+        return view('project.create-inspection');
     }
 
     public function storeClient(Request $request): \Illuminate\Http\JsonResponse

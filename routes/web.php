@@ -17,7 +17,10 @@ use App\Http\Controllers\ProjectController;
 
 Route::middleware('auth')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
-    Route::get('/create-project', [ProjectController::class, 'create'])->name('create.project');
+    Route::get('/create-project', [ProjectController::class, 'createProject'])->name('create.project');
+    Route::get('/create-task/{project-id}', [ProjectController::class, 'createTask'])->name('create.task');
+    Route::get('/create-payment/{project-id}', [ProjectController::class, 'createPayment'])->name('create.payment');
+    Route::get('/create-inspection/{project-id}', [ProjectController::class, 'createInspection'])->name('create.inspection');
 });
 
 require __DIR__.'/auth.php';
