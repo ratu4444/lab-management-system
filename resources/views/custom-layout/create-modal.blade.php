@@ -59,7 +59,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form class="">
+                <form class="w-100">
                     <div class="form-group form-float">
                         <div class="form-line">
                             <label class="form-label">Name*</label>
@@ -96,7 +96,15 @@
                             <input name="task_total_budget" type="text" class="form-control" required>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group form-float">
+                        <label>Client*</label>
+                        <select class="form-control">
+{{--                            @foreach($clients as $client)--}}
+                                <option>Dependency</option>
+{{--                            @endforeach--}}
+                        </select>
+                    </div>
+                    <div class="form-group form-flat">
                         <label class="form-label">Status</label>
                         <div class="selectgroup w-100">
                             @foreach(config('app.STATUSES') as $label => $status_id)
@@ -149,6 +157,14 @@
                             <input type="date" name="payment_date" class="form-control" required>
                         </div>
                     </div>
+                    <div class="form-group form-float">
+                        <label>Client*</label>
+                        <select class="form-control">
+                            {{--                            @foreach($clients as $client)--}}
+                            <option>Dependency</option>
+                            {{--                            @endforeach--}}
+                        </select>
+                    </div>
                     <button type="submit" class="btn btn-primary"> Submit </button>
                 </form>
             </div>
@@ -185,7 +201,15 @@
                             <input type="date" name="inspection_date" class="form-control">
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group form-float">
+                        <label>Client*</label>
+                        <select class="form-control">
+                            {{--                            @foreach($clients as $client)--}}
+                            <option>Dependency</option>
+                            {{--                            @endforeach--}}
+                        </select>
+                    </div>
+                    <div class="form-group form-float">
                         <label class="form-label">Status</label>
                         <div class="selectgroup w-100">
                             @foreach(config('app.STATUSES') as $label => $status_id)
