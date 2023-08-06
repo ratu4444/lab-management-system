@@ -77,17 +77,12 @@
                                             <th class="text-nowrap">Name</th>
                                             <th class="text-nowrap">Estimated Start Date</th>
                                             <th class="text-nowrap">Estimated Completion Date</th>
-                                            <th class="text-nowrap">Start Date</th>
-                                            <th class="text-nowrap">Completion Date</th>
-                                            <th class="text-nowrap">Total Budget</th>
+                                            <th class="text-nowrap">Budget</th>
                                             <th class="text-nowrap">Status</th>
                                         </tr>
                                         <tr>
                                             <td>1</td>
                                             <td>Irwansyah Saputra</td>
-                                            <td>2017-01-09</td>
-                                            <td>2017-01-09</td>
-                                            <td>2017-01-09</td>
                                             <td>2017-01-09</td>
                                             <td>2017-01-09</td>
                                             <td>2017-01-09</td>
