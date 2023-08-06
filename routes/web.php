@@ -22,7 +22,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/project/create', [ProjectController::class, 'create'])->name('project.create');
     Route::get('/client', [ClientController::class, 'index'])->name('client.index');
     Route::get('/client/create', [ClientController::class, 'create'])->name('client.create');
-    Route::get('/create-project', [ProjectController::class, 'createProject'])->name('create.project');
+//    Route::get('/create-project', [ProjectController::class, 'createProject'])->name('create.project');
     Route::get('/create-task/{project-id}', [ProjectController::class, 'createTask'])->name('create.task');
     Route::get('/create-payment/{project-id}', [ProjectController::class, 'createPayment'])->name('create.payment');
     Route::get('/create-inspection/{project-id}', [ProjectController::class, 'createInspection'])->name('create.inspection');
