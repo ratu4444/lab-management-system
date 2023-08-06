@@ -169,7 +169,8 @@
     <script src="{{ asset('assets/bundles/jquery-steps/jquery.steps.min.js') }}"></script>
     <!-- Page Specific JS File -->
     <script src="{{ asset('assets/js/page/form-wizard.js') }}"></script>
-
     <script src="{{ asset('assets/bundles/prism/prism.js') }}"></script>
+
+    <script src="{{ asset('js/form-submission.js') }}"></script>
 @endpush
 
