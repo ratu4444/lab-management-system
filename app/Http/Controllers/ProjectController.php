@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Inspection;
+use App\Models\InspectionDependency;
+use App\Models\Payment;
 use App\Models\Project;
 use App\Models\Task;
 use App\Models\TaskDependency;
+use App\Models\TaskPayment;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
@@ -115,6 +119,94 @@ class ProjectController extends Controller
 
             $data = $this->formatTask($task);
             return $this->apiResponse($data, 'Project created successfully');
+        } catch (\Exception $exception) {
+            DB::rollBack();
+
+            return $this->apiResponse([], $exception->getMessage(), 500);
+        }
+    }
+
+    public function storePayment(Request $request): \Illuminate\Http\JsonResponse
+    {
+        $request->validate([
+            'project_id'    => 'required|exists:projects,id',
+            'amount'        => 'required|min:0',
+            'date'          => 'required|date_format:Y-m-d',
+            'task_ids'      => 'array',
+            'task_ids.*'    => 'exists:tasks,id',
+        ]);
+
+        $project = Project::find($request->project_id);
+
+        $payment_data = [
+            'project_id'        => $request->project_id,
+            'client_id'         => $project->client_id,
+            'name'              => $request->name,
+            'amount'            => $request->amount,
+            'date'              => $request->date,
+            'payment_method'    => $request->payment_method ?? 'Cash',
+            'comment'           => $request->comment,
+        ];
+
+        DB::beginTransaction();
+        try {
+            $payment = Payment::create($payment_data);
+
+            $payment_tasks_data = [];
+            foreach ($request->task_ids as $task_id) {
+                $payment_tasks_data[] = [
+                    'payment_id'    => $payment->id,
+                    'task_id'       => $task_id,
+                ];
+            }
+            if (count($payment_tasks_data)) TaskPayment::insert($payment_tasks_data);
+
+            DB::commit();
+
+            $data = $this->formatPayment($payment);
+            return $this->apiResponse($data, 'Payment created successfully');
+        } catch (\Exception $exception) {
+            DB::rollBack();
+
+            return $this->apiResponse([], $exception->getMessage(), 500);
+        }
+    }
+
+    public function storeInspection(Request $request): \Illuminate\Http\JsonResponse
+    {
+        $request->validate([
+            'project_id'            => 'required|exists:projects,id',
+            'scheduled_date'        => 'required|date_format:Y-m-d',
+            'dependent_task_ids'    => 'array',
+            'dependent_task_ids.*'  => 'exists:tasks,id'
+        ]);
+
+        $inspection_data = [
+            'project_id'        => $request->project_id,
+            'name'              => $request->name,
+            'status'            => $request->status,
+            'scheduled_date'    => $request->scheduled_date,
+            'date'              => $request->date,
+            'comment'           => $request->comment,
+        ];
+
+        DB::beginTransaction();
+        try {
+            $inspection = Inspection::create($inspection_data);
+
+            $inspection_dependencies_data = [];
+            foreach ($request->dependent_task_ids as $dependent_task_id) {
+                $inspection_dependencies_data[] = [
+                    'inspection_id'     => $inspection->id,
+                    'dependent_task_id' => $dependent_task_id
+                ];
+            }
+            if (count($inspection_dependencies_data)) InspectionDependency::insert($inspection_dependencies_data);
+
+            DB::commit();
+
+            $data = $this->formatInspection($inspection);
+            return $this->apiResponse($data, 'Inspection created successfully');
         } catch (\Exception $exception) {
             DB::rollBack();
 
