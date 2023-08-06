@@ -2,6 +2,9 @@
 
 @push('css')
     <link rel="stylesheet" href="{{ asset('assets/bundles/prism/prism.css') }}">
+    {{-- For Multiple Selctric--}}
+    <link rel="stylesheet" href="{{ asset('assets/bundles/select2/dist/css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/bundles/jquery-selectric/selectric.css') }}">
 @endpush
 
 @section('content')
@@ -32,8 +35,8 @@
                             <h5> <b>Project</b> </h5>
                             <div class="form-group form-float mt-4">
                                 <div class="form-line">
-                                    <label class="form-label">Name*</label>
-                                    <input type="text" name="project_name" class="form-control" required>
+                                    <label class="form-label">Name</label>
+                                    <input type="text" name="project_name" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group form-float">
@@ -173,5 +176,9 @@
     <script src="{{ asset('assets/bundles/prism/prism.js') }}"></script>
 
     <script src="{{ asset('js/form-submission.js') }}"></script>
+{{--    For Selectric --}}
+    <script src="assets/bundles/select2/dist/js/select2.full.min.js"></script>
+    <script src="assets/bundles/jquery-selectric/jquery.selectric.min.js"></script>
+
 @endpush
 
