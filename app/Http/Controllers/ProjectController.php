@@ -19,7 +19,7 @@ class ProjectController extends Controller
     {
         $clients = User::where('is_client', true)->get();
 
-        return view('create-project.create-project', compact('clients'));
+        return view('project.create', compact('clients'));
     }
 
     public function storeClient(Request $request): \Illuminate\Http\JsonResponse
@@ -36,6 +36,7 @@ class ProjectController extends Controller
             'password'      => bcrypt($request->password),
             'mobile'        => $request->mobile,
             'company_name'  => $request->company_name,
+            'is_client'     => true,
         ];
 
         try {

@@ -17,7 +17,7 @@ use App\Http\Controllers\ProjectController;
 
 Route::middleware('auth')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
-    Route::get('/create-project', [\App\Http\Controllers\ProjectController::class, 'create'])->name('create.project');
+    Route::get('/create-project', [ProjectController::class, 'create'])->name('create.project');
 });
 
 require __DIR__.'/auth.php';
