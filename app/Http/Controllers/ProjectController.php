@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\DB;
 
 class ProjectController extends Controller
 {
-    public function createProject()
+    public function create()
     {
         $clients = User::where('is_client', true)->get();
         $access_token = auth()->user()->createToken('accessToken')->plainTextToken;
@@ -76,7 +76,7 @@ class ProjectController extends Controller
         }
     }
 
-    public function storeProject(Request $request): \Illuminate\Http\JsonResponse
+    public function store(Request $request)
     {
         $request->validate([
             'client_id'                 => 'required|exists:users,id',
@@ -96,10 +96,9 @@ class ProjectController extends Controller
         try {
             $project = Project::create($project_data);
 
-            $data = $this->formatProject($project);
-            return $this->apiResponse($data, 'Project created successfully');
+            return redirect()->route('task.create', $project->id);
         } catch (\Exception $exception) {
-            return $this->apiResponse([], $exception->getMessage(), 500);
+            return redirect()->back();
         }
     }
 
