@@ -177,8 +177,8 @@
 
     <script src="{{ asset('js/form-submission.js') }}"></script>
 {{--    For Selectric --}}
-    <script src="assets/bundles/select2/dist/js/select2.full.min.js"></script>
-    <script src="assets/bundles/jquery-selectric/jquery.selectric.min.js"></script>
+    <script src="{{ asset('assets/bundles/select2/dist/js/select2.full.min.js') }}"></script>
+    <script src="{{ asset('assets/bundles/jquery-selectric/jquery.selectric.min.js') }}"></script>
 
 @endpush
 

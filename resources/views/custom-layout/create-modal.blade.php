@@ -61,7 +61,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form class="w-100">
+                <form class="w-100" method="post" action="{{ route('api.store-task') }}">
                     <div class="form-group form-float">
                         <div class="form-line">
                             <label class="form-label">Name</label>
@@ -89,7 +89,7 @@
                     </div>
                     <div class="form-group form-float">
                         <label> Dependency*</label>
-                            <select class="form-control selectric" multiple="">
+                            <select class="form-control selectric" id="taskDependencyDropdown" multiple="">
                                 <option>Option 1</option>
                                 <option>Option 2</option>
                                 <option>Option 3</option>
