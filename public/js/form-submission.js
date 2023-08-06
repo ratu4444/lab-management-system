@@ -9,13 +9,11 @@ $(document).ready(function () {
         var headers = {
             'Authorization': 'Bearer ' + accessToken,
             'X-CSRF-TOKEN': csrf
-
-
         };
 
         // Perform API call
         $.ajax({
-            url: action, // Replace with your API endpoint
+            url: action,
             method: method,
             data: $(this).serialize(),
             headers: headers,
@@ -48,13 +46,11 @@ $(document).ready(function () {
         var headers = {
             'Authorization': 'Bearer ' + accessToken,
             'X-CSRF-TOKEN': csrf
-
-
         };
 
         // Perform API call
         $.ajax({
-            url: action, // Replace with your API endpoint
+            url: action,
             method: method,
             data: $(this).serialize(),
             headers: headers,
@@ -62,14 +58,14 @@ $(document).ready(function () {
                 // Close modal
                 $('#taskCreateModal').modal('hide');
 
-                // Add the new client to the select dropdown
-                $('#taskDependencyDropdown').append($('<option>', {
-                    value: response.data.id,
-                    text: response.data.name
-                }));
-
-                // Automatically select the new client
-                $('#taskDependencyDropdown').val(response.data.id);
+                // // Add the new task to the dependency select dropdown
+                // $('#taskDependencyDropdown').append($('<option>', {
+                //     value: response.data.id,
+                //     text: response.data.name
+                // }));
+                //
+                // // Automatically select the new depen
+                // $('#taskDependencyDropdown').val(response.data.id);
             },
             error: function (error) {
                 console.log(error);
