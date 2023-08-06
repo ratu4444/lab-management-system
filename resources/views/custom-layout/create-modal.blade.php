@@ -8,41 +8,41 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form class="">
-                <div class="form-group form-float">
+                <form id="clientCreateForm" action="{{ route('api.store-client') }}" method="post">
+                    @csrf
+                    <meta name="access-token" content="{{ $access_token }}">
+                    <div class="form-group form-float">
                         <div class="form-line">
                             <label class="form-label">Name*</label>
-                            <input type="text" class="form-control" name="client_name" required>
+                            <input type="text" class="form-control" name="name" required>
                         </div>
                     </div>
                     <div class="form-group form-float">
                         <div class="form-line">
                             <label class="form-label">Email*</label>
-                            <input type="text" class="form-control" name="client_email" required>
+                            <input type="text" class="form-control" name="email" required>
                         </div>
                     </div>
-
-                    <div class="form-group form-float">
-                        <div class="form-line">
-                            <label class="form-label">Mobile*</label>
-                            <input type="tel" class="form-control" name="client_mobile">
-                        </div>
-                    </div>
-
                     <div class="form-group form-float">
                         <div class="form-line">
                             <label class="form-label">Password*</label>
-                            <input type="password" class="form-control" name="client_password" id="password" required>
+                            <input type="password" class="form-control" name="password" id="password" required>
+                        </div>
+                    </div>
+                    <div class="form-group form-float">
+                        <div class="form-line">
+                            <label class="form-label">Mobile</label>
+                            <input type="tel" class="form-control" name="mobile">
                         </div>
                     </div>
                     <div class="form-group form-float">
                         <div class="form-line">
                             <label class="form-label">Company Name</label>
-                            <input type="text" class="form-control" name="client_company_name">
+                            <input type="text" class="form-control" name="company_name">
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-primary"> Submit </button>
+                    <button type="submit" class="btn btn-primary" id="clientCreateButton">Submit</button>
                 </form>
             </div>
         </div>

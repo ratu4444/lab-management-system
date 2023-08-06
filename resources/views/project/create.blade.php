@@ -22,12 +22,13 @@
                             </div>
                             <div class="mt-3 mb-5">
                                 <label>Client*</label>
-                                <select class="form-control">
-                                        @foreach($clients as $client)
-                                    <option>{{ $client->name }}</option>
-                                        @endforeach
+                                <select class="form-control" id="clientDropdown">
+                                    @foreach($clients as $client)
+                                        <option value="{{ $client->id }}">{{ $client->name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
+
                             <h5> <b>Project</b> </h5>
                             <div class="form-group form-float mt-4">
                                 <div class="form-line">

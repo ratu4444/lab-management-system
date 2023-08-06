@@ -18,8 +18,9 @@ class ProjectController extends Controller
     public function create()
     {
         $clients = User::where('is_client', true)->get();
+        $access_token = auth()->user()->createToken('accessToken')->plainTextToken;
 
-        return view('project.create', compact('clients'));
+        return view('project.create', compact('clients', 'access_token'));
     }
 
     public function storeClient(Request $request): \Illuminate\Http\JsonResponse

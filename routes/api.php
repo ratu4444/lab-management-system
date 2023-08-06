@@ -15,11 +15,11 @@ use App\Http\Controllers\ProjectController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
 
-Route::middleware('auth')->group(function () {
     Route::post('store-client', [ProjectController::class, 'storeClient'])->name('api.store-client');
     Route::post('store-project', [ProjectController::class, 'storeProject'])->name('api.store-project');
     Route::post('store-task', [ProjectController::class, 'storeTask'])->name('api.store-task');
