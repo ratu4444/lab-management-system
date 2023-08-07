@@ -29,6 +29,11 @@ $(document).ready(function () {
 
                 // Automatically select the new client
                 $('#clientDropdown').val(response.data.id);
+
+                // Refresh the Selectric dropdown to update its options
+                // $('#clientDropdown').selectric('refresh');
+                //
+                // $("#clientDropdown").selectric('select', response.data.id);
             },
             error: function (error) {
                 console.log(error);

@@ -20,10 +20,12 @@ use App\Http\Controllers\TaskController;
 Route::middleware('auth')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
 
-    Route::get('/project', [ProjectController::class, 'index'])->name('project.index');
-    Route::get('/project/create', [ProjectController::class, 'create'])->name('project.create');
-    Route::post('/project', [ProjectController::class, 'store'])->name('project.store');
-    Route::get('/project/{project_id}/task/create', [TaskController::class, 'create'])->name('task.create');
+    Route::prefix('project')->group(function () {
+        Route::get('', [ProjectController::class, 'index'])->name('project.index');
+        Route::get('create', [ProjectController::class, 'create'])->name('project.create');
+        Route::post('', [ProjectController::class, 'store'])->name('project.store');
+        Route::get('{project_id}/task/create', [TaskController::class, 'create'])->name('task.create');
+    });
 
     Route::get('/client', [ClientController::class, 'index'])->name('client.index');
     Route::get('/client/create', [ClientController::class, 'create'])->name('client.create');
