@@ -34,3 +34,7 @@
         </div>
     </div>
 @endsection
+
+@section('modal')
+    @include('custom-layout.create-modal')
+@endsection

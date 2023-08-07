@@ -23,7 +23,7 @@
                     </div>
                 </section>
 
-                @include('custom-layout.create-modal')
+                @yield('modal')
             </div>
         </div>
     </div>
