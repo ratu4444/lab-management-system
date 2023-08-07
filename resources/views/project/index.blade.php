@@ -19,6 +19,7 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Name</th>
+                                    <th>Client Name</th>
                                     <th>Estimated Completion Date</th>
                                     <th>Estimated Budget</th>
                                     <th>Total Budget</th>
@@ -32,22 +33,15 @@
                                         <tr>
                                             <th scope="row">{{ (($projects->currentpage()-1) * $projects->perpage()) + $loop->index + 1 }}</th>
                                             <td>{{ $project->name }}</td>
+                                            <td>{{ $project->client->name }}</td>
                                             <td>{{ $project->estimated_completion_date }}</td>
                                             <td>{{ $project->estimated_budget }}</td>
                                             <td>{{ $project->total_budget ?? '-' }}</td>
                                             <td>{{ $project->status }}</td>
-                                            <td class="py-3">
-                                                <div class="text-nowrap">
-                                                    <a href="{{ route('task.index', $project->id) }}" class="btn btn-primary btn-sm">See Tasks</a>
-                                                    <a href="{{ route('payment.index', $project->id) }}" class="btn btn-primary btn-sm">See Payments</a>
-                                                    <a href="{{ route('inspection.index', $project->id) }}" class="btn btn-primary btn-sm">See Inspections</a>
-                                                </div>
-
-                                                <div class="text-nowrap mt-1">
-                                                    <a href="{{ route('task.create', $project->id) }}" class="btn btn-success btn-sm">Add Task</a>
-                                                    <a href="{{ route('payment.create', $project->id) }}" class="btn btn-success btn-sm">Add Payment</a>
-                                                    <a href="{{ route('inspection.create', $project->id) }}" class="btn btn-success btn-sm">Add Inspection</a>
-                                                </div>
+                                            <td class="text-nowrap">
+                                                <a href="{{ route('task.create', $project->id) }}" class="btn btn-primary btn-sm">See Tasks</a>
+                                                <a href="{{ route('payment.create', $project->id) }}" class="btn btn-primary btn-sm">See Payments</a>
+                                                <a href="{{ route('inspection.create', $project->id) }}" class="btn btn-primary btn-sm">See Inspections</a>
                                             </td>
                                         </tr>
                                     @endforeach

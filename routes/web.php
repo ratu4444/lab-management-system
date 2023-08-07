@@ -30,19 +30,16 @@ Route::middleware('auth')->group(function () {
         Route::post('', [ProjectController::class, 'store'])->name('project.store');
 
 //      TASK
-        Route::get('{project_id}/task', [TaskController::class, 'index'])->name('task.index');
         Route::get('{project_id}/task/create', [TaskController::class, 'create'])->name('task.create');
         Route::post('{project_id}/task', [TaskController::class, 'store'])->name('task.store');
 
 //      PAYMENT
-        Route::get('{project_id}/payment', [PaymentController::class, 'index'])->name('payment.index');
-        Route::get('{project-id}/payment/create', [PaymentController::class, 'create'])->name('payment.create');
-        Route::post('{project-id}/payment', [PaymentController::class, 'store'])->name('payment.store');
+        Route::get('{project_id}/payment/create', [PaymentController::class, 'create'])->name('payment.create');
+        Route::post('{project_id}/payment', [PaymentController::class, 'store'])->name('payment.store');
 
 //      INSPECTION
-        Route::get('{project_id}/inspection', [InspectionController::class, 'index'])->name('inspection.index');
-        Route::get('{project-id}/inspection/create', [InspectionController::class, 'create'])->name('inspection.create');
-        Route::post('{project-id}/inspection', [InspectionController::class, 'store'])->name('inspection.store');
+        Route::get('{project_id}/inspection/create', [InspectionController::class, 'create'])->name('inspection.create');
+        Route::post('{project_id}/inspection', [InspectionController::class, 'store'])->name('inspection.store');
     });
 
 //  CLIENT
