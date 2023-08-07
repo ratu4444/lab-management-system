@@ -83,7 +83,7 @@
 @endsection
 
 @section('modal')
-    @include('custom-layout.create-modal')
+    @include('custom-layout.modal.create-client')
 @endsection
 
 @push('js')

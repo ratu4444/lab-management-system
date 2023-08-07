@@ -40,5 +40,5 @@
 @endsection
 
 @section('modal')
-    @include('custom-layout.create-modal')
+    @include('custom-layout.modal.create-inspection')
 @endsection
