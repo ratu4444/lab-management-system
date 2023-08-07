@@ -37,6 +37,17 @@
                     <li class="{{ Route::is('project.create') ? 'active' : '' }}"><a class="nav-link" href="{{ route('project.create') }}">Create Project</a></li>
                 </ul>
             </li>
+
+{{--            <li class="dropdown {{ Route::is('task*') ? 'active' : '' }}">--}}
+{{--                <a href="" class="menu-toggle nav-link has-dropdown">--}}
+{{--                    <i data-feather="briefcase"></i>--}}
+{{--                    <span>Task</span>--}}
+{{--                </a>--}}
+{{--                <ul class="dropdown-menu">--}}
+{{--                    <li class="{{ Route::is('task.index') ? 'active' : '' }}"><a class="nav-link" href="{{ route('task.index') }}">Tasks List</a></li>--}}
+{{--                    <li class="{{ Route::is('task.create') ? 'active' : '' }}"><a class="nav-link" href="{{ route('task.create') }}">Create Task</a></li>--}}
+{{--                </ul>--}}
+{{--            </li>--}}
         </ul>
     </aside>
 </div>
