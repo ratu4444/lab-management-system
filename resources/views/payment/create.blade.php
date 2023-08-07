@@ -1,6 +1,8 @@
 @extends('custom-layout.master')
 
 @push('css')
+    <link rel="stylesheet" href="{{ asset('assets/bundles/jquery-selectric/selectric.css') }}">
+
 @endpush
 
 @section('content')
@@ -9,7 +11,7 @@
             <div><h3>Payment</h3></div>
 
             <div class="">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#taskCreateModal">Add New Payment</button>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#paymentCreateModal">Add New Payment</button>
             </div>
         </div>
         <div class="card-body">
@@ -25,26 +27,26 @@
                         </tr>
                     </thead>
                     <tbody>
-{{--                    @if(count($task->payments))--}}
-{{--                        @foreach($task->payments as $payment)--}}
+                    @if(count($payments))
+                        @foreach($payments as $payment)
                             <tr>
-{{--                                <td>{{ $loop->iteration }}</td>--}}
-{{--                                <td>{{ $task->name }}</td>--}}
-{{--                                <td>{{ $task->estimated_start_date }}</td>--}}
-{{--                                <td>{{ $task->estimated_completion_date }}</td>--}}
-{{--                                <td>{{ $task->total_budget }}</td>--}}
-{{--                                <td>--}}
-{{--                                    <div class="badge badge-success">{{ $task->status }}</div>--}}
-{{--                                </td>--}}
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $payment->name }}</td>
+                                <td>{{ $payment->amount}}</td>
+                                <td>{{  $payment->date}}</td>
+                                <td>{{  $payment->payment_method }}</td>
                             </tr>
-{{--                        @endforeach--}}
-{{--                    @else--}}
+                        @endforeach
+                    @else
                         <tr>
                             <td colspan="100%" class="text-center text-muted font-weight-bold">No Task Found</td>
                         </tr>
-{{--                    @endif--}}
+                    @endif
                     </tbody>
                 </table>
+                <div class="d-flex justify-content-end">
+                    <a class="btn btn-primary" href="#">Next</a>
+                </div>
             </div>
         </div>
     </div>
@@ -53,3 +55,7 @@
 @section('modal')
     @include('custom-layout.modal.create-payment')
 @endsection
+
+@push('js')
+    <script src="{{ asset('assets/bundles/jquery-selectric/jquery.selectric.min.js') }}"></script>
+@endpush

@@ -46,10 +46,10 @@
                     @endif
                     </tbody>
                 </table>
+                <div class="d-flex justify-content-end">
+                <a class="btn btn-primary" href="{{ route('payment.create', $project_id) }}">Next</a>
+                </div>
             </div>
-{{--                <div class="d-flex justify-content-end">--}}
-{{--                <button class="btn btn-primary" href="">Next</button>--}}
-{{--                </div>--}}
             </div>
         </div>
     </div>

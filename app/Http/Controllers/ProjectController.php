@@ -35,7 +35,7 @@ class ProjectController extends Controller
     public function create(Request $request)
     {
         $clients = User::where('is_client', true);
-
+//      $clients->with('projects');
         $client_id = $request->client;
         if ($client_id) $clients->where('id', $client_id);
 
@@ -48,11 +48,12 @@ class ProjectController extends Controller
 
     public function store(Request $request)
     {
-        dd($request->all());
+//        dd($request->all());
         $request->validate([
-            'estimated_start_date'      => 'required|exists:users,id',
+//            'estimated_start_date'      => 'required|exists:users,id',
+            'name'                      => 'required',
             'estimated_completion_date' => 'required|date_format:Y-m-d',
-            'total_budget'              => 'required',
+            'estimated_budget'          => 'required',
         ]);
 
         $project_data = [
@@ -64,11 +65,13 @@ class ProjectController extends Controller
             'comment'                   => $request->comment,
         ];
 
+
         try {
             $project = Project::create($project_data);
 
             return redirect()->route('task.create', $project->id);
         } catch (\Exception $exception) {
+            dd($exception->getMessage());
             return redirect()->back();
         }
     }

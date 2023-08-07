@@ -20,6 +20,7 @@ use App\Http\Controllers\InspectionController;
 */
 
 Route::middleware('auth')->group(function () {
+
 //      DASHBOARD
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
 

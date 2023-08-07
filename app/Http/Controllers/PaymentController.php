@@ -2,48 +2,52 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Payment;
 use App\Models\Project;
 use App\Models\Task;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
     public function create($project_id)
     {
- dd('ok');
-//        $clients = User::where('is_client', true)->get();
+
+//      dd($project_id);
         $access_token = auth()->user()->createToken('accessToken')->plainTextToken;
 
-        $task = Task::with('payments')->findOrFail($project_id);
-//        dd($task);
-        return view('payment.create', compact('task', 'access_token'));
+        $payments = Payment::where('project_id', $project_id)->get();
+        return view('payment.create', compact(  'payments','access_token','project_id'));
 
     }
 
-    public function store(Request $request , $project_id)
+    public function store(Request $request, $project_id)
     {
         $request->validate([
-            'estimated_completion_date' => 'required|date_format:Y-m-d',
-            'total_budget'          => 'required',
-//            'dependency'                => 'required',
+            'amount' => 'required',
         ]);
 
+        $project = Project::where('id', $project_id)->first();
+
+        $client_id = $project->client_id;
 
 
-        $task_data = [
-            'project_id' =>  $project_id,
+
+        $payment_data = [
+            'project_id'                =>  $project_id,
+            'client_id'                 => $client_id,
             'name'                      => $request->name,
-            'estimated_start_date'      => $request->estimated_start_date,
-            'estimated_completion_date' => $request->estimated_completion_date,
-            'total_budget'              => $request->total_budget,
-            'status'                    => $request->status,
+            'amount'                    => $request->amount,
+            'date'                      => $request->date,
+            'payment_method'            => $request->payment_method,
             'comment'                   => $request->comment,
         ];
         try {
 
-            $task = Task::create($task_data);
-            return redirect()->route('store.create');
+            $payment = Payment::create($payment_data);
+            return redirect()->back();
         } catch (\Exception $exception) {
+            dd($exception->getMessage());
             return redirect()->back();
         }
     }

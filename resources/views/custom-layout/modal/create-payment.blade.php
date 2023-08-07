@@ -8,7 +8,8 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form class="">
+                <form class="" action="{{ route('payment.store', $project_id) }}" method="post">
+                    @csrf
                     <div class="form-group form-float">
                         <div class="form-line">
                             <label class="form-label">Name</label>
@@ -30,12 +31,12 @@
                     <div class="form-group form-float">
                         <div class="form-line">
                             <label class="form-label">Payment Method*</label>
-                            <input type="date" name="payment_date" class="form-control" required>
+                            <input type="text" name="payment_method" class="form-control" required>
                         </div>
                     </div>
                     <div class="form-group form-float">
                         <label>Payment For*</label>
-                        <select class="form-control selectric" multiple="">
+                        <select class="form-control selectric" name="payment_for" multiple="">
                             <option>Option 1</option>
                             <option>Option 2</option>
                             <option>Option 3</option>
@@ -43,6 +44,13 @@
                             <option>Option 5</option>
                             <option>Option 6</option>
                         </select>
+                    </div>
+
+                    <div class="form-group form-float">
+                        <div class="form-line">
+                            <label class="form-label">Comment</label>
+                            <textarea name="comment" class="form-control"></textarea>
+                        </div>
                     </div>
                     <button type="submit" class="btn btn-primary"> Submit </button>
                 </form>

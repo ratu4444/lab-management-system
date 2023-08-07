@@ -72,8 +72,7 @@
                                     <textarea name="comment" class="form-control" id="comment"></textarea>
                                 </div>
                             </div>
-
-                            <button type="submit" class="btn btn-primary">Create Project</button>
+                            <button type="submit" class="btn btn-primary"> Submit </button>
                         </form>
                     </div>
                 </div>
