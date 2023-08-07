@@ -18,19 +18,29 @@
                             @csrf
                             <div class="form-row">
                                 <div class="form-group col-12">
-                                    <div class="">
+                                    <div>
                                         <label for="clientDropdown">Client <span class="text-danger">*</span></label>
                                         <div class="row">
-                                            <div class="col-12 col-sm-8 col-xl-10">
-                                                <select class="form-control" name="client_id" id="clientDropdown">
-                                                    @foreach($clients as $client)
-                                                        <option value="{{ $client->id }}">{{ $client->name }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                            <div class="col-12 col-sm-4 col-xl-2 mt-1 mt-sm-0">
-                                                <button class="btn btn-primary text-nowrap w-100 h-100" type="button" data-toggle="modal" data-target="#clientCreateModal">Add New Client</button>
-                                            </div>
+                                            @if($client_id)
+                                                <div class="col-12">
+                                                    <select class="form-control" name="client_id" id="clientDropdown" style="pointer-events: none" readonly>
+                                                        @foreach($clients as $client)
+                                                            <option value="{{ $client->id }}">{{ $client->name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            @else
+                                                <div class="col-12 col-sm-8 col-xl-10">
+                                                    <select class="form-control" name="client_id" id="clientDropdown">
+                                                        @foreach($clients as $client)
+                                                            <option value="{{ $client->id }}">{{ $client->name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                                <div class="col-12 col-sm-4 col-xl-2 mt-1 mt-sm-0">
+                                                    <button class="btn btn-primary text-nowrap w-100 h-100" type="button" data-toggle="modal" data-target="#clientCreateModal">Add New Client</button>
+                                                </div>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>

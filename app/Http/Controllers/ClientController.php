@@ -15,4 +15,35 @@ class ClientController extends Controller
 
         return view('client.index', compact('clients'));
     }
+
+    public function create()
+    {
+        return view('client.create');
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name'      => 'required|string',
+            'email'     => 'required|email|unique:users,email',
+            'password'  => 'required',
+        ]);
+
+        $client_data = [
+            'name'          => $request->name,
+            'email'         => $request->email,
+            'password'      => bcrypt($request->password),
+            'mobile'        => $request->mobile,
+            'company_name'  => $request->company_name,
+            'is_client'     => true,
+        ];
+
+        try {
+            User::create($client_data);
+
+            return redirect()->route('client.index');
+        } catch (\Exception $exception) {
+            return redirect()->back();
+        }
+    }
 }

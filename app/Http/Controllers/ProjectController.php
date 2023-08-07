@@ -27,16 +27,23 @@ class ProjectController extends Controller
         return view('project.index', compact('projects', 'client_id'));
     }
 
-    public function create()
+    public function create(Request $request)
     {
-        $clients = User::where('is_client', true)->get();
+        $clients = User::where('is_client', true);
+
+        $client_id = $request->client;
+        if ($client_id) $clients->where('id', $client_id);
+
+        $clients = $clients->get();
+
         $access_token = auth()->user()->createToken('accessToken')->plainTextToken;
 
-        return view('project.create', compact('clients', 'access_token'));
+        return view('project.create', compact('clients', 'access_token', 'client_id'));
     }
 
     public function store(Request $request)
     {
+        dd($request->all());
         $request->validate([
             'estimated_start_date'      => 'required|exists:users,id',
             'estimated_completion_date' => 'required|date_format:Y-m-d',
