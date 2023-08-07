@@ -18,7 +18,19 @@ use App\Http\Controllers\TaskController;
 */
 
 Route::middleware('auth')->group(function () {
+//  DASHBOARD
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
+//  PROJECT
+    Route::get('/project', [ProjectController::class, 'index'])->name('project.index');
+    Route::get('/project/create', [ProjectController::class, 'create'])->name('project.create');
+    Route::post('/project', [ProjectController::class, 'store'])->name('project.store');
+
+    Route::get('/create-payment/{project-id}', [ProjectController::class, 'createPayment'])->name('create.payment');
+    Route::get('/create-inspection/{project-id}', [ProjectController::class, 'createInspection'])->name('create.inspection');
+//  TASK
+    Route::get('/project/{project_id}/task/create', [TaskController::class, 'create'])->name('task.create');
+    Route::get('/project/{project_id}/task/create', [TaskController::class, 'create'])->name('task.create');
+//  CLIENT
 
     Route::prefix('project')->group(function () {
         Route::get('', [ProjectController::class, 'index'])->name('project.index');

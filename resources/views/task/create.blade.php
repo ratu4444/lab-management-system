@@ -1,6 +1,7 @@
 @extends('custom-layout.master')
 
 @push('css')
+    <link rel="stylesheet" href="{{ asset('assets/bundles/jquery-selectric/selectric.css') }}">
 @endpush
 
 @section('content')
@@ -49,3 +50,7 @@
         </div>
     </div>
 @endsection
+
+@push('js')
+    <script src="{{ asset('assets/bundles/jquery-selectric/jquery.selectric.min.js') }}"></script>
+@endpush
