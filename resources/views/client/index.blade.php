@@ -37,7 +37,9 @@
                                             <td>{{ $client->company_name ?? '-' }}</td>
                                             <td>{{ $client->projects_count }}</td>
                                             <td>
-                                                <a href="{{ route('project.index', ['client' => $client->id]) }}" class="btn btn-primary btn-sm">See Projects</a>
+                                                @if($client->projects_count)
+                                                    <a href="{{ route('project.index', ['client' => $client->id]) }}" class="btn btn-primary btn-sm">See Projects</a>
+                                                @endif
                                                 <a href="{{ route('project.create', ['client' => $client->id]) }}" class="btn btn-success btn-sm">Create New Projects</a>
                                             </td>
                                         </tr>

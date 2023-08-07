@@ -24,6 +24,11 @@ class ProjectController extends Controller
 
         $projects = $projects->paginate(10);
 
+        $filter_data = [
+            'client'  => $client_id,
+        ];
+        $projects->appends(array_filter($filter_data));
+
         return view('project.index', compact('projects', 'client_id'));
     }
 
