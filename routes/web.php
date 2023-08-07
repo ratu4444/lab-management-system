@@ -5,6 +5,8 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\InspectionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,34 +20,34 @@ use App\Http\Controllers\TaskController;
 */
 
 Route::middleware('auth')->group(function () {
-//  DASHBOARD
+//      DASHBOARD
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
-//  PROJECT
-    Route::get('/project', [ProjectController::class, 'index'])->name('project.index');
-    Route::get('/project/create', [ProjectController::class, 'create'])->name('project.create');
-    Route::post('/project', [ProjectController::class, 'store'])->name('project.store');
-
-    Route::get('/create-payment/{project-id}', [ProjectController::class, 'createPayment'])->name('create.payment');
-    Route::get('/create-inspection/{project-id}', [ProjectController::class, 'createInspection'])->name('create.inspection');
-//  TASK
-    Route::get('/project/{project_id}/task/create', [TaskController::class, 'create'])->name('task.create');
-    Route::get('/project/{project_id}/task/create', [TaskController::class, 'create'])->name('task.create');
-//  CLIENT
 
     Route::prefix('project')->group(function () {
+//      PROJECT
         Route::get('', [ProjectController::class, 'index'])->name('project.index');
         Route::get('create', [ProjectController::class, 'create'])->name('project.create');
         Route::post('', [ProjectController::class, 'store'])->name('project.store');
 
+//      TASK
         Route::get('{project_id}/task/create', [TaskController::class, 'create'])->name('task.create');
         Route::post('{project_id}/task', [TaskController::class, 'store'])->name('task.store');
+
+//      PAYMENT
+        Route::get('{project-id}/payment/create', [PaymentController::class, 'create'])->name('payment.create');
+        Route::post('{project-id}/payment', [PaymentController::class, 'store'])->name('payment.store');
+
+//      INSPECTION
+        Route::get('{project-id}/inspection/create', [InspectionController::class, 'create'])->name('inspection.create');
+        Route::post('{project-id}/inspection', [InspectionController::class, 'store'])->name('inspection.store');
     });
 
-    Route::get('/client', [ClientController::class, 'index'])->name('client.index');
-    Route::get('/client/create', [ClientController::class, 'create'])->name('client.create');
-//    Route::get('/create-project', [ProjectController::class, 'createProject'])->name('create.project');
-    Route::get('/create-payment/{project-id}', [ProjectController::class, 'createPayment'])->name('create.payment');
-    Route::get('/create-inspection/{project-id}', [ProjectController::class, 'createInspection'])->name('create.inspection');
+//  CLIENT
+    Route::prefix('client')->group(function () {
+        Route::get('/', [ClientController::class, 'index'])->name('client.index');
+        Route::get('create', [ClientController::class, 'create'])->name('client.create');
+        Route::post('', [ClientController::class, 'store'])->name('client.store');
+    });
 });
 
 require __DIR__.'/auth.php';
