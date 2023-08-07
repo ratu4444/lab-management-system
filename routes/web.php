@@ -24,7 +24,9 @@ Route::middleware('auth')->group(function () {
         Route::get('', [ProjectController::class, 'index'])->name('project.index');
         Route::get('create', [ProjectController::class, 'create'])->name('project.create');
         Route::post('', [ProjectController::class, 'store'])->name('project.store');
+
         Route::get('{project_id}/task/create', [TaskController::class, 'create'])->name('task.create');
+        Route::post('{project_id}/task', [TaskController::class, 'store'])->name('task.store');
     });
 
     Route::get('/client', [ClientController::class, 'index'])->name('client.index');

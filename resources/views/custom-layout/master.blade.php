@@ -22,7 +22,8 @@
                         @yield('content')
                     </div>
                 </section>
-                @yield('modal')
+
+                @include('custom-layout.create-modal')
             </div>
         </div>
     </div>

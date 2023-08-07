@@ -23,12 +23,30 @@ class ProjectController extends Controller
         return view('project.create', compact('clients', 'access_token'));
     }
 
-    public function createTask()
+    public function store(Request $request)
     {
-//        $clients = User::where('is_client', true)->get();
-//        $access_token = auth()->user()->createToken('accessToken')->plainTextToken;
+        $request->validate([
+            'client_id'                 => 'required|exists:users,id',
+            'estimated_completion_date' => 'required|date_format:Y-m-d',
+            'estimated_budget'          => 'required',
+        ]);
 
-        return view('project.create-task');
+        $project_data = [
+            'client_id'                 => $request->client_id,
+            'name'                      => $request->name,
+            'estimated_completion_date' => $request->estimated_completion_date,
+            'estimated_budget'          => $request->estimated_budget,
+            'status'                    => $request->status,
+            'comment'                   => $request->comment,
+        ];
+
+        try {
+            $project = Project::create($project_data);
+
+            return redirect()->route('task.create', $project->id);
+        } catch (\Exception $exception) {
+            return redirect()->back();
+        }
     }
 
     public function createPayment()
@@ -73,32 +91,6 @@ class ProjectController extends Controller
             return $this->apiResponse($data, 'User created successfully');
         } catch (\Exception $exception) {
             return $this->apiResponse([], $exception->getMessage(), 500);
-        }
-    }
-
-    public function store(Request $request)
-    {
-        $request->validate([
-            'client_id'                 => 'required|exists:users,id',
-            'estimated_completion_date' => 'required|date_format:Y-m-d',
-            'estimated_budget'          => 'required',
-        ]);
-
-        $project_data = [
-            'client_id'                 => $request->client_id,
-            'name'                      => $request->name,
-            'estimated_completion_date' => $request->estimated_completion_date,
-            'estimated_budget'          => $request->estimated_budget,
-            'status'                    => $request->status,
-            'comment'                   => $request->comment,
-        ];
-
-        try {
-            $project = Project::create($project_data);
-
-            return redirect()->route('task.create', $project->id);
-        } catch (\Exception $exception) {
-            return redirect()->back();
         }
     }
 

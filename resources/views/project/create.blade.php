@@ -72,10 +72,6 @@
     </div>
 @endsection
 
-@section('modal')
-    @include('custom-layout.create-modal')
-@endsection
-
 @push('js')
     <script src="{{ asset('assets/bundles/jquery-selectric/jquery.selectric.min.js') }}"></script>
     <script src="{{ asset('assets/bundles/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
