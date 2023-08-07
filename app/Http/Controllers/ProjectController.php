@@ -15,6 +15,18 @@ use Illuminate\Support\Facades\DB;
 
 class ProjectController extends Controller
 {
+    public function index(Request $request)
+    {
+        $projects = Project::query();
+
+        $client_id = $request->client;
+        if ($client_id) $projects->where('client_id', $request->client);
+
+        $projects = $projects->paginate(10);
+
+        return view('project.index', compact('projects', 'client_id'));
+    }
+
     public function create()
     {
         $clients = User::where('is_client', true)->get();
