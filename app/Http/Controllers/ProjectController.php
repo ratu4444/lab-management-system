@@ -26,9 +26,9 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'client_id'                 => 'required|exists:users,id',
+            'estimated_start_date'      => 'required|exists:users,id',
             'estimated_completion_date' => 'required|date_format:Y-m-d',
-            'estimated_budget'          => 'required',
+            'total_budget'              => 'required',
         ]);
 
         $project_data = [

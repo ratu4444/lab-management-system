@@ -15,4 +15,8 @@ class Task extends Model
     {
         return $this->belongsTo(Project::class);
     }
+
+    public function payment(){
+        return $this->hasMany(Payment::class,'payment_id');
+    }
 }

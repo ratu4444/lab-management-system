@@ -1,5 +1,5 @@
 
-
+{{-- CLIENT CREATE MODAL--}}
 <div class="modal fade" id="clientCreateModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -10,6 +10,8 @@
                 </button>
             </div>
             <div class="modal-body">
+
+{{-- PROJECT CREATE MODAL--}}
                 <form id="clientCreateForm" action="{{ route('api.store-client') }}" method="post">
                     @csrf
                     <meta name="access-token" content="{{ $access_token }}">
@@ -42,6 +44,7 @@
         </div>
     </div>
 </div>
+
 {{-- TASK CREATE MODAL --}}
 <div class="modal fade" id="taskCreateModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -53,7 +56,8 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form class="w-100" method="post" action="{{ route('api.store-task') }}">
+                <form class="w-100" method="post" action="{{ route('task.store', $project->id) }}">
+                   @csrf
                     <div class="form-group form-float">
                         <div class="form-line">
                             <label class="form-label">Name</label>
@@ -81,7 +85,7 @@
                     </div>
                     <div class="form-group form-float">
                         <label> Dependency*</label>
-                            <select class="form-control selectric" id="taskDependencyDropdown" multiple="">
+                            <select class="form-control selectric" name="dependency" id="taskDependencyDropdown" multiple="">
                                 <option>Option 1</option>
                                 <option>Option 2</option>
                                 <option>Option 3</option>
@@ -95,10 +99,16 @@
                         <div class="selectgroup w-100">
                             @foreach(config('app.STATUSES') as $label => $status_id)
                                 <label class="selectgroup-item">
-                                    <input type="radio" name="radio1" value="{{ $status_id }}" class="selectgroup-input-radio" {{ $status_id == 1 ? 'checked' : ''}} >
+                                    <input type="radio" name="status" value="{{ $status_id }}" class="selectgroup-input-radio" {{ $status_id == 1 ? 'checked' : ''}} >
                                     <span class="selectgroup-button">{{ $label }}</span>
                                 </label>
                             @endforeach
+                        </div>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">Comment</label>
+                                <textarea name="comment" class="form-control"></textarea>
+                            </div>
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary"> Submit </button>

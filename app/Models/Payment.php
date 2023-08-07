@@ -10,4 +10,8 @@ class Payment extends Model
 {
     use HasFactory, SoftDeletes;
     protected $guarded = ['id'];
+
+    public function task(){
+        return $this->hasMany(Task::class,'task_id');
+    }
 }
