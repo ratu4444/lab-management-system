@@ -24,31 +24,35 @@ Route::middleware('auth')->group(function () {
 //      DASHBOARD
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
 
-    Route::prefix('project')->group(function () {
+    Route::middleware('auth.admin')->group(function (){
+
+        Route::prefix('project')->group(function () {
 //      PROJECT
-        Route::get('', [ProjectController::class, 'index'])->name('project.index');
-        Route::get('create', [ProjectController::class, 'create'])->name('project.create');
-        Route::post('', [ProjectController::class, 'store'])->name('project.store');
+            Route::get('', [ProjectController::class, 'index'])->name('project.index');
+            Route::get('create', [ProjectController::class, 'create'])->name('project.create');
+            Route::post('', [ProjectController::class, 'store'])->name('project.store');
 
 //      TASK
-        Route::get('{project_id}/task/create', [TaskController::class, 'create'])->name('task.create');
-        Route::post('{project_id}/task', [TaskController::class, 'store'])->name('task.store');
+            Route::get('{project_id}/task/create', [TaskController::class, 'create'])->name('task.create');
+            Route::post('{project_id}/task', [TaskController::class, 'store'])->name('task.store');
 
 //      PAYMENT
-        Route::get('{project_id}/payment/create', [PaymentController::class, 'create'])->name('payment.create');
-        Route::post('{project_id}/payment', [PaymentController::class, 'store'])->name('payment.store');
+            Route::get('{project_id}/payment/create', [PaymentController::class, 'create'])->name('payment.create');
+            Route::post('{project_id}/payment', [PaymentController::class, 'store'])->name('payment.store');
 
 //      INSPECTION
-        Route::get('{project_id}/inspection/create', [InspectionController::class, 'create'])->name('inspection.create');
-        Route::post('{project_id}/inspection', [InspectionController::class, 'store'])->name('inspection.store');
-    });
+            Route::get('{project_id}/inspection/create', [InspectionController::class, 'create'])->name('inspection.create');
+            Route::post('{project_id}/inspection', [InspectionController::class, 'store'])->name('inspection.store');
+        });
 
 //  CLIENT
-    Route::prefix('client')->group(function () {
-        Route::get('/', [ClientController::class, 'index'])->name('client.index');
-        Route::get('create', [ClientController::class, 'create'])->name('client.create');
-        Route::post('', [ClientController::class, 'store'])->name('client.store');
+        Route::prefix('client')->group(function () {
+            Route::get('/', [ClientController::class, 'index'])->name('client.index');
+            Route::get('create', [ClientController::class, 'create'])->name('client.create');
+            Route::post('', [ClientController::class, 'store'])->name('client.store');
+        });
     });
+
 });
 
 require __DIR__.'/auth.php';
