@@ -37,10 +37,10 @@
                     </div>
                     <div class="form-group form-float">
                         <label> Dependency*</label>
-                        <select class="form-control selectric" name="dependency" id="taskDependencyDropdown" multiple="">
-                            @if(count($tasks))
-                                @foreach($tasks as $task)
-                            <option>{{ $task }}</option>
+                        <select class="form-control selectric" name="dependencies[]" id="taskDependencyDropdown" multiple="">
+                            @if(count($project->tasks))
+                                @foreach($project->tasks as $task)
+                                    <option value="{{ $task->id }}">{{ $task->name }}</option>
                                 @endforeach
                             @endif
                         </select>

@@ -2,7 +2,6 @@
 
 @push('css')
     <link rel="stylesheet" href="{{ asset('assets/bundles/jquery-selectric/selectric.css') }}">
-
 @endpush
 
 @section('content')
@@ -29,25 +28,25 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @if(count($payments))
-                        @foreach($payments as $payment)
+                    @if(count($project->payments))
+                        @foreach($project->payments as $payment)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $payment->name }}</td>
                                 <td>{{ $payment->amount}}</td>
-                                <td>{{  $payment->date}}</td>
-                                <td>{{  $payment->payment_method }}</td>
+                                <td>{{ $payment->date}}</td>
+                                <td>{{ $payment->payment_method }}</td>
                             </tr>
                         @endforeach
                     @else
                         <tr>
-                            <td colspan="100%" class="text-center text-muted font-weight-bold">No Task Found</td>
+                            <td colspan="100%" class="text-center text-muted font-weight-bold">No Payment Found</td>
                         </tr>
                     @endif
                     </tbody>
                 </table>
                 <div class="d-flex justify-content-end">
-                    <a class="btn btn-primary" href="{{ route('inspection.create', $project_id) }}">Next</a>
+                    <a class="btn btn-primary" href="{{ route('inspection.create', $project->id) }}">Next</a>
                 </div>
             </div>
         </div>

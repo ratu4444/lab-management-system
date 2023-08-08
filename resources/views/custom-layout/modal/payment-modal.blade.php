@@ -8,7 +8,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form class="" action="{{ route('payment.store', $project_id) }}" method="post">
+                <form class="" action="{{ route('payment.store', $project->id) }}" method="post">
                     @csrf
                     <div class="form-group form-float">
                         <div class="form-line">
@@ -36,12 +36,10 @@
                     </div>
                     <div class="form-group form-float">
                         <label>Payment For*</label>
-                        <select class="form-control selectric" name="payment_for" multiple="">
-                            @if(count($tasks))
-                                @foreach($tasks as $task)
-                                    <option>{{ $task }}</option>
-                                @endforeach
-                            @endif
+                        <select class="form-control selectric" name="payment_for[]" multiple="">
+                            @foreach($project->tasks as $task)
+                                <option value="{{ $task->id }}" >{{ $task->name }}</option>
+                            @endforeach
                         </select>
                     </div>
 

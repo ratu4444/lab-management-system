@@ -13,10 +13,9 @@ class InspectionController extends Controller
     public function create($project_id)
     {
 //      dd($project_id);
-        $access_token = auth()->user()->createToken('accessToken')->plainTextToken;
 
         $inspections = Inspection::where('project_id', $project_id)->get();
-        $tasks = Task::pluck('name');
+
         return view('inspection.create', compact( 'tasks','inspections', 'access_token','project_id'));
 
     }

@@ -22,7 +22,7 @@ class Project extends Model
         return $this->hasMany(Task::class);
     }
 
-    public function payment()
+    public function payments()
     {
         return $this->hasMany(Payment::class );
     }
