@@ -30,13 +30,17 @@
                     <tr>
                     @if(count($project->inspections))
                         @foreach($project->inspections as $inspection)
+                            @php
+                                $status = array_search($inspection->status, config('app.STATUSES'));
+                                $status_color = config("app.STATUSES_COLORS.$status")
+                            @endphp
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $inspection->name }}</td>
                                 <td>{{ $inspection->scheduled_date}}</td>
                                 <td>{{  $inspection->date}}</td>
                                 <td>
-                                    <div class="badge badge-success">{{ $inspection->date}}</div>
+                                    <div class="badge {{ 'badge-'.$status_color }}">{{ $status }}</div>
                                 </td>
                             </tr>
                         @endforeach
@@ -44,9 +48,7 @@
                         <tr>
                             <td colspan="100%" class="text-center text-muted font-weight-bold">No Task Found</td>
                         </tr>
-                        @endif
-
-                        </tr>
+                    @endif
                 </table>
             </div>
         </div>

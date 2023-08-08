@@ -69,8 +69,7 @@
                                     <div class="selectgroup w-100 flex-wrap">
                                         @foreach(config('app.STATUSES') as $label => $status_id)
                                             <label class="selectgroup-item">
-                                                <input type="radio" name="status" value="{{ $status_id }}"
-                                                       class="selectgroup-input-radio" {{ $status_id == 1 ? 'checked' : ''}} >
+                                                <input type="radio" name="status" value="{{ $status_id }}" class="selectgroup-input-radio" {{ $status_id == 1 ? 'checked' : ''}} >
                                                 <span class="selectgroup-button">{{ $label }}</span>
                                             </label>
                                         @endforeach

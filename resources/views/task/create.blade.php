@@ -30,6 +30,11 @@
                     <tbody>
                     @if(count($project->tasks))
                         @foreach($project->tasks as $task)
+                            @php
+                                $status = array_search($task->status, config('app.STATUSES'));
+                                $status_color = config("app.STATUSES_COLORS.$status")
+                            @endphp
+
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $task->name }}</td>
@@ -37,7 +42,7 @@
                                 <td>{{ $task->estimated_completion_date }}</td>
                                 <td>{{ $task->total_budget }}</td>
                                 <td>
-                                    <div class="badge badge-success">{{ $task->status }}</div>
+                                    <div class="badge {{ 'badge-'.$status_color }}">{{ $status }}</div>
                                 </td>
                             </tr>
                         @endforeach

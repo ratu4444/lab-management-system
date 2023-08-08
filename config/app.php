@@ -238,6 +238,13 @@ return [
         'In Progress'   => 2,
         'Completed'     => 3,
         'Canceled'      => 4,
+    ],
+
+    'STATUSES_COLORS' => [
+        'Pending'       => 'secondary',
+        'In Progress'   => 'primary',
+        'Completed'     => 'success',
+        'Canceled'      => 'danger',
     ]
 
 ];
