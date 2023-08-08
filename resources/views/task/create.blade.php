@@ -9,7 +9,9 @@
         <div class="card-header d-flex justify-content-between">
             <h4 class="card-title text-muted">Tasks</h4>
             <div class="">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#taskCreateModal">Add New Task</button>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#taskCreateModal">Add New
+                    Task
+                </button>
             </div>
         </div>
         <div class="card-body">
@@ -47,16 +49,16 @@
                     </tbody>
                 </table>
                 <div class="d-flex justify-content-end">
-                <a class="btn btn-primary" href="{{ route('payment.create', $project_id) }}">Next</a>
+                    <a class="btn btn-primary" href="{{ route('payment.create', $project_id) }}">Next</a>
                 </div>
             </div>
-            </div>
         </div>
+    </div>
     </div>
 @endsection
 
 @section('modal')
-    @include('custom-layout.modal.create-task')
+    @include('custom-layout.modal.task-modal')
 @endsection
 
 @push('js')

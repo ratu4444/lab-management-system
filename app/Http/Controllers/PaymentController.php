@@ -17,7 +17,8 @@ class PaymentController extends Controller
         $access_token = auth()->user()->createToken('accessToken')->plainTextToken;
 
         $payments = Payment::where('project_id', $project_id)->get();
-        return view('payment.create', compact(  'payments','access_token','project_id'));
+        $tasks = Task::pluck('name');
+        return view('payment.create', compact(  'tasks','payments','access_token','project_id'));
 
     }
 
@@ -47,7 +48,7 @@ class PaymentController extends Controller
             $payment = Payment::create($payment_data);
             return redirect()->back();
         } catch (\Exception $exception) {
-            dd($exception->getMessage());
+//            dd($exception->getMessage());
             return redirect()->back();
         }
     }

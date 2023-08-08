@@ -1,6 +1,8 @@
 @extends('custom-layout.master')
 
 @push('css')
+    <link rel="stylesheet" href="{{ asset('assets/bundles/jquery-selectric/selectric.css') }}">
+
 @endpush
 
 @section('content')
@@ -10,35 +12,52 @@
                 <h3>Inspection</h3>
             </div>
             <div>
-                <button type="button" class="btn btn-primary " data-toggle="modal" data-target="#inspectionCreateModal">Add New Inspection</button>
+                <button type="button" class="btn btn-primary " data-toggle="modal" data-target="#inspectionCreateModal">
+                    Add New Inspection
+                </button>
             </div>
         </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-bordered table-md">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-md">
+                    <tr>
+                        <th>#</th>
+                        <th class="text-nowrap">Name</th>
+                        <th class="text-nowrap">Scheduled Date</th>
+                        <th class="text-nowrap">Date</th>
+                        <th class="text-nowrap">Status</th>
+                    </tr>
+                    <tr>
+                    @if(count($inspections))
+                        @foreach($inspections as $inspection)
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $inspection->name }}</td>
+                                <td>{{ $inspection->scheduled_date}}</td>
+                                <td>{{  $inspection->date}}</td>
+                                <td>
+                                    <div class="badge badge-success">{{ $inspection->date }}</div>
+                                </td>
+                            </tr>
+                        @endforeach
+                    @else
                         <tr>
-                            <th>#</th>
-                            <th class="text-nowrap">Name</th>
-                            <th class="text-nowrap">Schedule Date</th>
-                            <th class="text-nowrap">Date</th>
-                            <th class="text-nowrap">Status</th>
+                            <td colspan="100%" class="text-center text-muted font-weight-bold">No Task Found</td>
                         </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>Irwansyah Saputra</td>
-                            <td>2017-01-09</td>
-                            <td>2017-01-09</td>
-                            <td>
-                                <div class="badge badge-success">Active</div>
-                            </td>
+                        @endif
+
                         </tr>
-                    </table>
-                </div>
+                </table>
             </div>
         </div>
+    </div>
     </div>
 @endsection
 
 @section('modal')
-    @include('custom-layout.modal.create-inspection')
+    @include('custom-layout.modal.inspection-modal')
 @endsection
+
+@push('js')
+    <script src="{{ asset('assets/bundles/jquery-selectric/jquery.selectric.min.js') }}"></script>
+@endpush

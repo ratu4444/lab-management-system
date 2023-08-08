@@ -23,7 +23,8 @@
                                         <div class="row">
                                             @if($client_id)
                                                 <div class="col-12">
-                                                    <select class="form-control" name="client_id" id="clientDropdown" style="pointer-events: none" readonly>
+                                                    <select class="form-control" name="client_id" id="clientDropdown"
+                                                            style="pointer-events: none" readonly>
                                                         @foreach($clients as $client)
                                                             <option value="{{ $client->id }}">{{ $client->name }}</option>
                                                         @endforeach
@@ -38,7 +39,10 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-12 col-sm-4 col-xl-2 mt-1 mt-sm-0">
-                                                    <button class="btn btn-primary text-nowrap w-100 h-100" type="button" data-toggle="modal" data-target="#clientCreateModal">Add New Client</button>
+                                                    <button class="btn btn-primary text-nowrap w-100 h-100"
+                                                            type="button" data-toggle="modal"
+                                                            data-target="#clientCreateModal">Add New Client
+                                                    </button>
                                                 </div>
                                             @endif
                                         </div>
@@ -49,19 +53,24 @@
                                     <input type="text" name="name" class="form-control" id="name" required>
                                 </div>
                                 <div class="form-group col-12 col-md-6">
-                                    <label class="form-label" for="estimated_completion_date">Estimated Completion Date <span class="text-danger">*</span></label>
-                                    <input type="text" name="estimated_completion_date" class="form-control datepicker" id="estimated_completion_date" required>
+                                    <label class="form-label" for="estimated_completion_date">Estimated Completion Date
+                                        <span class="text-danger">*</span></label>
+                                    <input type="text" name="estimated_completion_date" class="form-control datepicker"
+                                           id="estimated_completion_date" required>
                                 </div>
                                 <div class="form-group col-12 col-md-6">
-                                    <label class="form-label" for="estimated_budget">Estimated Budget <span class="text-danger">*</span></label>
-                                    <input type="number" name="estimated_budget" class="form-control" id="estimated_budget" required>
+                                    <label class="form-label" for="estimated_budget">Estimated Budget <span
+                                                class="text-danger">*</span></label>
+                                    <input type="number" name="estimated_budget" class="form-control"
+                                           id="estimated_budget" required>
                                 </div>
                                 <div class="form-group col-12">
                                     <label class="form-label">Status</label>
                                     <div class="selectgroup w-100 flex-wrap">
                                         @foreach(config('app.STATUSES') as $label => $status_id)
                                             <label class="selectgroup-item">
-                                                <input type="radio" name="status" value="{{ $status_id }}" class="selectgroup-input-radio" {{ $status_id == 1 ? 'checked' : ''}} >
+                                                <input type="radio" name="status" value="{{ $status_id }}"
+                                                       class="selectgroup-input-radio" {{ $status_id == 1 ? 'checked' : ''}} >
                                                 <span class="selectgroup-button">{{ $label }}</span>
                                             </label>
                                         @endforeach
@@ -72,7 +81,7 @@
                                     <textarea name="comment" class="form-control" id="comment"></textarea>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary"> Submit </button>
+                            <button type="submit" class="btn btn-primary"> Submit</button>
                         </form>
                     </div>
                 </div>
@@ -82,7 +91,7 @@
 @endsection
 
 @section('modal')
-    @include('custom-layout.modal.create-client')
+    @include('custom-layout.modal.client-modal')
 @endsection
 
 @push('js')

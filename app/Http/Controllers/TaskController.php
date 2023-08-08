@@ -14,7 +14,8 @@ class TaskController extends Controller
         $access_token = auth()->user()->createToken('accessToken')->plainTextToken;
 
         $project = Project::with('tasks')->findOrFail($project_id);
-        return view('task.create', compact('project', 'access_token', 'project_id'));
+        $tasks = Task::pluck('name');
+        return view('task.create', compact('tasks','project', 'access_token', 'project_id'));
 
     }
 

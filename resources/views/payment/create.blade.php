@@ -11,20 +11,22 @@
             <div><h3>Payment</h3></div>
 
             <div class="">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#paymentCreateModal">Add New Payment</button>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#paymentCreateModal">Add
+                    New Payment
+                </button>
             </div>
         </div>
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-bordered table-md">
                     <thead>
-                        <tr>
-                            <th>#</th>
-                            <th class="text-nowrap">Name</th>
-                            <th class="text-nowrap">Amount</th>
-                            <th class="text-nowrap">Date</th>
-                            <th class="text-nowrap">Payment Method</th>
-                        </tr>
+                    <tr>
+                        <th>#</th>
+                        <th class="text-nowrap">Name</th>
+                        <th class="text-nowrap">Amount</th>
+                        <th class="text-nowrap">Date</th>
+                        <th class="text-nowrap">Payment Method</th>
+                    </tr>
                     </thead>
                     <tbody>
                     @if(count($payments))
@@ -45,7 +47,7 @@
                     </tbody>
                 </table>
                 <div class="d-flex justify-content-end">
-                    <a class="btn btn-primary" href="#">Next</a>
+                    <a class="btn btn-primary" href="{{ route('inspection.create', $project_id) }}">Next</a>
                 </div>
             </div>
         </div>
@@ -53,7 +55,7 @@
 @endsection
 
 @section('modal')
-    @include('custom-layout.modal.create-payment')
+    @include('custom-layout.modal.payment-modal')
 @endsection
 
 @push('js')

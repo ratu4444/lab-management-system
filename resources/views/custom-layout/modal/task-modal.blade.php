@@ -38,12 +38,11 @@
                     <div class="form-group form-float">
                         <label> Dependency*</label>
                         <select class="form-control selectric" name="dependency" id="taskDependencyDropdown" multiple="">
-                            <option>Option 1</option>
-                            <option>Option 2</option>
-                            <option>Option 3</option>
-                            <option>Option 4</option>
-                            <option>Option 5</option>
-                            <option>Option 6</option>
+                            @if(count($tasks))
+                                @foreach($tasks as $task)
+                            <option>{{ $task }}</option>
+                                @endforeach
+                            @endif
                         </select>
                     </div>
                     <div class="form-group form-flat">
