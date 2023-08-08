@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
+use App\Models\Payment;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\Payment;
 
 class Project extends Model
 {
@@ -25,6 +25,11 @@ class Project extends Model
     public function payments()
     {
         return $this->hasMany(Payment::class );
+    }
+
+    public function inspections()
+    {
+        return $this->hasMany(Inspection::class );
     }
 
 

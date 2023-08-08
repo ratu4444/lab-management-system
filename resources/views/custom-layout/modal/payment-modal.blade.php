@@ -36,7 +36,7 @@
                     </div>
                     <div class="form-group form-float">
                         <label>Payment For*</label>
-                        <select class="form-control selectric" name="payment_for[]" multiple="">
+                        <select class="form-control selectric" name="tasks[]" multiple="">
                             @foreach($project->tasks as $task)
                                 <option value="{{ $task->id }}" >{{ $task->name }}</option>
                             @endforeach

@@ -41,6 +41,8 @@ class TaskController extends Controller
             $task = Task::create($task_data);
 
             $task_dependencies_data = [];
+
+            if ($request->dependencies ){
             foreach ($request->dependencies as $dependency) {
                 $task_dependencies_data[] = [
                     'task_id'           => $task->id,
@@ -48,7 +50,7 @@ class TaskController extends Controller
                     'created_at'        => Carbon::now(),
                     'updated_at'        => Carbon::now(),
                 ];
-            }
+            }}
 
             if (count($task_dependencies_data)) TaskDependency::insert($task_dependencies_data);
             DB::commit();

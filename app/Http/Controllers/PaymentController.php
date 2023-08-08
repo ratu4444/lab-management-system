@@ -15,7 +15,7 @@ class PaymentController extends Controller
 {
     public function create($project_id)
     {
-        $project = Project::with('tasks', 'payments')->where('id', $project_id)->firstOrFail();
+        $project = Project::with('tasks', 'inspections')->where('id', $project_id)->firstOrFail();
         return view('payment.create', compact(  'project'));
     }
 
@@ -43,16 +43,20 @@ class PaymentController extends Controller
         try {
 
             $payment = Payment::create($payment_data);
-            $payment_dependency = [];
-//
-            $payment_dependency [] = [
-                'payment_id'    => $payment->id,
-                'task_id'       =>  $project->task->id,
-                'created_at'    => Carbon::now(),
-                'updated_at'    => Carbon::now(),
-        ];
 
-            if(count($payment_dependency)) TaskPayment::insert($payment_dependency);
+            $payment_task_data = [];
+
+            if ($request->tasks){
+            foreach ($request->tasks as $task) {
+                $payment_task_data [] = [
+                    'payment_id' => $payment->id,
+                    'task_id' => $task,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ];
+            }}
+
+            if(count($payment_task_data)) TaskPayment::insert($payment_task_data);
             DB::commit();
             return redirect()->back();
         } catch (\Exception $exception) {

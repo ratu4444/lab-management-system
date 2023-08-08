@@ -28,15 +28,15 @@
                         <th class="text-nowrap">Status</th>
                     </tr>
                     <tr>
-                    @if(count($inspections))
-                        @foreach($inspections as $inspection)
+                    @if(count($project->inspections))
+                        @foreach($project->inspections as $inspection)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $inspection->name }}</td>
                                 <td>{{ $inspection->scheduled_date}}</td>
                                 <td>{{  $inspection->date}}</td>
                                 <td>
-                                    <div class="badge badge-success">{{ $inspection->date }}</div>
+                                    <div class="badge badge-success">{{ $inspection->date}}</div>
                                 </td>
                             </tr>
                         @endforeach
