@@ -29,27 +29,113 @@
         <div class="row">
             <div class="col-12">
                 <div class="card card-primary">
-                    <div class="card-header d-flex justify-content-between">
-                        <h4>All Projects</h4>
+                    <div class="card-header">
+                        <h4>
+                            Running Projects
+                            <sup class="text-success">({{ $running_projects->count() }})</sup>
+                        </h4>
                     </div>
                     <div class="card-body">
-                        @include('custom-layout.component.project-table')
-                        {{ $projects->appends(request()->except('project_page'))->links() }}
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Project Name</th>
+                                        <th>Client Name</th>
+                                        <th>Process</th>
+                                        <th>Estimated Completion Date</th>
+                                        <th>Estimated Budget</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if($running_projects->count())
+                                        @foreach($running_projects as $project)
+                                            <tr>
+                                                <td>{{ $project->name }}</td>
+                                                <td>{{ $project->client?->name }}</td>
+                                                <td class="align-middle" style="min-width: 200px">
+                                                    <div class="progress" data-height="4" data-toggle="tooltip" title="{{ $project->completion_percentage.'% Completed' }}">
+                                                        <div class="progress-bar {{ $project->completion_percentage < 50 ? 'bg-danger' : 'bg-success' }}" data-width="{{ $project->completion_percentage }}"></div>
+                                                    </div>
+                                                </td>
+                                                <td>{{ $project->estimated_completion_date }}</td>
+                                                <td>{{ '$'.$project->estimated_budget }}</td>
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                        <tr>
+                                            <td colspan="100%" class="text-center text-muted font-weight-bold">No Project Found</td>
+                                        </tr>
+                                    @endif
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div class="col-12">
                 <div class="card card-primary">
-                    <div class="card-header d-flex justify-content-between">
-                        <h4>All Clients</h4>
+                    <div class="card-header">
+                        <h4>
+                            Upcoming Inspections
+                            <sup class="text-success">({{ $upcoming_inspections->count() }})</sup>
+                        </h4>
                     </div>
                     <div class="card-body">
-                        @include('custom-layout.component.client-table')
-                        {{ $clients->appends(request()->except('client_page'))->links() }}
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>Inspection Name</th>
+                                    <th>Project Name</th>
+                                    <th>Scheduled Date</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @if($upcoming_inspections->count())
+                                    @foreach($upcoming_inspections as $inspection)
+                                        <tr>
+                                            <td>{{ $inspection->name }}</td>
+                                            <td>{{ $inspection->project?->name }}</td>
+                                            <td>{{ $inspection->scheduled_date }}</td>
+                                        </tr>
+                                    @endforeach
+                                @else
+                                    <tr>
+                                        <td colspan="100%" class="text-center text-muted font-weight-bold">No Upcoming Inspections Found</td>
+                                    </tr>
+                                @endif
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
+
+{{--            <div class="col-12">--}}
+{{--                <div class="card card-primary">--}}
+{{--                    <div class="card-header d-flex justify-content-between">--}}
+{{--                        <h4>All Projects</h4>--}}
+{{--                    </div>--}}
+{{--                    <div class="card-body">--}}
+{{--                        @include('custom-layout.component.project-table')--}}
+{{--                        {{ $projects->appends(request()->except('project_page'))->links() }}--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+
+{{--            <div class="col-12">--}}
+{{--                <div class="card card-primary">--}}
+{{--                    <div class="card-header d-flex justify-content-between">--}}
+{{--                        <h4>All Clients</h4>--}}
+{{--                    </div>--}}
+{{--                    <div class="card-body">--}}
+{{--                        @include('custom-layout.component.client-table')--}}
+{{--                        {{ $clients->appends(request()->except('client_page'))->links() }}--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
         </div>
     </div>
 @endsection

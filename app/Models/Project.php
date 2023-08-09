@@ -12,6 +12,11 @@ class Project extends Model
     use HasFactory, SoftDeletes;
     protected $guarded = ['id'];
 
+    public function getCompletionPercentageAttribute()
+    {
+        return $this->tasks->pluck('completion_percentage')->avg() ?? 0;
+    }
+
     public function client()
     {
         return $this->belongsTo(User::class, 'client_id');

@@ -19,12 +19,12 @@ class TaskController extends Controller
 
     public function store(Request $request , $project_id)
     {
-//        dd($request);
         $request->validate([
             'estimated_completion_date' => 'required|date_format:Y-m-d',
             'total_budget'              => 'required',
-//          'dependency'              => 'required',
         ]);
+
+        $project = Project::find($project_id);
 
         $task_data = [
             'project_id'                => $project_id,
@@ -41,25 +41,27 @@ class TaskController extends Controller
             $task = Task::create($task_data);
 
             $task_dependencies_data = [];
-
-            if ($request->dependencies ){
-            foreach ($request->dependencies as $dependency) {
-                $task_dependencies_data[] = [
-                    'task_id'           => $task->id,
-                    'dependent_task_id' => $dependency,
-                    'created_at'        => Carbon::now(),
-                    'updated_at'        => Carbon::now(),
-                ];
-            }}
+            if ($request->dependencies) {
+                foreach ($request->dependencies as $dependency) {
+                    $task_dependencies_data[] = [
+                        'task_id'           => $task->id,
+                        'dependent_task_id' => $dependency,
+                        'created_at'        => Carbon::now(),
+                        'updated_at'        => Carbon::now(),
+                    ];
+                }
+            }
 
             if (count($task_dependencies_data)) TaskDependency::insert($task_dependencies_data);
+
+            $project->total_budget += $request->total_budget;
+            $project->save();
+
             DB::commit();
 
             return back();
         } catch (\Exception $exception) {
             DB::rollBack();
-
-            dd($exception->getMessage());
             return redirect()->back();
         }
     }

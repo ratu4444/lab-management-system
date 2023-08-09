@@ -9,7 +9,7 @@
 
         <ul class="sidebar-menu">
             <li class="menu-header">Main</li>
-            <li class="dropdown {{ Route::is('dashboard.index') ? 'active' : '' }}">
+            <li class="dropdown {{ Route::is('dashboard*') ? 'active' : '' }}">
                 <a href="{{ route('dashboard.index') }}" class="nav-link">
                     <i data-feather="monitor"></i>
                     <span>Dashboard</span>

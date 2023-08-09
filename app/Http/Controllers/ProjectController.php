@@ -77,6 +77,16 @@ class ProjectController extends Controller
         }
     }
 
+    public function show($project_id)
+    {
+        //
+    }
+
+    public function dashboard()
+    {
+        return view('project.show');
+    }
+
     public function createPayment()
     {
 //        $clients = User::where('is_client', true)->get();

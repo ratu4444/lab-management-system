@@ -23,6 +23,7 @@ Route::middleware('auth')->group(function () {
 
 //      DASHBOARD
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
+    Route::get('project/dashboard', [ProjectController::class, 'dashboard'])->name('dashboard.client-index'); // client dashboard
 
     Route::middleware('auth.admin')->group(function (){
         Route::prefix('project')->group(function () {
@@ -30,6 +31,7 @@ Route::middleware('auth')->group(function () {
             Route::get('', [ProjectController::class, 'index'])->name('project.index');
             Route::get('create', [ProjectController::class, 'create'])->name('project.create');
             Route::post('', [ProjectController::class, 'store'])->name('project.store');
+            Route::get('{project_id}', [ProjectController::class, 'show'])->name('project.show');
 //      TASK
             Route::get('{project_id}/task/create', [TaskController::class, 'create'])->name('task.create');
             Route::post('{project_id}/task', [TaskController::class, 'store'])->name('task.store');

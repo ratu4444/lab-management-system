@@ -7,33 +7,36 @@ use App\Models\Payment;
 use App\Models\Project;
 use App\Models\Task;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
     public function index ()
     {
-        if (auth()->user()->is_client) {
-            return view('project.show');
-        }
+        if (auth()->user()->is_client) return redirect()->route('dashboard.client-index');
 
-        $projects = Project::with('client')
-            ->paginate(10, ['*'], 'project_page');
+        $projects = Project::withCount('tasks', 'inspections')
+            ->withSum('payments', 'amount')
+            ->with('client')
+            ->get();
 
-        $clients = User::where('is_client', true)
-            ->withCount('projects')
-            ->paginate(10, ['*'], 'client_page');
+        $running_projects = $projects->where('status', config('app.STATUSES.In Progress'));
+        $upcoming_inspections = Inspection::where('status', config('app.STATUSES.Pending'))
+            ->whereDate('scheduled_date', '<=', Carbon::now()->addDays(7))
+            ->with('project')
+            ->get();
 
-        $total_projects = [
+        $project_reports = [
             'type'              => 'projects',
             'heading'           => 'Total Projects',
             'card_icon'         => 'fa fa-list',
             'card_background'   => 'l-bg-green',
-            'count'             => Project::count(),
+            'count'             => $projects->count(),
             'url'               => route('project.index')
         ];
 
-        $total_clients = [
+        $client_reports = [
             'type'              => 'clients',
             'heading'           => 'Total Clients',
             'card_icon'         => 'fa fa-users',
@@ -42,43 +45,43 @@ class DashboardController extends Controller
             'url'               => route('client.index')
         ];
 
-        $total_tasks = [
+        $task_reports = [
             'type'              => 'tasks',
             'heading'           => 'Total Tasks',
             'card_icon'         => 'fa fa-clipboard-list',
             'card_background'   => 'l-bg-red',
-            'count'             => Task::count(),
+            'count'             => $projects->sum('tasks_count'),
             'url'               => null,
         ];
 
-        $total_payments = [
+        $payment_reports = [
             'type'              => 'payments',
             'heading'           => 'Total Payments',
             'card_icon'         => 'fa fa-dollar-sign',
             'card_background'   => 'l-bg-cyan',
-            'count'             => Payment::sum('amount'),
+            'count'             => $projects->sum('payments_sum_amount'),
             'url'               => null,
         ];
 
-        $total_inspections = [
+        $inspection_reports = [
             'type'              => 'inspections',
             'heading'           => 'Total Inspections',
             'card_icon'         => null,
             'card_background'   => 'l-bg-purple-dark',
-            'count'             => Inspection::count(),
+            'count'             => $projects->sum('inspections_count'),
             'url'               => null,
         ];
 
 
         $reports = [
-            $total_projects,
-            $total_clients,
-            $total_tasks,
-            $total_payments,
-            $total_inspections
+            $project_reports,
+            $client_reports,
+            $task_reports,
+            $payment_reports,
+            $inspection_reports
         ];
 
-        return view('index', compact('projects', 'clients', 'reports'));
+        return view('index', compact('reports', 'running_projects', 'upcoming_inspections'));
     }
 
 
