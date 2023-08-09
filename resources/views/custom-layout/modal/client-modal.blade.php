@@ -14,9 +14,13 @@
                     <meta name="access-token" content="{{ $access_token }}">
                     <div class="form-row">
                         <div class="form-group col-12">
-                            <label class="form-label" for="client_name">Name <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" name="name" id="client_name" required>
+                            <label class="form-label" for="client_name">Name <span class="text-danger"></span></label>
+                            <input type="text" class="form-control" name="name" id="client_name" >
+{{--                            @error('name')--}}
+{{--                            <div class="text-danger">{{ $message }}</div>--}}
+{{--                            @enderror--}}
                         </div>
+
                         <div class="form-group col-12">
                             <label class="form-label" for="email">Email <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" name="email" id="email" required>
