@@ -45,7 +45,8 @@
                     @endif
                     </tbody>
                 </table>
-                <div class="d-flex justify-content-end">
+                <div class="d-flex justify-content-between">
+                    <a class="btn btn-primary" href="{{ route('task.create', $project->id) }}">Previous</a>
                     <a class="btn btn-primary" href="{{ route('inspection.create', $project->id) }}">Next</a>
                 </div>
             </div>

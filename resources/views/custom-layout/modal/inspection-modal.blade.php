@@ -12,8 +12,8 @@
                     @csrf
                     <div class="form-group form-float">
                         <div class="form-line">
-                            <label class="form-label">Name</label>
-                            <input type="text" name="name" class="form-control">
+                            <label class="form-label">Name <span class="text-danger">*</span> </label>
+                            <input type="text" name="name" class="form-control" required>
                         </div>
                     </div>
                     <div class="form-group form-float">
@@ -29,7 +29,7 @@
                         </div>
                     </div>
                     <div class="form-group form-float">
-                        <label>Dependency*</label>
+                        <label>Dependency</label>
                         <select class="form-control selectric" name="dependencies[]" multiple="">
                             @if(count($project->tasks))
                                 @foreach($project->tasks as $task)

@@ -50,6 +50,9 @@
                         </tr>
                     @endif
                 </table>
+                <div class="d-flex justify-content-between">
+                    <a class="btn btn-primary" href="{{ route('payment.create', $project->id) }}">Previous</a>
+                </div>
             </div>
         </div>
     </div>

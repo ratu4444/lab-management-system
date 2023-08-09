@@ -12,8 +12,8 @@
                     @csrf
                     <div class="form-group form-float">
                         <div class="form-line">
-                            <label class="form-label">Name</label>
-                            <input type="text" name="name" class="form-control">
+                            <label class="form-label">Name <span class="text-danger">*</span></label>
+                            <input type="text" name="name" class="form-control" required>
                         </div>
                     </div>
                     <div class="form-group form-float">
@@ -35,7 +35,7 @@
                         </div>
                     </div>
                     <div class="form-group form-float">
-                        <label>Payment For*</label>
+                        <label>Payment For</label>
                         <select class="form-control selectric" name="tasks[]" multiple="">
                             @foreach($project->tasks as $task)
                                 <option value="{{ $task->id }}" >{{ $task->name }}</option>

@@ -30,9 +30,9 @@
                         <div class="badge {{ 'badge-'.$status_color }}">{{ $status }}</div>
                     </td>
                     <td class="text-nowrap">
-                        <a href="{{ route('task.create', $project->id) }}" class="btn btn-primary btn-sm">See Tasks</a>
-                        <a href="{{ route('payment.create', $project->id) }}" class="btn btn-success btn-sm">See Payments</a>
-                        <a href="{{ route('inspection.create', $project->id) }}" class="btn btn-warning btn-sm">See Inspections</a>
+                        <a href="{{ route('task.create', $project->id) }}" class="btn btn-primary btn-sm" target="_blank">See Tasks</a>
+                        <a href="{{ route('payment.create', $project->id) }}" class="btn btn-success btn-sm" target="_blank">See Payments</a>
+                        <a href="{{ route('inspection.create', $project->id) }}" class="btn btn-warning btn-sm" target="_blank">See Inspections</a>
                     </td>
                 </tr>
             @endforeach
