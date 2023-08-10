@@ -33,7 +33,9 @@
                         <a href="{{ route('task.create', $project->id) }}" class="btn btn-primary btn-sm" target="_blank">See Tasks</a>
                         <a href="{{ route('payment.create', $project->id) }}" class="btn btn-success btn-sm" target="_blank">See Payments</a>
                         <a href="{{ route('inspection.create', $project->id) }}" class="btn btn-warning btn-sm" target="_blank">See Inspections</a>
+                        <a href="{{ route('inspection.create', $project->id) }}" class="btn btn-warning btn-sm" target="_blank"></a>
                     </td>
+
                 </tr>
             @endforeach
         @else
