@@ -25,7 +25,7 @@ class ProjectController extends Controller
         $projects = $projects->paginate(10);
 
         $filter_data = [
-            'client'  => $client_id,
+            'client' => $client_id,
         ];
         $projects->appends(array_filter($filter_data));
 
@@ -51,20 +51,19 @@ class ProjectController extends Controller
 //        dd($request->all());
         $request->validate([
 //            'estimated_start_date'      => 'required|exists:users,id',
-            'name'                      => 'required',
+            'name' => 'required',
             'estimated_completion_date' => 'required|date_format:Y-m-d',
-            'estimated_budget'          => 'required',
+            'estimated_budget' => 'required',
         ]);
 
         $project_data = [
-            'client_id'                 => $request->client_id,
-            'name'                      => $request->name,
+            'client_id' => $request->client_id,
+            'name' => $request->name,
             'estimated_completion_date' => $request->estimated_completion_date,
-            'estimated_budget'          => $request->estimated_budget,
-            'status'                    => $request->status,
-            'comment'                   => $request->comment,
+            'estimated_budget' => $request->estimated_budget,
+            'status' => $request->status,
+            'comment' => $request->comment,
         ];
-
 
 
         try {
@@ -96,7 +95,6 @@ class ProjectController extends Controller
     }
 
 
-
     public function createInspection()
     {
 //        $clients = User::where('is_client', true)->get();
@@ -108,18 +106,18 @@ class ProjectController extends Controller
     public function storeClient(Request $request): \Illuminate\Http\JsonResponse
     {
         $request->validate([
-            'name'      => 'required|string',
-            'email'     => 'required|email|unique:users,email',
-            'password'  => 'required',
+            'name' => 'required|string',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required',
         ]);
 
         $client_data = [
-            'name'          => $request->name,
-            'email'         => $request->email,
-            'password'      => bcrypt($request->password),
-            'mobile'        => $request->mobile,
-            'company_name'  => $request->company_name,
-            'is_client'     => true,
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'mobile' => $request->mobile,
+            'company_name' => $request->company_name,
+            'is_client' => true,
         ];
 
         try {
@@ -135,24 +133,24 @@ class ProjectController extends Controller
     public function storeTask(Request $request): \Illuminate\Http\JsonResponse
     {
         $request->validate([
-            'project_id'                => 'required|exists:projects,id',
-            'estimated_start_date'      => 'required|date_format:Y-m-d',
+            'project_id' => 'required|exists:projects,id',
+            'estimated_start_date' => 'required|date_format:Y-m-d',
             'estimated_completion_date' => 'required|date_format:Y-m-d',
-            'total_budget'              => 'required',
-            'dependent_task_ids'        => 'array',
-            'dependent_task_ids.*'      => 'exists:tasks,id'
+            'total_budget' => 'required',
+            'dependent_task_ids' => 'array',
+            'dependent_task_ids.*' => 'exists:tasks,id'
         ]);
 
         $task_data = [
-            'project_id'                => $request->project_id,
-            'name'                      => $request->name,
-            'estimated_start_date'      => $request->estimated_start_date,
+            'project_id' => $request->project_id,
+            'name' => $request->name,
+            'estimated_start_date' => $request->estimated_start_date,
             'estimated_completion_date' => $request->estimated_completion_date,
-            'start_date'                => $request->start_date,
-            'completion_date'           => $request->completion_date,
-            'total_budget'              => $request->total_budget,
-            'status'                    => $request->status,
-            'comment'                   => $request->comment,
+            'start_date' => $request->start_date,
+            'completion_date' => $request->completion_date,
+            'total_budget' => $request->total_budget,
+            'status' => $request->status,
+            'comment' => $request->comment,
         ];
 
         DB::beginTransaction();
@@ -162,7 +160,7 @@ class ProjectController extends Controller
             $task_dependencies_data = [];
             foreach ($request->dependent_task_ids as $dependent_task_id) {
                 $task_dependencies_data[] = [
-                    'task_id'           => $task->id,
+                    'task_id' => $task->id,
                     'dependent_task_id' => $dependent_task_id
                 ];
             }
@@ -186,23 +184,23 @@ class ProjectController extends Controller
     public function storePayment(Request $request): \Illuminate\Http\JsonResponse
     {
         $request->validate([
-            'project_id'    => 'required|exists:projects,id',
-            'amount'        => 'required|min:0',
-            'date'          => 'required|date_format:Y-m-d',
-            'task_ids'      => 'array',
-            'task_ids.*'    => 'exists:tasks,id',
+            'project_id' => 'required|exists:projects,id',
+            'amount' => 'required|min:0',
+            'date' => 'required|date_format:Y-m-d',
+            'task_ids' => 'array',
+            'task_ids.*' => 'exists:tasks,id',
         ]);
 
         $project = Project::find($request->project_id);
 
         $payment_data = [
-            'project_id'        => $request->project_id,
-            'client_id'         => $project->client_id,
-            'name'              => $request->name,
-            'amount'            => $request->amount,
-            'date'              => $request->date,
-            'payment_method'    => $request->payment_method ?? 'Cash',
-            'comment'           => $request->comment,
+            'project_id' => $request->project_id,
+            'client_id' => $project->client_id,
+            'name' => $request->name,
+            'amount' => $request->amount,
+            'date' => $request->date,
+            'payment_method' => $request->payment_method ?? 'Cash',
+            'comment' => $request->comment,
         ];
 
         DB::beginTransaction();
@@ -212,8 +210,8 @@ class ProjectController extends Controller
             $payment_tasks_data = [];
             foreach ($request->task_ids as $task_id) {
                 $payment_tasks_data[] = [
-                    'payment_id'    => $payment->id,
-                    'task_id'       => $task_id,
+                    'payment_id' => $payment->id,
+                    'task_id' => $task_id,
                 ];
             }
             if (count($payment_tasks_data)) TaskPayment::insert($payment_tasks_data);
@@ -232,19 +230,19 @@ class ProjectController extends Controller
     public function storeInspection(Request $request): \Illuminate\Http\JsonResponse
     {
         $request->validate([
-            'project_id'            => 'required|exists:projects,id',
-            'scheduled_date'        => 'required|date_format:Y-m-d',
-            'dependent_task_ids'    => 'array',
-            'dependent_task_ids.*'  => 'exists:tasks,id'
+            'project_id' => 'required|exists:projects,id',
+            'scheduled_date' => 'required|date_format:Y-m-d',
+            'dependent_task_ids' => 'array',
+            'dependent_task_ids.*' => 'exists:tasks,id'
         ]);
 
         $inspection_data = [
-            'project_id'        => $request->project_id,
-            'name'              => $request->name,
-            'status'            => $request->status,
-            'scheduled_date'    => $request->scheduled_date,
-            'date'              => $request->date,
-            'comment'           => $request->comment,
+            'project_id' => $request->project_id,
+            'name' => $request->name,
+            'status' => $request->status,
+            'scheduled_date' => $request->scheduled_date,
+            'date' => $request->date,
+            'comment' => $request->comment,
         ];
 
         DB::beginTransaction();
@@ -254,7 +252,7 @@ class ProjectController extends Controller
             $inspection_dependencies_data = [];
             foreach ($request->dependent_task_ids as $dependent_task_id) {
                 $inspection_dependencies_data[] = [
-                    'inspection_id'     => $inspection->id,
+                    'inspection_id' => $inspection->id,
                     'dependent_task_id' => $dependent_task_id
                 ];
             }
@@ -270,4 +268,43 @@ class ProjectController extends Controller
             return $this->apiResponse([], $exception->getMessage(), 500);
         }
     }
+
+    public function edit($project_id)
+    {
+        $project = Project::where('id', $project_id)->first();
+
+        return view('project.edit', compact('project'));
+    }
+
+    public function editStore(Request $request, $project_id)
+    {
+        $request->validate([
+            'name' => 'required',
+            'estimated_completion_date' => 'required|date_format:Y-m-d',
+            'estimated_budget' => 'required',
+        ]);
+
+        $client = Project:: where('id', $project_id)->first();
+//        dd('ok');
+        $project_data = [
+            'client_id' => $client->client_id,
+            'name' => $request->name,
+            'estimated_completion_date' => $request->estimated_completion_date,
+            'estimated_budget' => $request->estimated_budget,
+            'status' => $request->status,
+            'comment' => $request->comment,
+        ];
+
+//        dd('ok ok');
+        try {
+            $project = Project::where('id', $project_id)
+            ->update($project_data);
+
+            return back();
+        } catch (\Exception $exception) {
+            dd($exception->getMessage());
+            return redirect()->back();
+        }
+    }
+
 }
