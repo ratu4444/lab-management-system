@@ -58,7 +58,7 @@
                                 <div class="card-content">
                                     <h5 class="font-15 matrix-title">Final Budget</h5>
                                     <div>
-                                        <h2 class="font-18">{{ ($project->total_budget ?? $project->estimated_budget) .'$' }}</h2>
+                                        <h2 class="font-18">{{ ($project->total_budget ?? $project->estimated_budget) .' $' }}</h2>
                                         <p class="col-orange mb-0"><span class="col-orange font-20">{{ abs($project->budget_increament_percentage).'%' }}</span>
                                             {{ $project->budget_increament_percentage < 0 ? 'Decrease' : 'Increase'}}
                                         </p>
@@ -87,7 +87,7 @@
                                     <h5 class="font-15 matrix-title">Payment Completion</h5>
                                 </div>
                                 <div>
-                                    <h2 class="font-18">{{ $project->paid_amount.'$' }}</h2>
+                                    <h2 class="font-18">{{ $project->paid_amount.' $' }}</h2>
                                     <p class="mb-0"><span class="col-green font-20">{{ $project->paid_amount_percentage.'%' }}</span></p>
                                 </div>
                             </div>
@@ -125,64 +125,34 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-hover mb-0">
+                        <table class="table table-striped mb-0">
                             <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Task Name</th>
-                                <th>Dependency</th>
-                                <th>Date</th>
-                                <th>Payment Method</th>
-                            </tr>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Paid For</th>
+                                    <th>Date</th>
+                                    <th>Amount</th>
+                                    <th>Method</th>
+                                </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Payment 1</td>
-                                <td>Demolition</td>
-                                <td>2023-08-20</td>
-                                <td>NEFT</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Payment 2</td>
-                                <td>Concrete</td>
-                                <td>2023-09-16</td>
-                                <td>Cash</td>
-                            </tr>
-
-                            <tr>
-                                <td>3</td>
-                                <td>Payment 3</td>
-                                <td>Framing</td>
-                                <td>2023-10-01</td>
-                                <td>PayPal</td>
-                            </tr>
-
-                            <tr>
-                                <td>4</td>
-                                <td>Payment 4</td>
-                                <td>Roofing</td>
-                                <td>2023-10-08</td>
-                                <td>Cash</td>
-                            </tr>
-
-                            <tr>
-                                <td>5</td>
-                                <td>Payment 5</td>
-                                <td>Mechanical</td>
-                                <td>2023-10-15</td>
-                                <td>Cash</td>
-                            </tr>
-
-                            <tr>
-                                <td>6</td>
-                                <td>Payment 6</td>
-                                <td>Electrical</td>
-                                <td>2023-10-22</td>
-                                <td>NEFT</td>
-                            </tr>
-
+                                @if($project->payments->count())
+                                    @foreach($project->payments as $payment)
+                                        <tr>
+                                            <th scope="row">{{ $loop->iteration }}</th>
+                                            <td>{{ $payment->name }}</td>
+                                            <td>{{ $payment->dependentTasks->pluck('name')->implode(', ') }}</td>
+                                            <td>{{ $payment->date }}</td>
+                                            <td>{{ $payment->amount.' $' }}</td>
+                                            <td>{{ $payment->payment_method }}</td>
+                                        </tr>
+                                    @endforeach
+                                @else
+                                    <tr>
+                                        <td colspan="100%" class="text-center text-muted font-weight-bold">No Payment Data Found</td>
+                                    </tr>
+                                @endif
                             </tbody>
                         </table>
                     </div>
@@ -196,117 +166,46 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h4>Schedules</h4>
-                    <div class="card-header-form">
-                        <!--                    <form>-->
-                        <!--                      <div class="input-group">-->
-                        <!--                        <input type="text" class="form-control" placeholder="Search">-->
-                        <!--                        <div class="input-group-btn">-->
-                        <!--                          <button class="btn btn-primary"><i class="fas fa-search"></i></button>-->
-                        <!--                        </div>-->
-                        <!--                      </div>-->
-                        <!--                    </form>-->
-                    </div>
+                    <h4>Tasks</h4>
                 </div>
-                <div class="card-body p-0">
+                <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-striped">
-                            <tr>
-                                <th class="p-0 text-center">Task Name</th>
-                                <th>Task Status</th>
-                                <th>Assigh Date</th>
-                                <th>Due Date</th>
-                                <th>Dependency</th>
-                                <th>Action</th>
-                            </tr>
-                            <tr>
-                                <td class="p-0 text-center">Contract Review</td>
-                                <td class="align-middle">
-                                    <div class="progress-text">50%</div>
-                                    <div class="progress" data-height="6">
-                                        <div class="progress-bar bg-success" data-width="50%"></div>
-                                    </div>
-                                </td>
-                                <td>2023-08-12</td>
-                                <td>2023-08-12</td>
-                                <td></td>
-                                <td><a href="#" class="btn btn-outline-primary">Detail</a></td>
-                            </tr>
-                            <tr>
-                                <td class="p-0 text-center">Mobilization</td>
-                                <td class="align-middle">
-                                    <div class="progress-text">40%</div>
-                                    <div class="progress" data-height="6">
-                                        <div class="progress-bar bg-danger" data-width="40%"></div>
-                                    </div>
-                                </td>
-                                <td>2023-08-15</td>
-                                <td>2023-08-15</td>
-                                <td>
-                                    Contract Review
-                                </td>
-                                <td><a href="#" class="btn btn-outline-primary">Detail</a></td>
-                            </tr>
-                            <tr>
-                                <td class="p-0 text-center">Demolition</td>
-                                <td class="align-middle">
-                                    <div class="progress-text">55%</div>
-                                    <div class="progress" data-height="6">
-                                        <div class="progress-bar bg-purple" data-width="55%"></div>
-                                    </div>
-                                </td>
-                                <td>2023-08-16</td>
-                                <td>2023-08-19</td>
-                                <td>
-                                    Mobilization
-                                </td>
-                                <td><a href="#" class="btn btn-outline-primary">Detail</a></td>
-                            </tr>
-                            <tr>
-                                <td class="p-0 text-center">Earth Work</td>
-                                <td class="align-middle">
-                                    <div class="progress-text">70%</div>
-                                    <div class="progress" data-height="6">
-                                        <div class="progress-bar" data-width="70%"></div>
-                                    </div>
-                                </td>
-                                <td>2023-08-22</td>
-                                <td>2019-07-31</td>
-                                <td>
-                                    Demolition
-                                </td>
-                                <td><a href="#" class="btn btn-outline-primary">Detail</a></td>
-                            </tr>
-                            <tr>
-                                <td class="p-0 text-center">Utility Connections</td>
-                                <td class="align-middle">
-                                    <div class="progress-text">45%</div>
-                                    <div class="progress" data-height="6">
-                                        <div class="progress-bar bg-cyan" data-width="45%"></div>
-                                    </div>
-                                </td>
-                                <td>2023-08-24</td>
-                                <td>2018-09-26</td>
-                                <td>
-                                    Mobilization
-                                </td>
-                                <td><a href="#" class="btn btn-outline-primary">Detail</a></td>
-                            </tr>
-                            <tr>
-                                <td class="p-0 text-center">Concrete</td>
-                                <td class="align-middle">
-                                    <div class="progress-text">30%</div>
-                                    <div class="progress" data-height="6">
-                                        <div class="progress-bar bg-orange" data-width="30%"></div>
-                                    </div>
-                                </td>
-                                <td>2023-09-01</td>
-                                <td>2023-09-15</td>
-                                <td>
-                                    Earth Work
-                                </td>
-                                <td><a href="#" class="btn btn-outline-primary">Detail</a></td>
-                            </tr>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Status</th>
+                                    <th>Estimated Start Date</th>
+                                    <th>Estimated Completion Date</th>
+                                    <th>Dependencies</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if($project->tasks->count())
+                                    @foreach($project->tasks as $task)
+                                        <tr>
+                                            <th scope="row">{{ $loop->iteration }}</th>
+                                            <td>{{ $task->name }}</td>
+                                            <td class="align-middle">
+                                                <div class="progress-text">{{ $task->completion_percentage.'%' }}</div>
+                                                <div class="progress" data-height="6">
+                                                    <div class="progress-bar bg-success" data-width="{{ $task->completion_percentage.'%' }}"></div>
+                                                </div>
+                                            </td>
+                                            <td>{{ $task->estimated_start_date }}</td>
+                                            <td>{{ $task->estimated_completion_date }}</td>
+                                            <td>-</td>
+                                            <td><a href="#" class="btn btn-outline-primary">Detail</a></td>
+                                        </tr>
+                                    @endforeach
+                                @else
+                                    <tr>
+                                        <td colspan="100%" class="text-center text-muted font-weight-bold">No Tasks Found</td>
+                                    </tr>
+                                @endif
+                            </tbody>
                         </table>
                     </div>
                 </div>

@@ -25,7 +25,7 @@ class Project extends Model
         $total_budget = $this->total_budget ?? $estimated_budget;
 
         $increment_percentage = (($total_budget - $estimated_budget) / $estimated_budget) * 100;
-        return intval($increment_percentage);
+        return number_format($increment_percentage, 2);
     }
 
     public function getPaidAmountAttribute()
@@ -35,13 +35,13 @@ class Project extends Model
 
     public function getPaidAmountPercentageAttribute()
     {
-        $paid_amount = $this->paid_amount;
-        if (!$paid_amount) return 0;
-
         $total_budget = $this->total_budget ?? $this->estimated_budget;
+        if (!$total_budget) return 100;
 
-        $paid_amount_percentage = (($total_budget - $paid_amount) / $paid_amount) * 100;
-        return intval($paid_amount_percentage);
+        $paid_amount = $this->paid_amount;
+
+        $paid_amount_percentage = ($paid_amount / $total_budget) * 100;
+        return number_format($paid_amount_percentage, 2);
     }
 
     public function client()

@@ -88,13 +88,13 @@ class ProjectController extends Controller
             'project' => 'required|exists:projects,id',
         ]);
 
-        $project = Project::with('client', 'tasks', 'payments', 'inspections')
+        $project = Project::with('client', 'tasks', 'payments.dependentTasks', 'inspections')
             ->find($request->project);
 
-        if ($project->client?->id != auth()->id() && auth()->user()->is_client)
-            return redirect()
-                ->route('dashboard.index')
-                ->with('error', 'You don\'t have authorization');
+//        if ($project->client?->id != auth()->id() && auth()->user()->is_client)
+//            return redirect()
+//                ->route('dashboard.index')
+//                ->with('error', 'You don\'t have authorization');
 
         return view('project.show', compact('project'));
     }

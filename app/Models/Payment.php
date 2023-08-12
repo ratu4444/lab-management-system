@@ -12,11 +12,14 @@ class Payment extends Model
     use HasFactory, SoftDeletes;
     protected $guarded = ['id'];
 
-    public function task(){
-        return $this->hasMany(Task::class,'task_id');
+    public function dependentTasks()
+    {
+        return $this->belongsToMany(Task::class,'task_payments')
+            ->where('task_payments.deleted_at', null);
     }
 
-    public function project(){
+    public function project()
+    {
         return $this->belongsTo(Project::class, 'project_id');
     }
 }
