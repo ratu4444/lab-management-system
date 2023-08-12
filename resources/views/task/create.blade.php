@@ -46,7 +46,7 @@
                                     <div class="badge {{ 'badge-'.$status_color }}">{{ $status }}</div>
                                 </td>
                                 <td class="text-nowrap">
-                                    <a href="{{ route('task.edit', $project->id) }}" class="btn btn-primary btn-sm" target="_blank">Edit</a>
+                                    <a href="{{ route('task.edit', $task->id) }}" class="btn btn-primary btn-sm" target="_blank">Edit</a>
                                 </td>
                             </tr>
                         @endforeach
