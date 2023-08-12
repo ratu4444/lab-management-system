@@ -9,6 +9,7 @@
             <th class="text-nowrap">Estimated Budget</th>
             <th class="text-nowrap">Total Budget</th>
             <th class="text-nowrap">Status</th>
+            <th class="text-nowrap">View</th>
             <th class="text-nowrap">Action</th>
         </tr>
         </thead>
@@ -34,6 +35,11 @@
                         <a href="{{ route('payment.create', $project->id) }}" class="btn btn-success btn-sm" target="_blank">See Payments</a>
                         <a href="{{ route('inspection.create', $project->id) }}" class="btn btn-warning btn-sm" target="_blank">See Inspections</a>
                     </td>
+
+                    <td class="text-nowrap">
+                        <a href="{{ route('project.edit', $project->id) }}" class="btn btn-primary btn-sm" target="_blank">Edit</a>
+                    </td>
+
                 </tr>
             @endforeach
         @else
