@@ -17,6 +17,33 @@ class Project extends Model
         return $this->tasks->pluck('completion_percentage')->avg() ?? 0;
     }
 
+    public function getBudgetIncreamentPercentageAttribute()
+    {
+        $estimated_budget = $this->estimated_budget;
+        if (!$estimated_budget) return 100;
+
+        $total_budget = $this->total_budget ?? $estimated_budget;
+
+        $increment_percentage = (($total_budget - $estimated_budget) / $estimated_budget) * 100;
+        return number_format($increment_percentage, 2);
+    }
+
+    public function getPaidAmountAttribute()
+    {
+        return $this->payments->sum('amount');
+    }
+
+    public function getPaidAmountPercentageAttribute()
+    {
+        $total_budget = $this->total_budget ?? $this->estimated_budget;
+        if (!$total_budget) return 100;
+
+        $paid_amount = $this->paid_amount;
+
+        $paid_amount_percentage = ($paid_amount / $total_budget) * 100;
+        return number_format($paid_amount_percentage, 2);
+    }
+
     public function client()
     {
         return $this->belongsTo(User::class, 'client_id');

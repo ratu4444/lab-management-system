@@ -14,7 +14,10 @@ class DashboardController extends Controller
 {
     public function index ()
     {
-        if (auth()->user()->is_client) return redirect()->route('dashboard.client-index');
+        if (auth()->user()->is_client) {
+            $projects = auth()->user()->projects;
+            return view('client-index', compact('projects'));
+        }
 
         $projects = Project::withCount('tasks', 'inspections')
             ->withSum('payments', 'amount')
