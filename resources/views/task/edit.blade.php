@@ -15,7 +15,7 @@
                         <h4 class="card-title text-muted">Task Edit</h4>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('task.update', $task->project_id) }}">
+                        <form method="POST" action="{{ route('task.update', $task->id) }}">
                             @csrf
                             <div class="form-group form-float">
                                 <div class="form-line">
@@ -43,18 +43,16 @@
                                 </div>
                             </div>
 {{--                                                                @dd($task_dependency)--}}
-
                             <div class="form-group form-float">
                                 <label> Dependency</label>
                                 <select class="form-control selectric" name="dependencies[]" id="taskDependencyDropdown" multiple="">
-{{--                                    @dd($task_dependencies->dependent_task_id)--}}
-                                    @if(count($task_dependencies->dependent_task_id))
-                                        @foreach($task_dependencies->dependent_task_id as $task_dependency)
-                                            @if(count($dependent_task_name))
-                                                @foreach($dependent_task_name as $dependency_name)
-                                                    <option value="{{ $task_dependency->id }}">{{ $dependency_name->name }}</option>
-                                                @endforeach
-                                            @endif
+                                    @if(count($project_tasks))
+                                        @foreach($project_tasks as $project_task)
+{{--                                            @if(count($dependent_task_name))--}}
+{{--                                                @foreach($dependent_task_name as $dependency_name)--}}
+                                                    <option value="{{ $project_task->id }}" {{ in_array( $project_task->id, $task->dependent_task_ids,) ? 'selected' : '' }}>{{ $project_task->name }}</option>
+{{--                                                @endforeach--}}
+{{--                                            @endif--}}
                                         @endforeach
                                     @endif
                                 </select>

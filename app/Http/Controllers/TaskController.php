@@ -66,9 +66,15 @@ class TaskController extends Controller
         }
     }
 
-    public function edit($project_id)
+    public function edit($task_id)
     {
-        $project = Project::where('id', $project_id)->first();
+//        dd($task_id);
+        $task = Task::with('dependentTasks')->findOrFail($task_id);
+
+        $task->dependent_task_ids = $task->dependentTasks->pluck('id')->toArray();
+        $project_tasks = Task::where('project_id', $task->project_id)->where('id','!=', $task_id)->get();
+//
+//        $project = Project::where('id', $project_id)->first();
 //        dd('ok');
 //        $task = Task::where('project_id', $project_id)->first();
 //        $tasks = Task::get();
@@ -90,7 +96,55 @@ class TaskController extends Controller
 //        }
 //
 
-        return view('task.edit', compact('task', 'task_dependency', 'dependent_task_name'));
+        return view('task.edit', compact('task', 'project_tasks'));
+    }
+
+    public function update(Request $request, $task_id)
+    {
+        $request->validate([
+            'name' => 'required',
+            'estimated_start_date' => 'required|date_format:Y-m-d',
+            'total_budget' => 'required',
+        ]);
+
+        $task = Task::with('taskDependencies')->findOrFail($task_id);
+
+        $task_data = [
+            'name'                      => $request->name,
+            'estimated_start_date'      => $request->estimated_start_date,
+            'estimated_completion_date' => $request->estimated_completion_date,
+            'total_budget'              => $request->total_budget,
+            'status'                    => $request->status,
+            'comment'                   => $request->comment,
+        ];
+
+        DB::beginTransaction();
+
+        try {
+            $task->update($task_data);
+
+            $task->taskDependencies()->delete();
+
+            $task_dependencies_data = [];
+            if ($request->dependencies) {
+                foreach ($request->dependencies as $dependency) {
+                    $task_dependencies_data[] = [
+                        'task_id'           => $task->id,
+                        'dependent_task_id' => $dependency,
+                        'created_at'        => Carbon::now(),
+                        'updated_at'        => Carbon::now(),
+                    ];
+                }
+            }
+            if (count($task_dependencies_data)){
+                $dependency = TaskDependency::insert($task_dependencies_data);
+            }
+            DB::commit();
+            return back();
+        } catch (\Exception $exception) {
+            dd($exception->getMessage());
+            return redirect()->back();
+        }
     }
 
 }

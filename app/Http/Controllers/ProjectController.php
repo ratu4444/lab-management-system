@@ -272,7 +272,6 @@ class ProjectController extends Controller
     public function edit($project_id)
     {
         $project = Project::where('id', $project_id)->first();
-
         return view('project.edit', compact('project'));
     }
 
@@ -284,10 +283,7 @@ class ProjectController extends Controller
             'estimated_budget' => 'required',
         ]);
 
-        $client = Project:: where('id', $project_id)->first();
-//        dd('ok');
         $project_data = [
-            'client_id' => $client->client_id,
             'name' => $request->name,
             'estimated_completion_date' => $request->estimated_completion_date,
             'estimated_budget' => $request->estimated_budget,
