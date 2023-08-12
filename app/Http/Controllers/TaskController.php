@@ -65,4 +65,32 @@ class TaskController extends Controller
             return redirect()->back();
         }
     }
+
+    public function edit($project_id)
+    {
+        $project = Project::where('id', $project_id)->first();
+//        dd('ok');
+//        $task = Task::where('project_id', $project_id)->first();
+//        $tasks = Task::get();
+//        $task = $tasks->where('project_id', $project_id)->first();
+
+
+//        $task_dependencies = TaskDependency::where('task_id', 7)->get();
+//        dd($task_dependencies->id);
+//         foreach ($task_dependencies as $task_dependency){
+//            $task_dependency_id[] =[
+//                $task_dependency->id];
+//        }
+//         dd($task_dependency_id);
+//        $dependent_task_name = $tasks->where('id',foreach($task_dependency_id as $task_dependencies_name){
+//
+//         dd($dependent_task_name);
+//        foreach ($task_dependencies as $task_dependency){
+//            $task_dependency;
+//        }
+//
+
+        return view('task.edit', compact('task', 'task_dependency', 'dependent_task_name'));
+    }
+
 }

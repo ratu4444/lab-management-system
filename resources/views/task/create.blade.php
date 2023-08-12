@@ -25,6 +25,7 @@
                         <th class="text-nowrap">Estimated Completion Date</th>
                         <th class="text-nowrap">Budget</th>
                         <th class="text-nowrap">Status</th>
+                        <th class="text-nowrap">Action</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -43,6 +44,9 @@
                                 <td>{{ $task->total_budget }}</td>
                                 <td>
                                     <div class="badge {{ 'badge-'.$status_color }}">{{ $status }}</div>
+                                </td>
+                                <td class="text-nowrap">
+                                    <a href="{{ route('task.edit', $project->id) }}" class="btn btn-primary btn-sm" target="_blank">Edit</a>
                                 </td>
                             </tr>
                         @endforeach

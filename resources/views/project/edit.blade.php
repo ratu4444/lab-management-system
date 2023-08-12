@@ -13,7 +13,7 @@
                         <h4 class="card-title text-muted">Project Edit</h4>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="">
+                        <form method="POST" action="{{ route('project.update', $project->id) }}">
                             @csrf
                             <div class="form-row">
                                 <div class="form-group col-12">

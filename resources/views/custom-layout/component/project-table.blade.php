@@ -37,7 +37,7 @@
                     </td>
 
                     <td class="text-nowrap">
-                        <a href="{{ route('edit.project', $project->id) }}" class="btn btn-primary btn-sm" target="_blank">Edit</a>
+                        <a href="{{ route('project.edit', $project->id) }}" class="btn btn-primary btn-sm" target="_blank">Edit</a>
                     </td>
 
                 </tr>

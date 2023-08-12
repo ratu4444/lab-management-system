@@ -33,10 +33,12 @@ Route::middleware('auth')->group(function () {
             Route::post('', [ProjectController::class, 'store'])->name('project.store');
             Route::get('{project_id}', [ProjectController::class, 'show'])->name('project.show');
             Route::get('{project_id}/edit', [ProjectController::class, 'edit'])->name('project.edit');
-            Route::post('{project_id}/edit', [ProjectController::class, 'editStore'])->name('project.edit.store');
+            Route::post('{project_id}/update', [ProjectController::class, 'update'])->name('project.update');
 //      TASK
             Route::get('{project_id}/task/create', [TaskController::class, 'create'])->name('task.create');
             Route::post('{project_id}/task', [TaskController::class, 'store'])->name('task.store');
+            Route::get('{project_id}/task/edit', [TaskController::class, 'edit'])->name('task.edit');
+            Route::post('{project_id}/task/update', [TaskController::class, 'update'])->name('task.update');
 //      PAYMENT
             Route::get('{project_id}/payment/create', [PaymentController::class, 'create'])->name('payment.create');
             Route::post('{project_id}/payment', [PaymentController::class, 'store'])->name('payment.store');
