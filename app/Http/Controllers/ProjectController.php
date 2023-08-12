@@ -288,7 +288,7 @@ class ProjectController extends Controller
         return view('project.edit', compact('project'));
     }
 
-    public function editStore(Request $request, $project_id)
+    public function update(Request $request, $project_id)
     {
         $request->validate([
             'name' => 'required',
@@ -312,9 +312,9 @@ class ProjectController extends Controller
             $project = Project::where('id', $project_id)
             ->update($project_data);
 
-            return back();
+            return redirect()->route('task.create', $project_id);
         } catch (\Exception $exception) {
-            dd($exception->getMessage());
+//            dd($exception->getMessage());
             return redirect()->back();
         }
     }
