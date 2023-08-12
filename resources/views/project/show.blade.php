@@ -31,14 +31,11 @@
                                 </div>
                                 <div>
                                     <h2 class="font-18"></h2>
-                                    <!--                          <p class="mb-0"><span class="col-green font-20">09%</span></p>-->
                                 </div>
-                                <!--                          PROGRESS BAR -->
-                                <div class="progress-text col-green font-20">50%</div>
-                                <div class="progress" data-height="6">
-                                    <div class="progress-bar bg-success" data-width="50%"></div>
+                                <div class="progress-text font-20 font-weight-bold {{ $project->completion_percentage < 50 ? 'col-red' : 'col-green' }}">{{ $project->completion_percentage.'%' }}</div>
+                                <div class="progress mt-2" data-height="6">
+                                    <div class="progress-bar {{ $project->completion_percentage < 50 ? 'bg-danger' : 'bg-success' }}" data-width="{{ $project->completion_percentage.'%' }}"></div>
                                 </div>
-
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
                                 <div class="banner-img">
@@ -59,11 +56,11 @@
                         <div class="row ">
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
                                 <div class="card-content">
-                                    <h5 class="font-15 matrix-title"> Final Budget </h5>
+                                    <h5 class="font-15 matrix-title">Final Budget</h5>
                                     <div>
-                                        <h2 class="font-18">100000$</h2>
-                                        <p class="col-orange mb-0"><span class="col-orange font-20">18%</span>
-                                            Increase
+                                        <h2 class="font-18">{{ ($project->total_budget ?? $project->estimated_budget) .'$' }}</h2>
+                                        <p class="col-orange mb-0"><span class="col-orange font-20">{{ abs($project->budget_increament_percentage).'%' }}</span>
+                                            {{ $project->budget_increament_percentage < 0 ? 'Decrease' : 'Increase'}}
                                         </p>
                                     </div>
                                 </div>
@@ -90,8 +87,8 @@
                                     <h5 class="font-15 matrix-title">Payment Completion</h5>
                                 </div>
                                 <div>
-                                    <h2 class="font-18">42000$</h2>
-                                    <p class="mb-0"><span class="col-green font-20">42%</span></p>
+                                    <h2 class="font-18">{{ $project->paid_amount.'$' }}</h2>
+                                    <p class="mb-0"><span class="col-green font-20">{{ $project->paid_amount_percentage.'%' }}</span></p>
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
