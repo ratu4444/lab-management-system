@@ -69,13 +69,12 @@ class PaymentController extends Controller
 
 
     public function edit($payment_id){
-//        dd('ok');
-//        dd($project_id, $client_id);
+
         $payment = Payment::with('dependentTasks')->findOrFail($payment_id);
 
         $payment->dependent_payment_ids = $payment->dependentTasks->pluck('id')->toArray();
         $payment_task = Task::where('project_id', $payment->project_id)->get();
-//        dd($payment_task);
+
         return view('payment.edit', compact('payment', 'payment_task'));
 
 
@@ -124,7 +123,7 @@ class PaymentController extends Controller
                 $dependency = TaskPayment::insert($payment_dependencies_data);
             }
             DB::commit();
-            return back();
+            return redirect()->route('payment.create', $payment->project_id);
         } catch (\Exception $exception) {
 //            dd($exception->getLine());
             return redirect()->back();

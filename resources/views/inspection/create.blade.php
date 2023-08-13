@@ -26,6 +26,7 @@
                         <th class="text-nowrap">Scheduled Date</th>
                         <th class="text-nowrap">Date</th>
                         <th class="text-nowrap">Status</th>
+                        <th class="text-nowrap">Action</th>
                     </tr>
                     <tr>
                     @if(count($project->inspections))
@@ -41,6 +42,9 @@
                                 <td>{{  $inspection->date}}</td>
                                 <td>
                                     <div class="badge {{ 'badge-'.$status_color }}">{{ $status }}</div>
+                                </td>
+                                <td class="text-nowrap">
+                                    <a href="{{ route('inspection.edit', $inspection->id) }}" class="btn btn-primary btn-sm" target="_blank">Edit</a>
                                 </td>
                             </tr>
                         @endforeach

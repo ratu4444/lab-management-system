@@ -47,6 +47,8 @@ Route::middleware('auth')->group(function () {
 //      INSPECTION
             Route::get('{project_id}/inspection/create', [InspectionController::class, 'create'])->name('inspection.create');
             Route::post('{project_id}/inspection', [InspectionController::class, 'store'])->name('inspection.store');
+            Route::get('inspection/{inspection_id}/edit', [InspectionController::class, 'edit'])->name('inspection.edit');
+            Route::post('inspection/{inspection_id}/update', [InspectionController::class, 'update'])->name('inspection.update');
         });
 //  CLIENT
         Route::prefix('client')->group(function () {
