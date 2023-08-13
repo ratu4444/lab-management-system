@@ -42,9 +42,13 @@ Route::middleware('auth')->group(function () {
 //      PAYMENT
             Route::get('{project_id}/payment/create', [PaymentController::class, 'create'])->name('payment.create');
             Route::post('{project_id}/payment', [PaymentController::class, 'store'])->name('payment.store');
+            Route::get('payment/{payment_id}/edit', [PaymentController::class, 'edit'])->name('payment.edit');
+            Route::post('payment/{payment_id}/update', [PaymentController::class, 'update'])->name('payment.update');
 //      INSPECTION
             Route::get('{project_id}/inspection/create', [InspectionController::class, 'create'])->name('inspection.create');
             Route::post('{project_id}/inspection', [InspectionController::class, 'store'])->name('inspection.store');
+            Route::get('inspection/{inspection_id}/edit', [InspectionController::class, 'edit'])->name('inspection.edit');
+            Route::post('inspection/{inspection_id}/update', [InspectionController::class, 'update'])->name('inspection.update');
         });
 //  CLIENT
         Route::prefix('client')->group(function () {

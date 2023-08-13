@@ -140,7 +140,7 @@ class TaskController extends Controller
                 $dependency = TaskDependency::insert($task_dependencies_data);
             }
             DB::commit();
-            return back();
+            return redirect()->route('task.create', $task->project_id);
         } catch (\Exception $exception) {
             dd($exception->getMessage());
             return redirect()->back();

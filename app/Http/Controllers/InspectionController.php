@@ -74,4 +74,68 @@ class InspectionController extends Controller
             return redirect()->back();
         }
     }
+
+    public function edit($inspection_id){
+
+
+        $inspection = Inspection::with('dependentTask')->findOrFail($inspection_id);
+
+        $inspection->dependent_inspection_ids = $inspection->dependentTask->pluck('id')->toArray();
+        $inspection_tasks = Task::where('project_id', $inspection->project_id)->get();
+
+        return view('inspection.edit', compact('inspection', 'inspection_tasks'));
+
+
+    }
+
+    public function update(Request $request, $inspection_id){
+
+//        dd($request);
+        $request->validate([
+            'name' => 'required',
+            'date' => 'required|date_format:Y-m-d',
+        ]);
+
+        $inspection = Inspection::with('inspectionDependencies')->findOrFail($inspection_id);
+//        dd($inspection);
+
+        $inspection_data = [
+            'name'                      => $request->name,
+            'status'                    => $request->status,
+            'date'                      => $request->date,
+            'scheduled_date'            => $request->scheduled_date,
+            'comment'                   => $request->comment,
+        ];
+
+        DB::beginTransaction();
+
+        try {
+            $inspection->update($inspection_data);
+
+            $inspection->inspectionDependencies()->delete();
+
+            $inspection_dependencies_data = [];
+            if ($request->dependencies) {
+                foreach ($request->dependencies as $dependency) {
+                    $inspection_dependencies_data[] = [
+                        'inspection_id'     => $inspection->id,
+                        'dependent_task_id' => $dependency,
+                        'created_at'        => Carbon::now(),
+                        'updated_at'        => Carbon::now(),
+                    ];
+                }
+            }
+//            dd('ok');
+            if (count($inspection_dependencies_data)){
+                $inspection = InspectionDependency::insert($inspection_dependencies_data);
+            }
+            DB::commit();
+            return redirect()->route('inspection.create', $inspection->project_id);
+        } catch (\Exception $exception) {
+//            dd($exception->getLine());
+            return redirect()->back();
+        }
+
+
+    }
 }

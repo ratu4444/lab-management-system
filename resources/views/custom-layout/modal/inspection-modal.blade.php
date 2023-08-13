@@ -24,7 +24,7 @@
                     </div>
                     <div class="form-group form-float">
                         <div class="form-line">
-                            <label class="form-label">Date</label>
+                            <label class="form-label"> Inspection Date</label>
                             <input type="date" name="date" class="form-control">
                         </div>
                     </div>
