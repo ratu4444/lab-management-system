@@ -33,4 +33,5 @@ class Task extends Model
         return $this->belongsToMany(Payment::class,'task_payments', 'task_id', 'payment_id');
     }
 
+
 }

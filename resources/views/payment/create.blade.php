@@ -25,6 +25,7 @@
                         <th class="text-nowrap">Amount</th>
                         <th class="text-nowrap">Date</th>
                         <th class="text-nowrap">Payment Method</th>
+                        <th class="text-nowrap">Action</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -36,6 +37,9 @@
                                 <td>{{ $payment->amount}}</td>
                                 <td>{{ $payment->date}}</td>
                                 <td>{{ $payment->payment_method }}</td>
+                                <td class="text-nowrap">
+                                    <a href="{{ route('payment.edit', $payment->id) }}" class="btn btn-primary btn-sm" target="_blank">Edit</a>
+                                </td>
                             </tr>
                         @endforeach
                     @else
