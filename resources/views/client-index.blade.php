@@ -262,7 +262,7 @@
                     <div class="row">
                         <div class="col-12 px-5">
                             <div class="activities">
-                                @foreach($project->tasks as $task)
+                                @foreach($project->tasks->sortBy('estimated_start_date') as $task)
                                     @php
                                         $status = array_search($task->status, config('app.STATUSES'));
                                         $status_color = config("app.STATUSES_COLORS.$status");

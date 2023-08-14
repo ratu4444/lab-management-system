@@ -93,11 +93,12 @@ class DashboardController extends Controller
         ]);
 
         $all_projects = auth()->user()->is_client ? auth()->user()->projects() : Project::query();
-        $all_projects = $all_projects->with(
+        $all_projects = $all_projects->with([
                 'client',
                 'tasks',
                 'payments.dependentTasks',
-                'inspections')
+                'inspections'
+            ])
             ->latest()
             ->get();
 
