@@ -14,6 +14,10 @@
             max-height: 200px;
             width: auto;
         }
+
+        .activity-icon i {
+            font-size: 20px;
+        }
     </style>
 @endpush
 
@@ -199,8 +203,8 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if($project->tasks->count())
-                                        @foreach($project->tasks as $task)
+                                    @if($project->tasks->where('status', '!=', config('app.STATUSES.Canceled'))->count())
+                                        @foreach($project->tasks->where('status', '!=', config('app.STATUSES.Canceled')) as $task)
                                             <tr>
                                                 <th scope="row">{{ $loop->iteration }}</th>
                                                 <td>{{ $task->name }}</td>
@@ -252,137 +256,33 @@
                     </div>
                     <div class="card-body"></div>
 
-                    <div class="ml-5 mb-4"><h5>Project Name</h5></div>
+                    <div class="ml-5 mb-4">
+                        <h5>{{ $project->name }}</h5>
+                    </div>
                     <div class="row">
                         <div class="col-12 px-5">
                             <div class="activities">
-
-                                <!--                FIRST ACTIVITY-->
-                                <div class="activity">
-                                    <div class="activity-icon bg-success text-white">
-                                        <i class="fas fa-check"></i>
-                                    </div>
-                                    <div class="activity-detail width-per-50">
-                                        <div>
-                                            <p class="text-success">Completed</p>
+                                @foreach($project->tasks as $task)
+                                    @php
+                                        $status = array_search($task->status, config('app.STATUSES'));
+                                        $status_color = config("app.STATUSES_COLORS.$status");
+                                        $status_icon = config("app.STATUSES_ICONS.$status");
+                                    @endphp
+                                    <div class="activity">
+                                        <div class="activity-icon text-white {{ 'bg-'.$status_color }} d-flex align-items-center justify-content-center">
+                                            {!! $status_icon !!}
                                         </div>
-                                        <div class="mb-2">
-                                            <span class="text-job ">Deadline 2023-08-12 </span>
-                                            <span class="bullet"></span>
-                                            <a class="text-job" href="#">View</a>
+                                        <div class="activity-detail width-per-50">
+                                            <div><p class="{{ 'text-'.$status_color }}">{{ $status }}</p></div>
+                                            <div class="mb-2">
+                                                <span class="text-job">Deadline : {{ $task->estimated_completion_date }} </span>
+{{--                                                <span class="bullet"></span>--}}
+{{--                                                <a class="text-job" href="#">View</a>--}}
+                                            </div>
+                                            <p><h6 class="col-black">{{ $task->name }}</h6></p>
                                         </div>
-                                        <p><b class="col-black">Contract Review.</b><a href="#"></a></p>
                                     </div>
-                                </div>
-
-                                <!--                  SECOND ACTIVITY-->
-                                <div class="activity">
-                                    <div class="activity-icon bg-success text-white">
-                                        <i class="fas fa-check"></i>
-                                    </div>
-                                    <div class="activity-detail width-per-50">
-                                        <div>
-                                            <p class="text-success">Completed</p>
-                                        </div>
-                                        <div class="mb-2">
-                                            <span class="text-job ">Deadline 2023-08-15</span>
-                                            <span class="bullet"></span>
-                                            <a class="text-job" href="#">View</a>
-                                        </div>
-                                        <p><b class="col-black">Mobilization.</b><a href="#"></a></p>
-                                    </div>
-                                </div>
-
-                                <!--               THIRD ACTIVITY-->
-                                <div class="activity">
-                                    <div class="activity-icon bg-orange text-white">
-                                        <i class="ion-android-checkmark-circle"></i>
-                                    </div>
-                                    <div class="activity-detail width-per-50">
-                                        <div>
-                                            <p class="col-orange">In Progress</p>
-                                        </div>
-                                        <div class="mb-2">
-                                            <span class="text-job ">Deadline 2023-08-19</span>
-                                            <span class="bullet"></span>
-                                            <a class="text-job" href="#">View</a>
-                                        </div>
-                                        <p><b class="col-black">Demolition.</b><a href="#"></a></p>
-                                    </div>
-                                </div>
-
-                                <!--                  FOURTH ACTIVITY-->
-                                <div class="activity">
-                                    <div class="activity-icon bg-orange text-white">
-                                        <i class="ion-android-checkmark-circle"></i>
-                                    </div>
-                                    <div class="activity-detail width-per-50">
-                                        <div>
-                                            <p class="col-orange">In Progress</p>
-                                        </div>
-                                        <div class="mb-2">
-                                            <span class="text-job ">Deadline 2023-08-31</span>
-                                            <span class="bullet"></span>
-                                            <a class="text-job" href="#">View</a>
-                                        </div>
-                                        <p><b class="col-black">Earth Work.</b><a href="#"></a></p>
-                                    </div>
-                                </div>
-
-                                <!--                  FIFTH ACTIVITY-->
-                                <div class="activity">
-                                    <div class="activity-icon bg-danger text-white">
-                                        <i class="ion-android-time"></i>
-                                    </div>
-                                    <div class="activity-detail width-per-50">
-                                        <div>
-                                            <p class="text-danger">Pending</p>
-                                        </div>
-                                        <div class="mb-2">
-                                            <span class="text-job ">Deadline 2023-08-26</span>
-                                            <span class="bullet"></span>
-                                            <a class="text-job" href="#">View</a>
-                                        </div>
-                                        <p><b class="col-black">Utility Connections.</b><a href="#"></a></p>
-                                    </div>
-                                </div>
-
-                                <!--                  SIXTH ACTIVITY-->
-                                <div class="activity">
-                                    <div class="activity-icon bg-danger text-white">
-                                        <i class="ion-android-time"></i>
-                                    </div>
-                                    <div class="activity-detail width-per-50">
-                                        <div>
-                                            <p class="text-danger">Pending</p>
-                                        </div>
-                                        <div class="mb-2">
-                                            <span class="text-job ">Deadline 2023-09-15</span>
-                                            <span class="bullet"></span>
-                                            <a class="text-job" href="#">View</a>
-                                        </div>
-                                        <p><b class="col-black">Concrete.</b><a href="#"></a></p>
-                                    </div>
-                                </div>
-
-                                <!--                  SEVENT ACTIVITY-->
-                                <div class="activity">
-                                    <div class="activity-icon bg-danger text-white">
-                                        <b class="ion-android-time"></b>
-                                    </div>
-                                    <div class="activity-detail width-per-50">
-                                        <div>
-                                            <p class="text-danger">Pending</p>
-                                        </div>
-                                        <div class="mb-2">
-                                            <span class="text-job ">Deadline 2023-09-30</span>
-                                            <span class="bullet"></span>
-                                            <a class="text-job" href="#">View</a>
-                                        </div>
-                                        <p><b class="col-black">Framing.</b><a href="#"></a></p>
-                                    </div>
-                                </div>
-
+                                @endforeach
                             </div>
                         </div>
                     </div>
@@ -402,7 +302,7 @@
 
     <script>
         $(document).ready(function() {
-            var tasks = @json($project?->tasks ?? []);
+            var tasks = @json($project?->tasks->where('status', '!=', config('app.STATUSES.Canceled')) ?? []);
 
             ganttChart(tasks);
             pieChart(tasks);
