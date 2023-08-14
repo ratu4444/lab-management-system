@@ -195,7 +195,7 @@
                                         <th>Estimated Start Date</th>
                                         <th>Estimated Completion Date</th>
                                         <th>Dependencies</th>
-                                        <th>Action</th>
+{{--                                        <th>Action</th>--}}
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -212,8 +212,8 @@
                                                 </td>
                                                 <td>{{ $task->estimated_start_date }}</td>
                                                 <td>{{ $task->estimated_completion_date }}</td>
-                                                <td>-</td>
-                                                <td><a href="#" class="btn btn-outline-primary">Detail</a></td>
+                                                <td>{{ $task->dependentTasks->pluck('name')->implode(', ') }}</td>
+{{--                                                <td><a href="#" class="btn btn-outline-primary">Detail</a></td>--}}
                                             </tr>
                                         @endforeach
                                     @else
@@ -393,28 +393,6 @@
 @endsection
 
 @push('js')
-    <script>
-        var projectTasks = @json($project?->tasks ?? []);
-        var tasks = [];
-        projectTasks.forEach(function (task) {
-            console.log(task)
-            tasks.push(
-                {
-                    id: task.id,
-                    name: task.name,
-                    start: task.estimated_start_date,
-                    end: task.estimated_completion_date,
-                    progress: task.completion_percentage,
-                    // dependencies: 'Task 2, Task 3',
-                    // custom_class: 'bar-milestone' // optional
-                }
-            );
-        });
-
-        console.log(tasks);
-        var gantt = new Gantt("#gantt", tasks);
-        gantt.change_view_mode('Week');
-    </script>
     <!--  FOR PIE CHART-->
     <script src="{{ asset('assets/bundles/amcharts4/core.js') }}"></script>
     <script src="{{ asset('assets/bundles/amcharts4/charts.js') }}"></script>
@@ -423,52 +401,58 @@
     <script src="{{ asset('assets/js/page/ion-icons.js') }}"></script>
 
     <script>
-        $(function () {
-            pieChart();
+        $(document).ready(function() {
+            var tasks = @json($project?->tasks ?? []);
+
+            ganttChart(tasks);
+            pieChart(tasks);
         });
 
-        function pieChart() {
-            // Themes begin
+        function ganttChart(tasks) {
+            var chartTasks = [];
+            tasks.forEach(function (task) {
+                chartTasks.push(
+                    {
+                        id: task.id,
+                        name: task.name,
+                        start: task.estimated_start_date,
+                        end: task.estimated_completion_date,
+                        progress: task.completion_percentage,
+                        // dependencies: 'Task 2, Task 3',
+                        // custom_class: 'bar-milestone' // optional
+                    }
+                );
+            });
+
+            var gantt = new Gantt("#gantt", chartTasks);
+            gantt.change_view_mode('Week');
+        }
+
+        function pieChart(tasks) {
             am4core.useTheme(am4themes_animated);
-            // Themes end
 
             // Create chart instance
             var chart = am4core.create("pieChart", am4charts.PieChart);
 
+            var chartTasks = [];
+            tasks.forEach(function (task) {
+                chartTasks.push(
+                    {
+                        "task": task.name,
+                        "budget": task.total_budget,
+                    }
+                );
+            });
+
+            console.log(chartTasks);
+
             // Add data
-            chart.data = [{
-                "country": "Contract Review",
-                "litres": 501.9
-            }, {
-                "country": "Mobilization",
-                "litres": 301.9
-            }, {
-                "country": "Demolition",
-                "litres": 201.1
-            }, {
-                "country": "Earth Work",
-                "litres": 165.8
-            }, {
-                "country": "Utility Connections",
-                "litres": 139.9
-            }, {
-                "country": "Concrete",
-                "litres": 128.3
-            }, {
-                "country": "Framing",
-                "litres": 99
-            }, {
-                "country": "Windows",
-                "litres": 60
-            }, {
-                "country": "Roofing",
-                "litres": 50
-            }];
+            chart.data = chartTasks;
 
             // Add and configure Series
             var pieSeries = chart.series.push(new am4charts.PieSeries());
-            pieSeries.dataFields.value = "litres";
-            pieSeries.dataFields.category = "country";
+            pieSeries.dataFields.value = "budget";
+            pieSeries.dataFields.category = "task";
             pieSeries.slices.template.stroke = am4core.color("#fff");
             pieSeries.slices.template.strokeWidth = 2;
             pieSeries.slices.template.strokeOpacity = 1;
