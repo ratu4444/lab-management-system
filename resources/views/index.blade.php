@@ -147,16 +147,25 @@
 
             $('.card-value').each(function() {
                 var valueElement = $(this);
-                var value = valueElement.text();
-
-                valueElement.text(0); // set initial value to 0
-                $({ value: 0 }).animate({ value: value }, {
-                    duration: speed,
-                    step: function() {
-                        valueElement.text(Math.ceil(this.value));
-                    }
-                });
+                var value = parseInt(valueElement.text());
+                valueElement.text(0);
+                animateValue(valueElement, value, speed);
             });
         });
+
+        function animateValue(element, endValue, duration) {
+            var startTimestamp = null;
+            function step(timestamp) {
+                if (!startTimestamp) startTimestamp = timestamp;
+                var progress = timestamp - startTimestamp;
+                var progressPercentage = Math.min(progress / duration, 1);
+                var animatedValue = Math.ceil(progressPercentage * endValue);
+                element.text(animatedValue);
+                if (progress < duration) {
+                    requestAnimationFrame(step);
+                }
+            }
+            requestAnimationFrame(step);
+        }
     </script>
 @endpush
