@@ -7,6 +7,7 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\InspectionController;
+use App\Http\Controllers\SettingsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,6 +50,11 @@ Route::middleware('auth')->group(function () {
             Route::post('{project_id}/inspection', [InspectionController::class, 'store'])->name('inspection.store');
             Route::get('inspection/{inspection_id}/edit', [InspectionController::class, 'edit'])->name('inspection.edit');
             Route::post('inspection/{inspection_id}/update', [InspectionController::class, 'update'])->name('inspection.update');
+//      SETTINGS
+            Route::get('settings/create', [SettingsController::class, 'create'])->name('settings.create');
+            Route::post('settings/store', [SettingsController::class, 'store'])->name('settings.store');
+
+
         });
 //  CLIENT
         Route::prefix('client')->group(function () {
@@ -56,6 +62,7 @@ Route::middleware('auth')->group(function () {
             Route::get('create', [ClientController::class, 'create'])->name('client.create');
             Route::post('', [ClientController::class, 'store'])->name('client.store');
         });
+
     });
 });
 
