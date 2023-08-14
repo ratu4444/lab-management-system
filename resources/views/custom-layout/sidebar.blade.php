@@ -9,7 +9,7 @@
 
         <ul class="sidebar-menu">
             <li class="menu-header">Main</li>
-            <li class="dropdown {{ Route::is('dashboard*') ? 'active' : '' }}">
+            <li class="dropdown {{ Route::is('dashboard*') && !Route::is('dashboard.client-index') ? 'active' : '' }}">
                 <a href="{{ route('dashboard.index') }}" class="nav-link">
                     <i data-feather="monitor"></i>
                     <span>Dashboard</span>
@@ -40,6 +40,12 @@
                     </ul>
                 </li>
 
+                <li class="dropdown {{ Route::is('dashboard.client-index') ? 'active' : '' }}">
+                    <a href="{{ route('dashboard.client-index') }}" class="nav-link">
+                        <i data-feather="monitor"></i>
+                        <span>Project Dashboard</span>
+                    </a>
+                </li>
             @endif
 {{--            <li class="dropdown {{ Route::is('task*') ? 'active' : '' }}">--}}
 {{--                <a href="" class="menu-toggle nav-link has-dropdown">--}}

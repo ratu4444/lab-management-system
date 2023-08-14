@@ -29,7 +29,7 @@
                     <button class="btn btn-primary dropdown-toggle btn-lg" type="button" data-toggle="dropdown">
                         {{ $project ? 'Project : '.$project->name : 'Select Another Project' }}
                     </button>
-                    <div class="dropdown-menu overflow-auto">
+                    <div class="dropdown-menu" style="max-height: 500px; min-width: fit-content; overflow-y: auto">
                         @foreach($all_projects as $single_project)
                             <a class="dropdown-item {{ $single_project->id == $project?->id ? 'active' : '' }}" href="{{ route('dashboard.client-index', ['project' => $single_project->id]) }}">
                                 {{ $single_project->name }}

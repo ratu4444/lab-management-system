@@ -96,9 +96,13 @@ class DashboardController extends Controller
     {
         $request->validate([
             'project' => 'nullable|exists:projects,id',
+            'client' => 'nullable|exists:users,id',
         ]);
 
-        $all_projects = auth()->user()->is_client ? auth()->user()->projects() : Project::query();
+        if (auth()->user()->is_client) $all_projects = Project::where('client_id', auth()->id());
+        elseif($request->client) $all_projects = Project::where('client_id',$request->client);
+        else $all_projects = Project::query();
+
         $all_projects = $all_projects->with([
                 'client',
                 'tasks',

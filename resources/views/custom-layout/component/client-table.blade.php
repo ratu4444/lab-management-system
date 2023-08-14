@@ -21,9 +21,10 @@
                     <td>{{ $client->mobile ?? '-' }}</td>
                     <td>{{ $client->company_name ?? '-' }}</td>
                     <td>{{ $client->projects_count }}</td>
-                    <td>
+                    <td class="text-nowrap">
                         @if($client->projects_count)
                             <a href="{{ route('project.index', ['client' => $client->id]) }}" class="btn btn-primary btn-sm">See Projects</a>
+                            <a href="{{ route('dashboard.client-index', ['client' => $client->id]) }}" class="btn btn-primary btn-sm">Project Dashboard</a>
                         @endif
                         <a href="{{ route('project.create', ['client' => $client->id]) }}" class="btn btn-success btn-sm">Create New Projects</a>
                     </td>
