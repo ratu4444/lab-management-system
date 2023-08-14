@@ -48,7 +48,7 @@
                 </li>
             @endif
 
-            @if(!auth()->user()->is_client)
+            @if(false)
 
                 <li class="dropdown {{ Route::is('settings*') ? 'active' : '' }}">
                     <a href="" class="menu-toggle nav-link has-dropdown">
