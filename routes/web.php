@@ -50,12 +50,22 @@ Route::middleware('auth')->group(function () {
             Route::post('{project_id}/inspection', [InspectionController::class, 'store'])->name('inspection.store');
             Route::get('inspection/{inspection_id}/edit', [InspectionController::class, 'edit'])->name('inspection.edit');
             Route::post('inspection/{inspection_id}/update', [InspectionController::class, 'update'])->name('inspection.update');
-//      SETTINGS
-            Route::get('settings/create', [SettingsController::class, 'create'])->name('settings.create');
-            Route::post('settings/store', [SettingsController::class, 'store'])->name('settings.store');
-
-
         });
+
+//        SETTINGS
+//            SETTINGS TASK
+            Route::get('settings/task/create', [SettingsController::class, 'taskCreate'])->name('settings.task.create');
+            Route::post('settings/task/store', [SettingsController::class, 'taskStore'])->name('settings.task.store');
+            Route::get('settings/task/show', [SettingsController::class, 'taskShow'])->name('settings.task.show');
+//            SETTINGS PAYMENTS
+            Route::get('settings/payment/create', [SettingsController::class, 'paymentCreate'])->name('settings.payment.create');
+            Route::post('settings/payment/store', [SettingsController::class, 'paymentStore'])->name('settings.payment.store');
+            Route::get('settings/payment/show', [SettingsController::class, 'paymentShow'])->name('settings.payment.show');
+//            SETTINGS INSPECTION
+            Route::get('settings/inspection/create', [SettingsController::class, 'inspectionCreate'])->name('settings.inspection.create');
+            Route::post('settings/inspection/store', [SettingsController::class, 'inspectionStore'])->name('settings.inspection.store');
+            Route::get('settings/inspection/show', [SettingsController::class, 'inspectionShow'])->name('settings.inspection.show');
+
 //  CLIENT
         Route::prefix('client')->group(function () {
             Route::get('/', [ClientController::class, 'index'])->name('client.index');
