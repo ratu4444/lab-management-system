@@ -23,7 +23,7 @@ Route::middleware('auth')->group(function () {
 
 //      DASHBOARD
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
-    Route::get('project/dashboard', [ProjectController::class, 'dashboard'])->name('dashboard.client-index'); // client dashboard
+    Route::get('project/dashboard', [DashboardController::class, 'clientIndex'])->name('dashboard.client-index'); // client dashboard
 
     Route::middleware('auth.admin')->group(function (){
         Route::prefix('project')->group(function () {
