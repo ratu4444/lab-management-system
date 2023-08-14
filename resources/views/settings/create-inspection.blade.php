@@ -2,6 +2,7 @@
 
 @push('css')
     <link rel="stylesheet" href="{{ asset('assets/bundles/jquery-selectric/selectric.css') }}">
+
 @endpush
 
 @section('content')
@@ -10,48 +11,40 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title text-muted">Create Task For Settings</h4>
+                        <h4 class="card-title text-muted">Inspection Edit</h4>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('settings.task.store') }}">
+                        <form class="" action="{{ route('settings.inspection.store') }}" method="post">
                             @csrf
                             <div class="form-group form-float">
                                 <div class="form-line">
-                                    <label class="form-label">Name<span class="text-danger">*</span></label>
-                                    <input type="text" name="name"  class="form-control" required>
+                                    <label class="form-label">Name <span class="text-danger">*</span> </label>
+                                    <input type="text" name="name" class="form-control" required>
                                 </div>
                             </div>
                             <div class="form-group form-float">
                                 <div class="form-line">
-                                    <label class="form-label">Estimated Start Date*</label>
-                                    <input type="date" name="estimated_start_date"  class="form-control" required>
+                                    <label class="form-label">Schedule Date*</label>
+                                    <input type="date" name="scheduled_date"  class="form-control" required>
                                 </div>
                             </div>
                             <div class="form-group form-float">
                                 <div class="form-line">
-                                    <label class="form-label">Estimated Completion Date*</label>
-                                    <input type="date" name="estimated_completion_date"  class="form-control" required>
+                                    <label class="form-label">Date</label>
+                                    <input type="date" name="date" class="form-control">
                                 </div>
                             </div>
-
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <label class="form-label">Budget*</label>
-                                    <input name="total_budget" type="text" class="form-control" required>
-                                </div>
-                            </div>
-{{--                            @dd($task_dependency)--}}
 {{--                            <div class="form-group form-float">--}}
-{{--                                <label> Dependency</label>--}}
-{{--                                <select class="form-control selectric" name="dependencies[]" id="taskDependencyDropdown" multiple="">--}}
-{{--                                    @if(count($project_tasks))--}}
-{{--                                        @foreach($project_tasks as $project_task)--}}
-{{--                                            <option value="{{ $project_task->id }}" {{ in_array( $project_task->id, $task->dependent_task_ids,) ? 'selected' : '' }}>{{ $project_task->name }}</option>--}}
+{{--                                <label>Dependency</label>--}}
+{{--                                <select class="form-control selectric" name="dependencies[]" multiple="">--}}
+{{--                                    @if(count($inspection_tasks))--}}
+{{--                                        @foreach($inspection_tasks as $task)--}}
+{{--                                            <option value="{{ $task->id }}" {{ in_array($task->id, $inspection->dependent_inspection_ids) ? 'selected' : '' }} >{{ $task->name }}</option>--}}
 {{--                                        @endforeach--}}
 {{--                                    @endif--}}
 {{--                                </select>--}}
 {{--                            </div>--}}
-                            <div class="form-group form-flat">
+                            <div class="form-group form-float">
                                 <label class="form-label">Status</label>
                                 <div class="selectgroup w-100">
                                     @foreach(config('app.STATUSES') as $label => $status_id)
@@ -64,15 +57,16 @@
                                         </label>
                                     @endforeach
                                 </div>
-                                <div class="form-group form-float">
-                                    <div class="form-line">
-                                        <label class="form-label">Comment</label>
-                                        <textarea name="comment" class="form-control"></textarea>
-                                    </div>
+                            </div>
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <label class="form-label">Comment</label>
+                                    <textarea name="comment" class="form-control"></textarea>
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-primary"> Submit </button>
                         </form>
+
                     </div>
                 </div>
             </div>
