@@ -14,7 +14,8 @@ class Project extends Model
 
     public function getCompletionPercentageAttribute()
     {
-        return $this->tasks->pluck('completion_percentage')->avg() ?? 0;
+        $completion_percentage = $this->tasks->where('status', '!=', config('app.STATUSES.Canceled'))->pluck('completion_percentage')->avg() ?? 0;
+        return number_format($completion_percentage, 2);
     }
 
     public function getBudgetIncreamentPercentageAttribute()

@@ -245,6 +245,12 @@ return [
         'In Progress'   => 'primary',
         'Completed'     => 'success',
         'Canceled'      => 'danger',
-    ]
+    ],
 
+    'STATUSES_ICONS' => [
+        'Pending'       => '<i class="fas fa-stop"></i>',
+        'In Progress'   => '<i class="fas fa-hourglass-half"></i>',
+        'Completed'     => '<i class="fas fa-check"></i>',
+        'Canceled'      => '<i class="fas fa-ban"></i>',
+    ],
 ];

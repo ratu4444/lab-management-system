@@ -42,7 +42,7 @@
                                     <tr>
                                         <th>Project Name</th>
                                         <th>Client Name</th>
-                                        <th>Process</th>
+                                        <th>Progress</th>
                                         <th>Estimated Completion Date</th>
                                         <th>Estimated Budget</th>
                                     </tr>
