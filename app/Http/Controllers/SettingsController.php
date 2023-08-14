@@ -26,6 +26,11 @@ class SettingsController extends Controller
         return redirect()->back();
     }
 
+    public function taskShow(){
+        $task_show = SettingsTask::get();
+        return view('settings.settings-task', compact('task_show'));
+    }
+
     public function paymentCreate(){
         return view('settings.create-payment');
     }
@@ -44,6 +49,11 @@ class SettingsController extends Controller
         return redirect()->back();
     }
 
+    public function paymentShow(){
+        $payment_show = SettingsPayment::get();
+        return view('settings.settings-payment', compact('payment_show'));
+    }
+
     public function inspectionCreate(){
         return view('settings.create-inspection');
     }
@@ -60,5 +70,12 @@ class SettingsController extends Controller
         $settings_inspection = SettingsInspection::create($inspection_data);
         return redirect()->back();
     }
+
+    public function inspectionShow(){
+        $inspection_show = SettingsInspection::get();
+        return view('settings.settings-inspection', compact('inspection_show'));
+    }
+
+
 
 }
