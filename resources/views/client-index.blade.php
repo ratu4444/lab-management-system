@@ -22,22 +22,24 @@
 @endpush
 
 @section('content')
-    <div class="row">
-        <div class="col-12 col-md-6 col-lg-4">
-            <div class="dropdown mb-4">
-                <button class="btn btn-primary dropdown-toggle btn-lg" type="button" id="projectSelectButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {{ $project ? 'Project : '.$project->name : 'Select Another Project' }}
-                </button>
-                <div class="dropdown-menu" aria-labelledby="projectSelectButton">
-                    @foreach($all_projects as $single_project)
-                        <a class="dropdown-item {{ $single_project->id == $project?->id ? 'active' : '' }}" href="{{ route('dashboard.client-index', ['project' => $single_project->id]) }}">
-                            {{ $single_project->name }}
-                        </a>
-                    @endforeach
+    @if($all_projects->count() > 1)
+        <div class="row">
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="dropdown mb-4">
+                    <button class="btn btn-primary dropdown-toggle btn-lg" type="button" data-toggle="dropdown">
+                        {{ $project ? 'Project : '.$project->name : 'Select Another Project' }}
+                    </button>
+                    <div class="dropdown-menu overflow-auto">
+                        @foreach($all_projects as $single_project)
+                            <a class="dropdown-item {{ $single_project->id == $project?->id ? 'active' : '' }}" href="{{ route('dashboard.client-index', ['project' => $single_project->id]) }}">
+                                {{ $single_project->name }}
+                            </a>
+                        @endforeach
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    @endif
 
     @if($project)
         <!-- Main Content -->
@@ -129,7 +131,11 @@
                     <div class="card-header"><h4>Gantt Chart</h4></div>
                     <div class="card-body">
                         <div class="recent-report__chart">
-                            <div id="gantt"></div>
+                            @if($project->tasks->count())
+                                <div id="gantt"></div>
+                            @else
+                                <div class="font-weight-bold text-center text-muted">No Data Found</div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -240,7 +246,11 @@
                     <div class="card-header"><h4>Pie Chart</h4></div>
                     <div class="card-body">
                         <div class="recent-report__chart">
-                            <div id="pieChart"></div>
+                            @if($project->tasks->count())
+                                <div id="pieChart"></div>
+                            @else
+                                <div class="font-weight-bold text-center text-muted">No Data Found</div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -254,35 +264,36 @@
                     <div class="card-header">
                         <h4>Project Timeline</h4>
                     </div>
-                    <div class="card-body"></div>
-
-                    <div class="ml-5 mb-4">
-                        <h5>{{ $project->name }}</h5>
-                    </div>
-                    <div class="row">
-                        <div class="col-12 px-5">
-                            <div class="activities">
-                                @foreach($project->tasks->sortBy('estimated_start_date') as $task)
-                                    @php
-                                        $status = array_search($task->status, config('app.STATUSES'));
-                                        $status_color = config("app.STATUSES_COLORS.$status");
-                                        $status_icon = config("app.STATUSES_ICONS.$status");
-                                    @endphp
-                                    <div class="activity">
-                                        <div class="activity-icon text-white {{ 'bg-'.$status_color }} d-flex align-items-center justify-content-center">
-                                            {!! $status_icon !!}
-                                        </div>
-                                        <div class="activity-detail width-per-50">
-                                            <div><p class="{{ 'text-'.$status_color }}">{{ $status }}</p></div>
-                                            <div class="mb-2">
-                                                <span class="text-job">Deadline : {{ $task->estimated_completion_date }} </span>
-{{--                                                <span class="bullet"></span>--}}
-{{--                                                <a class="text-job" href="#">View</a>--}}
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12 px-5">
+                                @if($project->tasks->count())
+                                    <div class="activities">
+                                    @foreach($project->tasks->sortBy('estimated_start_date') as $task)
+                                        @php
+                                            $status = array_search($task->status, config('app.STATUSES'));
+                                            $status_color = config("app.STATUSES_COLORS.$status");
+                                            $status_icon = config("app.STATUSES_ICONS.$status");
+                                        @endphp
+                                        <div class="activity">
+                                            <div class="activity-icon text-white {{ 'bg-'.$status_color }} d-flex align-items-center justify-content-center">
+                                                {!! $status_icon !!}
                                             </div>
-                                            <p><h6 class="col-black">{{ $task->name }}</h6></p>
+                                            <div class="activity-detail width-per-50">
+                                                <div><p class="{{ 'text-'.$status_color }}">{{ $status }}</p></div>
+                                                <div class="mb-2">
+                                                    <span class="text-job">Deadline : {{ $task->estimated_completion_date }} </span>
+                                                    {{--                                                <span class="bullet"></span>--}}
+                                                    {{--                                                <a class="text-job" href="#">View</a>--}}
+                                                </div>
+                                                <p><h6 class="col-black">{{ $task->name }}</h6></p>
+                                            </div>
                                         </div>
-                                    </div>
-                                @endforeach
+                                    @endforeach
+                                </div>
+                                @else
+                                    <div class="font-weight-bold text-center text-muted">No Data Found</div>
+                                @endif
                             </div>
                         </div>
                     </div>
