@@ -81,23 +81,6 @@ class ProjectController extends Controller
         //
     }
 
-    public function dashboard(Request $request)
-    {
-        $request->validate([
-            'project' => 'required|exists:projects,id',
-        ]);
-
-        $project = Project::with('client', 'tasks', 'payments.dependentTasks', 'inspections')
-            ->find($request->project);
-
-//        if ($project->client?->id != auth()->id() && auth()->user()->is_client)
-//            return redirect()
-//                ->route('dashboard.index')
-//                ->with('error', 'You don\'t have authorization');
-
-        return view('project.show', compact('project'));
-    }
-
     public function createPayment()
     {
 //        $clients = User::where('is_client', true)->get();

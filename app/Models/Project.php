@@ -63,8 +63,4 @@ class Project extends Model
     {
         return $this->hasMany(Inspection::class );
     }
-
-
-
-
 }

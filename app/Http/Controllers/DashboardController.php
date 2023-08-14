@@ -15,8 +15,7 @@ class DashboardController extends Controller
     public function index ()
     {
         if (auth()->user()->is_client) {
-            $projects = auth()->user()->projects;
-            return view('client-index', compact('projects'));
+            return redirect()->route('dashboard.client-index');
         }
 
         $projects = Project::withCount('tasks', 'inspections')
@@ -87,5 +86,23 @@ class DashboardController extends Controller
         return view('index', compact('reports', 'running_projects', 'upcoming_inspections'));
     }
 
+    public function clientIndex(Request $request)
+    {
+        $request->validate([
+            'project' => 'nullable|exists:projects,id',
+        ]);
 
+        $all_projects = auth()->user()->is_client ? auth()->user()->projects() : Project::query();
+        $all_projects = $all_projects->with(
+                'client',
+                'tasks',
+                'payments.dependentTasks',
+                'inspections')
+            ->latest()
+            ->get();
+
+        $project = $request->project ? $all_projects->where('id', $request->project)->first() : $all_projects->first();
+
+        return view('client-index', compact('project', 'all_projects'));
+    }
 }
