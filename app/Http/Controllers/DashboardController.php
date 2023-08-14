@@ -23,8 +23,14 @@ class DashboardController extends Controller
             ->with('client')
             ->get();
 
-        $running_projects = $projects->where('status', config('app.STATUSES.In Progress'));
-        $upcoming_inspections = Inspection::where('status', config('app.STATUSES.Pending'))
+        $statuses = config('app.STATUSES');
+        $running_projects = $projects->filter(function ($project) use ($statuses) {
+                return $project->status ==  $statuses['In Progress'] ||
+                    ($project->completion_percentage > 0
+                    && $project->completion_percentage < 100);
+            });
+
+        $upcoming_inspections = Inspection::where('status', $statuses['Pending'])
             ->whereDate('scheduled_date', '<=', Carbon::now()->addDays(7))
             ->with('project')
             ->get();

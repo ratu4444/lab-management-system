@@ -16,22 +16,19 @@ class Task extends Model
         return $this->belongsTo(Project::class);
     }
 
-    public function payment(){
-        return $this->hasMany(Payment::class,'payment_id');
-    }
-
-    public function dependentTasks(){
+    public function dependentTasks()
+    {
         return $this->belongsToMany(Task::class,'task_dependencies', 'task_id', 'dependent_task_id')
             ->where('task_dependencies.deleted_at', null);
     }
 
-    public function taskDependencies(){
+    public function taskDependencies()
+    {
         return $this->hasMany(TaskDependency::class);
     }
 
-    public function payments(){
+    public function payments()
+    {
         return $this->belongsToMany(Payment::class,'task_payments', 'task_id', 'payment_id');
     }
-
-
 }
