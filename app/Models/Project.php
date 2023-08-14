@@ -22,7 +22,7 @@ class Project extends Model
                 return 100;
             default:
             $completion_percentage = $this->tasks->where('status', '!=', $statuses['Canceled'])->pluck('completion_percentage')->avg() ?? 0;
-            return number_format($completion_percentage, 2);
+            return sprintf("%.2f", $completion_percentage);
         }
     }
 
@@ -34,7 +34,7 @@ class Project extends Model
         $total_budget = $this->total_budget ?? $estimated_budget;
 
         $increment_percentage = (($total_budget - $estimated_budget) / $estimated_budget) * 100;
-        return number_format($increment_percentage, 2);
+        return sprintf("%.2f", $increment_percentage);
     }
 
     public function getPaidAmountAttribute()
@@ -50,7 +50,7 @@ class Project extends Model
         $paid_amount = $this->paid_amount;
 
         $paid_amount_percentage = ($paid_amount / $total_budget) * 100;
-        return number_format($paid_amount_percentage, 2);
+        return sprintf("%.2f", $paid_amount_percentage);
     }
 
     public function client()
