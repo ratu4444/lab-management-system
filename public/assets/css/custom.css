@@ -1,3 +1,9 @@
 .theme-white .text-primary {
     color: #6777ef !important;
 }
+
+.user-initial {
+    width: 40px;
+    height: 40px;
+    font-size: large;
+}

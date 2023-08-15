@@ -24,6 +24,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function getInitialAttribute()
+    {
+        $name = $this->name;
+        return strtoupper(preg_replace('/\B\w| /u', '', $name));
+    }
+
     public function projects()
     {
         return $this->hasMany(Project::class, 'client_id');

@@ -12,12 +12,15 @@ class DashboardController extends Controller
 {
     public function index ()
     {
-        $projects = Project::withCount('tasks', 'inspections')
+        $statuses = config('app.STATUSES');
+
+        $projects = Project::withCount(['tasks' => function($tasks) use ($statuses) {
+            return $tasks->where('status', '!=', $statuses['Canceled']);
+        }, 'inspections'])
             ->withSum('payments', 'amount')
             ->with('client')
             ->get();
 
-        $statuses = config('app.STATUSES');
         $running_projects = $projects->filter(function ($project) use ($statuses) {
                 return $project->status ==  $statuses['In Progress'] ||
                     ($project->completion_percentage > 0
@@ -61,7 +64,7 @@ class DashboardController extends Controller
             'heading'           => 'Total Payments',
             'card_icon'         => 'fa fa-dollar-sign',
             'card_background'   => 'l-bg-cyan',
-            'count'             => $projects->sum('payments_sum_amount'),
+            'count'             => '$'.number_format($projects->sum('payments_sum_amount')),
             'url'               => null,
         ];
 

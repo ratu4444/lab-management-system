@@ -81,7 +81,7 @@
                                     <div class="card-content">
                                         <h5 class="font-15 matrix-title">Final Budget</h5>
                                         <div>
-                                            <h2 class="font-18">{{ '$'.(number_format($project->total_budget ?? $project->estimated_budget)) }}</h2>
+                                            <h2 class="font-18">{{ '$'.(number_format($project->total_budget)) }}</h2>
                                             <p class="col-orange mb-0"><span class="col-orange font-20">{{ abs($project->budget_increament_percentage).'%' }}</span>
                                                 {{ $project->budget_increament_percentage < 0 ? 'Decrease' : 'Increase'}}
                                             </p>

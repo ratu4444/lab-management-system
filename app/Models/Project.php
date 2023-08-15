@@ -14,7 +14,8 @@ class Project extends Model
 
     public function getTotalBudgetAttribute()
     {
-        return $this->tasks->where('status', '!=', config('app.STATUSES.Canceled'))->sum('amount');
+        $total_budget = $this->tasks->where('status', '!=', config('app.STATUSES.Canceled'))->sum('amount');
+        return $total_budget ?: $this->estimated_budget;
     }
 
     public function getCompletionPercentageAttribute()
@@ -34,9 +35,10 @@ class Project extends Model
     public function getBudgetIncreamentPercentageAttribute()
     {
         $estimated_budget = $this->estimated_budget;
-        if (!$estimated_budget) return 100;
+        $total_budget = $this->total_budget;
 
-        $total_budget = $this->total_budget ?? $estimated_budget;
+        if (!$estimated_budget && $total_budget) return 100;
+        elseif (!$estimated_budget && !$total_budget) return 0;
 
         $increment_percentage = (($total_budget - $estimated_budget) / $estimated_budget) * 100;
         return sprintf("%.2f", $increment_percentage);
@@ -49,7 +51,7 @@ class Project extends Model
 
     public function getPaidAmountPercentageAttribute()
     {
-        $total_budget = $this->total_budget ?? $this->estimated_budget;
+        $total_budget = $this->total_budget;
         if (!$total_budget) return 100;
 
         $paid_amount = $this->paid_amount;

@@ -84,7 +84,6 @@
 @push('js')
     <script src="{{ asset('assets/bundles/jquery-selectric/jquery.selectric.min.js') }}"></script>
     <script src="{{ asset('assets/bundles/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
-    <script src="{{ asset('js/form-submission.js') }}"></script>
     <script src="{{ asset('js/select-button-bg-changer.js') }}"></script>
 @endpush
 

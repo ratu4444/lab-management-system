@@ -14,7 +14,7 @@
                         <h4 class="card-title text-muted">Create New Project</h4>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('project.store') }}">
+                        <form method="POST" action="{{ route('project.store') }}" class="needs-validation" novalidate>
                             @csrf
                             <div class="form-row">
                                 <div class="form-group col-12">
@@ -23,10 +23,9 @@
                                         <div class="row">
                                             @if($client_id)
                                                 <div class="col-12">
-                                                    <select class="form-control" name="client_id" id="clientDropdown"
-                                                            style="pointer-events: none" readonly>
+                                                    <select class="form-control" name="client_id" id="clientDropdown" style="pointer-events: none" readonly>
                                                         @foreach($clients as $client)
-                                                            <option value="{{ $client->id }}">{{ $client->name }}</option>
+                                                            <option value="{{ $client->id }}" selected>{{ $client->name }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -34,15 +33,12 @@
                                                 <div class="col-12 col-sm-8 col-xl-10">
                                                     <select class="form-control" name="client_id" id="clientDropdown">
                                                         @foreach($clients as $client)
-                                                            <option value="{{ $client->id }}">{{ $client->name }}</option>
+                                                            <option value="{{ $client->id }}" {{ old('client_id') == $client->id ? 'selected' : '' }}>{{ $client->name }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
                                                 <div class="col-12 col-sm-4 col-xl-2 mt-1 mt-sm-0">
-                                                    <button class="btn btn-primary text-nowrap w-100 h-100"
-                                                            type="button" data-toggle="modal"
-                                                            data-target="#clientCreateModal">Add New Client
-                                                    </button>
+                                                    <button class="btn btn-primary text-nowrap w-100 h-100" type="button" data-toggle="modal" data-target="#clientCreateModal">Add New Client</button>
                                                 </div>
                                             @endif
                                         </div>
@@ -50,19 +46,27 @@
                                 </div>
                                 <div class="form-group col-12">
                                     <label class="form-label" for="name">Project Name <span class="text-danger">*</span></label>
-                                    <input type="text" name="name" class="form-control" id="name" required>
+                                    <input type="text" name="name" class="form-control" id="name" value="{{ old('name') }}" required>
+
+                                    <div class="invalid-feedback">
+                                        Project name is required
+                                    </div>
                                 </div>
                                 <div class="form-group col-12 col-md-6">
-                                    <label class="form-label" for="estimated_completion_date">Estimated Completion Date
-                                        <span class="text-danger">*</span></label>
-                                    <input type="text" name="estimated_completion_date" class="form-control datepicker"
-                                           id="estimated_completion_date" required>
+                                    <label class="form-label" for="estimated_completion_date">Estimated Completion Date<span class="text-danger">*</span></label>
+                                    <input type="text" name="estimated_completion_date" class="form-control datepicker" id="estimated_completion_date" value="{{ old('estimated_completion_date') }}" required>
+
+                                    <div class="invalid-feedback">
+                                        Estimated completion date is required
+                                    </div>
                                 </div>
                                 <div class="form-group col-12 col-md-6">
-                                    <label class="form-label" for="estimated_budget">Estimated Budget <span
-                                                class="text-danger">*</span></label>
-                                    <input type="number" name="estimated_budget" class="form-control"
-                                           id="estimated_budget" required>
+                                    <label class="form-label" for="estimated_budget">Estimated Budget <span class="text-danger">*</span></label>
+                                    <input type="number" name="estimated_budget" class="form-control" id="estimated_budget" value="{{ old('estimated_budget') }}" min="1" required>
+
+                                    <div class="invalid-feedback">
+                                        Estimated budget is required
+                                    </div>
                                 </div>
                                 <div class="form-group col-12">
                                     <label class="form-label">Status</label>
@@ -72,7 +76,7 @@
                                                 $status_color = config("app.STATUSES_COLORS.$label");
                                             @endphp
                                             <label class="selectgroup-item">
-                                                <input type="radio" name="status" value="{{ $status_id }}" class="selectgroup-input-radio" {{ $status_id == 1 ? 'checked' : ''}} >
+                                                <input type="radio" name="status" value="{{ $status_id }}" class="selectgroup-input-radio" {{ old('status') ? (old('status') == $status_id ? 'checked' : '') : ($status_id == 1 ? 'checked' : '')}} >
                                                 <span class="selectgroup-button" data-class="{{ "bg-$status_color" }}">{{ $label }}</span>
                                             </label>
                                         @endforeach
@@ -80,10 +84,12 @@
                                 </div>
                                 <div class="form-group col-12">
                                     <label class="form-label" for="comment">Comment</label>
-                                    <textarea name="comment" class="form-control" id="comment"></textarea>
+                                    <textarea name="comment" class="form-control" id="comment">{{ old('comment') }}</textarea>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary"> Submit</button>
+                            <div class="text-right">
+                                <button type="submit" class="btn btn-primary">Next</button>
+                            </div>
                         </form>
                     </div>
                 </div>

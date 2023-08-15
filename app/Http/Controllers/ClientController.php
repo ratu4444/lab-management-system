@@ -51,7 +51,7 @@ class ClientController extends Controller
         }
     }
 
-    public function storeClient(Request $request): \Illuminate\Http\JsonResponse
+    public function storeClientApi(Request $request): \Illuminate\Http\JsonResponse
     {
         $request->validate([
             'name'      => 'required|string',

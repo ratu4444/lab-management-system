@@ -36,44 +36,9 @@ $(document).ready(function () {
                 // $("#clientDropdown").selectric('select', response.data.id);
             },
             error: function (error) {
-                console.log(error);
-            }
-        });
-    });
-
-    $('#taskCreateModal').submit(function (event) {
-        event.preventDefault();
-
-        var action = $(this).attr('action');
-        var method = $(this).attr('method');
-        var csrf = $('meta[name="csrf-token"]').attr('content');
-        var accessToken = $('meta[name="access-token"]').attr('content');
-        var headers = {
-            'Authorization': 'Bearer ' + accessToken,
-            'X-CSRF-TOKEN': csrf
-        };
-
-        // Perform API call
-        $.ajax({
-            url: action,
-            method: method,
-            data: $(this).serialize(),
-            headers: headers,
-            success: function (response) {
-                // Close modal
-                $('#taskCreateModal').modal('hide');
-
-                // // Add the new task to the dependency select dropdown
-                // $('#taskDependencyDropdown').append($('<option>', {
-                //     value: response.data.id,
-                //     text: response.data.name
-                // }));
-                //
-                // // Automatically select the new depen
-                // $('#taskDependencyDropdown').val(response.data.id);
-            },
-            error: function (error) {
-                console.log(error);
+                var errors = error.responseJSON.errors;
+                var keys = Object.keys(errors);
+                $('#apiErrorAlert').removeClass('d-none').text(errors[keys[0]][0]);
             }
         });
     });

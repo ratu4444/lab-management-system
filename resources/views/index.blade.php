@@ -1,4 +1,5 @@
 @extends('custom-layout.master')
+@section('title', 'Dashboard')
 @push('css')
 @endpush
 
@@ -59,7 +60,7 @@
                                                     </div>
                                                 </td>
                                                 <td>{{ $project->estimated_completion_date }}</td>
-                                                <td>{{ '$'.$project->estimated_budget }}</td>
+                                                <td>{{ '$'.number_format($project->estimated_budget) }}</td>
                                             </tr>
                                         @endforeach
                                     @else
@@ -147,25 +148,10 @@
 
             $('.card-value').each(function() {
                 var valueElement = $(this);
-                var value = parseInt(valueElement.text());
-                valueElement.text(0);
+                var value = valueElement.text();
+
                 animateValue(valueElement, value, speed);
             });
         });
-
-        function animateValue(element, endValue, duration) {
-            var startTimestamp = null;
-            function step(timestamp) {
-                if (!startTimestamp) startTimestamp = timestamp;
-                var progress = timestamp - startTimestamp;
-                var progressPercentage = Math.min(progress / duration, 1);
-                var animatedValue = Math.ceil(progressPercentage * endValue);
-                element.text(animatedValue);
-                if (progress < duration) {
-                    requestAnimationFrame(step);
-                }
-            }
-            requestAnimationFrame(step);
-        }
     </script>
 @endpush
