@@ -2,8 +2,8 @@
     <aside id="sidebar-wrapper">
         <div class="sidebar-brand">
             <a href="{{ route('dashboard.index') }}">
-                <img alt="image" src="{{ asset('assets/default/DJL-Construction_Dark.png') }}" class="header-logo" />
-                <span class="logo-name">{{ config('app.name') }}</span>
+                <img alt="image" src="{{ asset('assets/default/DJL-Construction_Dark.png') }}" class="header-logo" style="height: 60px"/>
+{{--                <span class="logo-name">{{ config('app.name') }}</span>--}}
             </a>
         </div>
 

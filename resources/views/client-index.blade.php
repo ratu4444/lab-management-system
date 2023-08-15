@@ -45,27 +45,27 @@
         <!-- Main Content -->
         <div class="row">
             <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                <div class="card h-90">
+                <div class="card card-primary h-90">
                     <div class="card-statistic-4">
                         <div class="align-items-center justify-content-between">
-                            <div class="row ">
-                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
+                            <div class="row">
+                                <div class="col-12 py-3">
                                     <div class="card-content ">
-                                        <h5 class="font-15 matrix-title"> Project Completion </h5>
+                                        <h5 class="matrix-title"> Project Completion </h5>
                                     </div>
+
                                     <div>
-                                        <h2 class="font-18"></h2>
-                                    </div>
-                                    <div class="progress-text font-20 font-weight-bold {{ $project->completion_percentage < 50 ? 'col-red' : 'col-green' }}">{{ $project->completion_percentage.'%' }}</div>
-                                    <div class="progress mt-2" data-height="6">
-                                        <div class="progress-bar {{ $project->completion_percentage < 50 ? 'bg-danger' : 'bg-success' }}" data-width="{{ $project->completion_percentage.'%' }}"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
-                                    <div class="banner-img">
-                                        <img src="{{ asset('assets/img/banner/3.png') }}" alt="">
+                                        <div class="progress-text font-20 font-weight-bold {{ $project->completion_percentage < 50 ? 'col-red' : 'col-green' }}">{{ $project->completion_percentage.'%' }}</div>
+                                        <div class="progress mt-2" data-height="6">
+                                            <div class="progress-bar {{ $project->completion_percentage < 50 ? 'bg-danger' : 'bg-success' }}" data-width="{{ $project->completion_percentage.'%' }}"></div>
+                                        </div>
                                     </div>
                                 </div>
+{{--                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">--}}
+{{--                                    <div class="banner-img">--}}
+{{--                                        <img src="{{ asset('assets/img/banner/3.png') }}" alt="">--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
                             </div>
                         </div>
                     </div>
@@ -73,13 +73,13 @@
             </div>
             <!--            FINAL BUDGET-->
             <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                <div class="card h-90">
+                <div class="card card-primary h-90">
                     <div class="card-statistic-4">
                         <div class="align-items-center justify-content-between">
-                            <div class="row ">
-                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
+                            <div class="row">
+                                <div class="col-12 pt-3">
                                     <div class="card-content">
-                                        <h5 class="font-15 matrix-title">Final Budget</h5>
+                                        <h5 class="matrix-title">Project Budget</h5>
                                         <div>
                                             <h2 class="font-18">{{ '$'.(number_format($project->total_budget)) }}</h2>
                                             <p class="col-orange mb-0"><span class="col-orange font-20">{{ abs($project->budget_increament_percentage).'%' }}</span>
@@ -88,11 +88,11 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
-                                    <div class="banner-img">
-                                        <img src="{{ asset('assets/img/banner/4.png') }}" alt="">
-                                    </div>
-                                </div>
+{{--                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">--}}
+{{--                                    <div class="banner-img">--}}
+{{--                                        <img src="{{ asset('assets/img/banner/4.png') }}" alt="">--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
                             </div>
                         </div>
                     </div>
@@ -100,24 +100,24 @@
             </div>
             <!--            PAYMENT COMPLETION-->
             <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                <div class="card h-90">
+                <div class="card card-primary h-90">
                     <div class="card-statistic-4">
                         <div class="align-items-center justify-content-between">
                             <div class="row ">
-                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
-                                    <div class="card-content ">
-                                        <h5 class="font-15 matrix-title">Payment Completion</h5>
+                                <div class="col-12 pt-3">
+                                    <div class="card-content">
+                                        <h5 class="matrix-title">Payments</h5>
                                     </div>
                                     <div>
                                         <h2 class="font-18">{{ '$'.number_format($project->paid_amount) }}</h2>
                                         <p class="mb-0"><span class="col-green font-20">{{ $project->paid_amount_percentage.'%' }}</span></p>
                                     </div>
                                 </div>
-                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
-                                    <div class="banner-img">
-                                        <img src="{{ asset('assets/img/banner/4.png') }}" alt="">
-                                    </div>
-                                </div>
+{{--                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">--}}
+{{--                                    <div class="banner-img">--}}
+{{--                                        <img src="{{ asset('assets/img/banner/4.png') }}" alt="">--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
                             </div>
                         </div>
                     </div>
@@ -125,10 +125,55 @@
             </div>
         </div>
 
+        <!--         PROJECT TIMELINE-->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Project Timeline</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12 px-5">
+                                @if($project->tasks->count())
+                                    <div class="activities">
+                                        @foreach($project->tasks->sortBy('estimated_start_date') as $task)
+                                            @php
+                                                $status = array_search($task->status, config('app.STATUSES'));
+                                                $status_color = config("app.STATUSES_COLORS.$status");
+                                                $status_icon = config("app.STATUSES_ICONS.$status");
+                                            @endphp
+                                            <div class="activity">
+                                                <div class="activity-icon text-white {{ 'bg-'.$status_color }} d-flex align-items-center justify-content-center">
+                                                    {!! $status_icon !!}
+                                                </div>
+                                                <div class="activity-detail width-per-50">
+                                                    <div><p class="{{ 'text-'.$status_color }}">{{ $status }}</p></div>
+                                                    <div class="mb-2">
+                                                        <span class="text-job">Deadline : {{ $task->estimated_completion_date }} </span>
+                                                        {{--                                                <span class="bullet"></span>--}}
+                                                        {{--                                                <a class="text-job" href="#">View</a>--}}
+                                                    </div>
+                                                    <p><h6 class="col-black">{{ $task->name }}</h6></p>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                @else
+                                    <div class="font-weight-bold text-center text-muted">No Data Found</div>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+{{--        Project schedule --}}
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12">
                 <div class="card">
-                    <div class="card-header"><h4>Gantt Chart</h4></div>
+                    <div class="card-header"><h4>Project Schedule</h4></div>
                     <div class="card-body">
                         <div class="recent-report__chart">
                             @if($project->tasks->count())
@@ -246,55 +291,11 @@
                     <div class="card-header"><h4>Pie Chart</h4></div>
                     <div class="card-body">
                         <div class="recent-report__chart">
-                            @if($project->tasks->count())
+                            @if($project->payments->count())
                                 <div id="pieChart"></div>
                             @else
                                 <div class="font-weight-bold text-center text-muted">No Data Found</div>
                             @endif
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!--         PROJECT TIMELINE-->
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h4>Project Timeline</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-12 px-5">
-                                @if($project->tasks->count())
-                                    <div class="activities">
-                                    @foreach($project->tasks->sortBy('estimated_start_date') as $task)
-                                        @php
-                                            $status = array_search($task->status, config('app.STATUSES'));
-                                            $status_color = config("app.STATUSES_COLORS.$status");
-                                            $status_icon = config("app.STATUSES_ICONS.$status");
-                                        @endphp
-                                        <div class="activity">
-                                            <div class="activity-icon text-white {{ 'bg-'.$status_color }} d-flex align-items-center justify-content-center">
-                                                {!! $status_icon !!}
-                                            </div>
-                                            <div class="activity-detail width-per-50">
-                                                <div><p class="{{ 'text-'.$status_color }}">{{ $status }}</p></div>
-                                                <div class="mb-2">
-                                                    <span class="text-job">Deadline : {{ $task->estimated_completion_date }} </span>
-                                                    {{--                                                <span class="bullet"></span>--}}
-                                                    {{--                                                <a class="text-job" href="#">View</a>--}}
-                                                </div>
-                                                <p><h6 class="col-black">{{ $task->name }}</h6></p>
-                                            </div>
-                                        </div>
-                                    @endforeach
-                                </div>
-                                @else
-                                    <div class="font-weight-bold text-center text-muted">No Data Found</div>
-                                @endif
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -314,9 +315,15 @@
     <script>
         $(document).ready(function() {
             var tasks = @json($project?->tasks->where('status', '!=', config('app.STATUSES.Canceled')) ?? []);
+            var payments = @json($project?->payments ?? []);
 
-            ganttChart(tasks);
-            pieChart(tasks);
+            if (tasks.length > 0) {
+                ganttChart(tasks);
+            }
+
+            if (payments.length > 0) {
+                pieChart(payments);
+            }
         });
 
         function ganttChart(tasks) {
@@ -339,31 +346,31 @@
             gantt.change_view_mode('Week');
         }
 
-        function pieChart(tasks) {
+        function pieChart(data) {
             am4core.useTheme(am4themes_animated);
 
             // Create chart instance
             var chart = am4core.create("pieChart", am4charts.PieChart);
 
-            var chartTasks = [];
-            tasks.forEach(function (task) {
-                chartTasks.push(
+            var chartData = [];
+            data.forEach(function (singleData) {
+                chartData.push(
                     {
-                        "task": task.name,
-                        "budget": task.total_budget,
+                        "amount": singleData.name,
+                        "payment": singleData.amount,
                     }
                 );
             });
 
-            console.log(chartTasks);
+            console.log(chartData);
 
             // Add data
-            chart.data = chartTasks;
+            chart.data = chartData;
 
             // Add and configure Series
             var pieSeries = chart.series.push(new am4charts.PieSeries());
-            pieSeries.dataFields.value = "budget";
-            pieSeries.dataFields.category = "task";
+            pieSeries.dataFields.value = "amount";
+            pieSeries.dataFields.category = "payment";
             pieSeries.slices.template.stroke = am4core.color("#fff");
             pieSeries.slices.template.strokeWidth = 2;
             pieSeries.slices.template.strokeOpacity = 1;
