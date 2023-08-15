@@ -22,7 +22,8 @@ class   Inspection extends Model
             ->where('inspection_dependencies.deleted_at', null);
     }
 
-    public function inspectionDependencies(){
-        return $this->hasMany(InspectionDependency::class,'inspection_id');
+    public function inspectionDependencies()
+    {
+        return $this->hasMany(InspectionDependency::class);
     }
 }

@@ -29,6 +29,7 @@ class Task extends Model
 
     public function payments()
     {
-        return $this->belongsToMany(Payment::class,'task_payments', 'task_id', 'payment_id');
+        return $this->belongsToMany(Payment::class,'task_payments')
+            ->where('task_payments.deleted_at', null);
     }
 }

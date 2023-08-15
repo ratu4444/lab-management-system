@@ -168,7 +168,7 @@
                                             <tr>
                                                 <th scope="row">{{ $loop->iteration }}</th>
                                                 <td>{{ $payment->name }}</td>
-                                                <td>{{ $payment->dependentTasks->pluck('name')->implode(', ') }}</td>
+                                                <td>{{ $payment->tasks->pluck('name')->implode(', ') }}</td>
                                                 <td>{{ $payment->date }}</td>
                                                 <td>{{ '$'.number_format($payment->amount) }}</td>
                                                 <td>{{ $payment->payment_method }}</td>

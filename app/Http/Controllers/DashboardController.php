@@ -106,7 +106,7 @@ class DashboardController extends Controller
         $all_projects = $all_projects->with([
                 'client',
                 'tasks',
-                'payments.dependentTasks',
+                'payments.tasks',
                 'inspections'
             ])
             ->latest()

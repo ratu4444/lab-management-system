@@ -70,9 +70,9 @@ class PaymentController extends Controller
 
     public function edit($payment_id){
 
-        $payment = Payment::with('dependentTasks')->findOrFail($payment_id);
+        $payment = Payment::with('tasks')->findOrFail($payment_id);
 
-        $payment->dependent_payment_ids = $payment->dependentTasks->pluck('id')->toArray();
+        $payment->dependent_payment_ids = $payment->tasks->pluck('id')->toArray();
         $payment_task = Task::where('project_id', $payment->project_id)->get();
 
         return view('payment.edit', compact('payment', 'payment_task'));
