@@ -2,40 +2,49 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Task Create Modal</h5>
+                <h5 class="modal-title">Create Task</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form class="w-100" method="post" action="{{ route('task.store', $project->id) }}">
+                <form method="post" action="{{ route('task.store', $project->id) }}" class="needs-validation" novalidate>
                     @csrf
-                    <div class="form-group form-float">
-                        <div class="form-line">
-                            <label class="form-label">Name<span class="text-danger">*</span></label>
-                            <input type="text" name="name" class="form-control" required>
+
+                    <div class="form-group">
+                        <label class="form-label">Name <span class="text-danger">*</span></label>
+                        <input type="text" name="name" class="form-control" required>
+
+                        <div class="invalid-feedback">
+                            Task name is required
                         </div>
                     </div>
-                    <div class="form-group form-float">
-                        <div class="form-line">
-                            <label class="form-label">Estimated Start Date*</label>
-                            <input type="date" name="estimated_start_date" class="form-control" required>
+                    <div class="form-group">
+                        <label class="form-label">Estimated Start Date <span class="text-danger">*</span></label>
+                        <input type="date" name="estimated_start_date" class="form-control" required>
+
+                        <div class="invalid-feedback">
+                            Estimated start date is required
                         </div>
                     </div>
-                    <div class="form-group form-float">
-                        <div class="form-line">
-                            <label class="form-label">Estimated Completion Date*</label>
-                            <input type="date" name="estimated_completion_date" class="form-control" required>
+                    <div class="form-group">
+                        <label class="form-label">Estimated Completion Date <span class="text-danger">*</span></label>
+                        <input type="date" name="estimated_completion_date" class="form-control" required>
+
+                        <div class="invalid-feedback">
+                            Estimated completion date is required
                         </div>
                     </div>
 
-                    <div class="form-group form-float">
-                        <div class="form-line">
-                            <label class="form-label">Budget*</label>
-                            <input name="total_budget" type="text" class="form-control" required>
+                    <div class="form-group">
+                        <label class="form-label">Budget <span class="text-danger">*</span></label>
+                        <input name="total_budget" type="number" class="form-control" min="1" required>
+
+                        <div class="invalid-feedback">
+                            Budget is required
                         </div>
                     </div>
-                    <div class="form-group form-float">
+                    <div class="form-group">
                         <label> Dependency</label>
                         <select class="form-control selectric" name="dependencies[]" id="taskDependencyDropdown" multiple="">
                             @if(count($project->tasks))
@@ -45,7 +54,7 @@
                             @endif
                         </select>
                     </div>
-                    <div class="form-group form-flat">
+                    <div class="form-group">
                         <label class="form-label">Status</label>
                         <div class="selectgroup w-100">
                             @foreach(config('app.STATUSES') as $label => $status_id)
@@ -58,14 +67,12 @@
                                 </label>
                             @endforeach
                         </div>
-                        <div class="form-group form-float">
-                            <div class="form-line">
-                                <label class="form-label">Comment</label>
-                                <textarea name="comment" class="form-control"></textarea>
-                            </div>
+                        <div class="form-group">
+                            <label class="form-label">Comment</label>
+                            <textarea name="comment" class="form-control"></textarea>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary"> Submit </button>
+                    <button type="submit" class="btn btn-primary">Create Task</button>
                 </form>
             </div>
         </div>

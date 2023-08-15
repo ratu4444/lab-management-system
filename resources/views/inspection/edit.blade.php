@@ -1,8 +1,8 @@
 @extends('custom-layout.master')
+@section('title', 'Edit Inspection')
 
 @push('css')
     <link rel="stylesheet" href="{{ asset('assets/bundles/jquery-selectric/selectric.css') }}">
-
 @endpush
 
 @section('content')
@@ -14,18 +14,26 @@
                         <h4 class="card-title text-muted">Inspection Edit</h4>
                     </div>
                     <div class="card-body">
-                        <form class="" action="{{ route('inspection.update', $inspection->id) }}" method="post">
+                        <form action="{{ route('inspection.update', $inspection->id) }}" method="post" class="needs-validation" novalidate>
                             @csrf
                             <div class="form-group form-float">
                                 <div class="form-line">
-                                    <label class="form-label">Name <span class="text-danger">*</span> </label>
+                                    <label class="form-label">Name <span class="text-danger">*</span></label>
                                     <input type="text" name="name" value="{{ $inspection->name }}" class="form-control" required>
+
+                                    <div class="invalid-feedback">
+                                        Inspection name is required
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group form-float">
                                 <div class="form-line">
-                                    <label class="form-label">Schedule Date*</label>
+                                    <label class="form-label">Schedule Date <span class="text-danger">*</span></label>
                                     <input type="date" name="scheduled_date" value="{{ $inspection->scheduled_date }}" class="form-control" required>
+
+                                    <div class="invalid-feedback">
+                                        Schedule date is required
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group form-float">
@@ -64,7 +72,7 @@
                                     <textarea name="comment" class="form-control">{{ $inspection->comment }}</textarea>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary"> Submit </button>
+                            <button type="submit" class="btn btn-primary">Update</button>
                         </form>
 
                     </div>

@@ -2,29 +2,37 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Inspection Create Modal</h5>
+                <h5 class="modal-title">Create Inspection</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form class="" action="{{ route('inspection.store', $project->id) }}" method="post">
+                <form action="{{ route('inspection.store', $project->id) }}" method="post" class="needs-validation" novalidate>
                     @csrf
                     <div class="form-group form-float">
                         <div class="form-line">
-                            <label class="form-label">Name <span class="text-danger">*</span> </label>
+                            <label class="form-label">Name <span class="text-danger">*</span></label>
                             <input type="text" name="name" class="form-control" required>
+
+                            <div class="invalid-feedback">
+                                Inspection name is required
+                            </div>
                         </div>
                     </div>
                     <div class="form-group form-float">
                         <div class="form-line">
-                            <label class="form-label">Schedule Date*</label>
+                            <label class="form-label">Schedule Date <span class="text-danger">*</span></label>
                             <input type="date" name="scheduled_date" class="form-control" required>
+
+                            <div class="invalid-feedback">
+                                Schedule date is required
+                            </div>
                         </div>
                     </div>
                     <div class="form-group form-float">
                         <div class="form-line">
-                            <label class="form-label"> Inspection Date</label>
+                            <label class="form-label">Inspection Date</label>
                             <input type="date" name="date" class="form-control">
                         </div>
                     </div>
@@ -58,7 +66,8 @@
                             <textarea name="comment" class="form-control"></textarea>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary"> Submit </button>
+
+                    <button type="submit" class="btn btn-primary">Create Inspection</button>
                 </form>
             </div>
         </div>

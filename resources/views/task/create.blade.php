@@ -1,4 +1,5 @@
 @extends('custom-layout.master')
+@section('title', 'Project Task')
 
 @push('css')
     <link rel="stylesheet" href="{{ asset('assets/bundles/jquery-selectric/selectric.css') }}">
@@ -9,9 +10,7 @@
         <div class="card-header d-flex justify-content-between">
             <h4 class="card-title text-muted">Tasks</h4>
             <div class="">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#taskCreateModal">Add New
-                    Task
-                </button>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#taskCreateModal">Add New Task</button>
             </div>
         </div>
         <div class="card-body">
@@ -41,12 +40,12 @@
                                 <td>{{ $task->name }}</td>
                                 <td>{{ $task->estimated_start_date }}</td>
                                 <td>{{ $task->estimated_completion_date }}</td>
-                                <td>{{ $task->total_budget }}</td>
+                                <td>{{ '$'.number_format($task->total_budget) }}</td>
                                 <td>
                                     <div class="badge {{ 'badge-'.$status_color }}">{{ $status }}</div>
                                 </td>
                                 <td class="text-nowrap">
-                                    <a href="{{ route('task.edit', $task->id) }}" class="btn btn-primary btn-sm" target="_blank">Edit</a>
+                                    <a href="{{ route('task.edit', $task->id) }}" class="btn btn-primary btn-sm">Edit</a>
                                 </td>
                             </tr>
                         @endforeach

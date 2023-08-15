@@ -2,36 +2,52 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Payment Create Modal</h5>
+                <h5 class="modal-title">Create Payment</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form class="" action="{{ route('payment.store', $project->id) }}" method="post">
+                <form action="{{ route('payment.store', $project->id) }}" method="post" class="needs-validation" novalidate>
                     @csrf
                     <div class="form-group form-float">
                         <div class="form-line">
                             <label class="form-label">Name <span class="text-danger">*</span></label>
                             <input type="text" name="name" class="form-control" required>
+
+                            <div class="invalid-feedback">
+                                Payment name is required
+                            </div>
                         </div>
                     </div>
                     <div class="form-group form-float">
                         <div class="form-line">
-                            <label class="form-label">Amount*</label>
-                            <input type="text" name="amount" class="form-control" required>
+                            <label class="form-label">Amount <span class="text-danger">*</span></label>
+                            <input type="number" name="amount" class="form-control" min="1" required>
+
+                            <div class="invalid-feedback">
+                                Amount is required
+                            </div>
                         </div>
                     </div>
                     <div class="form-group form-float">
                         <div class="form-line">
-                            <label class="form-label">Date*</label>
+                            <label class="form-label">Date <span class="text-danger">*</span></label>
                             <input type="date" name="date" class="form-control" required>
+
+                            <div class="invalid-feedback">
+                                Payment date is required
+                            </div>
                         </div>
                     </div>
                     <div class="form-group form-float">
                         <div class="form-line">
-                            <label class="form-label">Payment Method*</label>
+                            <label class="form-label">Payment Method <span class="text-danger">*</span></label>
                             <input type="text" name="payment_method" class="form-control" required>
+
+                            <div class="invalid-feedback">
+                                Payment method is required
+                            </div>
                         </div>
                     </div>
                     <div class="form-group form-float">
@@ -49,7 +65,7 @@
                             <textarea name="comment" class="form-control"></textarea>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary"> Submit </button>
+                    <button type="submit" class="btn btn-primary">Create Payment</button>
                 </form>
             </div>
         </div>

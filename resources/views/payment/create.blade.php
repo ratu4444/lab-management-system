@@ -1,4 +1,5 @@
 @extends('custom-layout.master')
+@section('title', 'Project Payment')
 
 @push('css')
     <link rel="stylesheet" href="{{ asset('assets/bundles/jquery-selectric/selectric.css') }}">
@@ -7,7 +8,7 @@
 @section('content')
     <div class="card">
         <div class="card-header d-flex justify-content-between">
-            <div><h3>Payment</h3></div>
+            <h4 class="card-title text-muted">Payments</h4>
 
             <div class="">
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#paymentCreateModal">Add
@@ -34,11 +35,11 @@
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $payment->name }}</td>
-                                <td>{{ $payment->amount}}</td>
+                                <td>{{ '$'.number_format($payment->amount) }}</td>
                                 <td>{{ $payment->date}}</td>
                                 <td>{{ $payment->payment_method }}</td>
                                 <td class="text-nowrap">
-                                    <a href="{{ route('payment.edit', $payment->id) }}" class="btn btn-primary btn-sm" target="_blank">Edit</a>
+                                    <a href="{{ route('payment.edit', $payment->id) }}" class="btn btn-primary btn-sm">Edit</a>
                                 </td>
                             </tr>
                         @endforeach

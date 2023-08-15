@@ -31,7 +31,7 @@
                     </button>
                     <div class="dropdown-menu" style="max-height: 500px; min-width: fit-content; overflow-y: auto">
                         @foreach($all_projects as $single_project)
-                            <a class="dropdown-item {{ $single_project->id == $project?->id ? 'active' : '' }}" href="{{ route('dashboard.client-index', ['project' => $single_project->id]) }}">
+                            <a class="dropdown-item {{ $single_project->id == $project?->id ? 'active' : '' }}" href="{{ route('dashboard.client-index', array_merge(request()->query(), ['project' => $single_project->id])) }}">
                                 {{ $single_project->name }}
                             </a>
                         @endforeach

@@ -1,9 +1,9 @@
 @extends('custom-layout.master')
+@section('title', 'Edit Task')
 
 @push('css')
     <link rel="stylesheet" href="{{ asset('assets/bundles/jquery-selectric/selectric.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/bundles/bootstrap-daterangepicker/daterangepicker.css') }}">
-
 @endpush
 
 @section('content')
@@ -15,34 +15,50 @@
                         <h4 class="card-title text-muted">Task Edit</h4>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('task.update', $task->id) }}">
+                        <form method="POST" action="{{ route('task.update', $task->id) }}" class="needs-validation" novalidate>
                             @csrf
                             <div class="form-group form-float">
                                 <div class="form-line">
-                                    <label class="form-label">Name<span class="text-danger">*</span></label>
+                                    <label class="form-label">Name <span class="text-danger">*</span></label>
                                     <input type="text" name="name" value="{{ $task->name }}" class="form-control" required>
+
+                                    <div class="invalid-feedback">
+                                        Task name is required
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group form-float">
                                 <div class="form-line">
-                                    <label class="form-label">Estimated Start Date*</label>
+                                    <label class="form-label">Estimated Start Date <span class="text-danger">*</span></label>
                                     <input type="date" name="estimated_start_date" value="{{ $task->estimated_start_date }}" class="form-control" required>
+
+                                    <div class="invalid-feedback">
+                                        Estimated start date is required
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group form-float">
                                 <div class="form-line">
-                                    <label class="form-label">Estimated Completion Date*</label>
+                                    <label class="form-label">Estimated Completion Date <span class="text-danger">*</span></label>
                                     <input type="date" name="estimated_completion_date" value="{{ $task->estimated_completion_date }}"  class="form-control" required>
+
+                                    <div class="invalid-feedback">
+                                        Estimated completion date is required
+                                    </div>
                                 </div>
                             </div>
 
                             <div class="form-group form-float">
                                 <div class="form-line">
-                                    <label class="form-label">Budget*</label>
-                                    <input name="total_budget" type="text" value="{{ $task->total_budget}}" class="form-control" required>
+                                    <label class="form-label">Budget <span class="text-danger">*</span></label>
+                                    <input name="total_budget" type="number" value="{{ $task->total_budget}}" class="form-control" min="1" required>
+
+                                    <div class="invalid-feedback">
+                                        Budget is required
+                                    </div>
                                 </div>
                             </div>
-{{--                                                                @dd($task_dependency)--}}
+
                             <div class="form-group form-float">
                                 <label> Dependency</label>
                                 <select class="form-control selectric" name="dependencies[]" id="taskDependencyDropdown" multiple="">
@@ -73,7 +89,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary"> Submit </button>
+                            <button type="submit" class="btn btn-primary">Update</button>
                         </form>
                     </div>
                 </div>
