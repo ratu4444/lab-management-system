@@ -12,6 +12,11 @@ class Project extends Model
     use HasFactory, SoftDeletes;
     protected $guarded = ['id'];
 
+    public function getTotalBudgetAttribute()
+    {
+        return $this->tasks->where('status', '!=', config('app.STATUSES.Canceled'))->sum('amount');
+    }
+
     public function getCompletionPercentageAttribute()
     {
         $statuses = config('app.STATUSES');
