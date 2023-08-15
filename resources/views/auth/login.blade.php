@@ -12,30 +12,39 @@
 
 @section('content')
     <div class="container">
-
-        <div class="col-12 col-md-6 offset-md-3 col-lg-4 offset-lg-4 mb-5">
-            <a href="">
-                <img src="{{ asset('default/DJL-Construction_Light.png') }}" class="img-fluid w-100" alt="">
+        <div class="col-12 mb-5 text-center">
+            <a href="{{ route('dashboard.index') }}">
+                <img src="{{ asset('assets/default/DJL-Construction_Dark.png') }}" class="img-fluid" style="max-height: 100px" alt="{{ config('app.name') }}">
             </a>
         </div>
-        <div class="card card-danger col-12 col-md-6 offset-md-3 py-3">
+        <div class="card card-primary col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3 py-3">
             <div class="card-body">
                 <h3 class="card-title text-center">Log in</h3>
                 <div class="card-text">
-                    <!--
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert">Incorrect username or password.</div> -->
-                    <!-- to error: add class "has-danger" -->
-                    <form method="POST" action="{{ route('login') }}">
+                    @if(session('errors'))
+                        <div class="alert alert-danger fade show" role="alert">{{ session('errors')->first() }}</div>
+                    @endif
+
+                    <form method="POST" action="{{ route('login') }}" class="needs-validation" novalidate>
                         @csrf
                         <div class="form-group">
-                            <label for="exampleInputEmail1" class="">Email address <small class="text-danger">*</small></label>
-                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email" required autofocus>
+                            <label for="email" class="">Email address <small class="text-danger">*</small></label>
+                            <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}" required autofocus>
+
+                            <div class="invalid-feedback">
+                                Valid email address is required
+                            </div>
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputPassword1">Password <small class="text-danger">*</small></label>
-                            <input type="password" class="form-control" id="exampleInputPassword1" name="password" required>
+                            <label for="password">Password <small class="text-danger">*</small></label>
+                            <input type="password" class="form-control" id="password" name="password" required>
+
+                            <div class="invalid-feedback">
+                                Password is required
+                            </div>
                         </div>
-                        <button type="submit" class="btn btn-danger btn-block btn-lg mt-5">Sign in</button>
+
+                        <button type="submit" class="btn btn-primary btn-block btn-lg mt-5">Login Now</button>
                     </form>
                 </div>
             </div>
