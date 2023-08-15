@@ -5,9 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Payment;
 use App\Models\Project;
 use App\Models\Task;
-use App\Models\TaskDependency;
 use App\Models\TaskPayment;
-use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -16,88 +14,90 @@ class PaymentController extends Controller
 {
     public function create($project_id)
     {
-        $project = Project::with('tasks', 'inspections')->where('id', $project_id)->firstOrFail();
+        $project = Project::with('tasks')->findOrFail($project_id);
+
         return view('payment.create', compact(  'project'));
     }
 
     public function store(Request $request, $project_id)
     {
         $request->validate([
-            'amount' => 'required',
+            'name'              => 'required|string',
+            'amount'            => 'required',
+            'date'              => 'required|date_format:Y-m-d',
+            'payment_method'    => 'required'
         ]);
 
-        $project = Project::where('id', $project_id)->first();
-
+        $project = Project::findOrFail($project_id);
         $client_id = $project->client_id;
 
         $payment_data = [
-            'project_id'                =>  $project_id,
+            'project_id'                => $project_id,
             'client_id'                 => $client_id,
             'name'                      => $request->name,
             'amount'                    => $request->amount,
             'date'                      => $request->date,
             'payment_method'            => $request->payment_method,
             'comment'                   => $request->comment,
-
         ];
+
         DB::beginTransaction();
         try {
-
             $payment = Payment::create($payment_data);
 
             $payment_task_data = [];
-
-            if ($request->tasks){
-            foreach ($request->tasks as $task) {
-                $payment_task_data [] = [
-                    'payment_id' => $payment->id,
-                    'task_id' => $task,
-                    'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now(),
-                ];
-            }}
+            if ($request->tasks) {
+                foreach ($request->tasks as $task) {
+                    $payment_task_data [] = [
+                        'payment_id'    => $payment->id,
+                        'task_id'       => $task,
+                        'created_at'    => Carbon::now(),
+                        'updated_at'    => Carbon::now(),
+                    ];
+                }
+            }
 
             if(count($payment_task_data)) TaskPayment::insert($payment_task_data);
+
             DB::commit();
-            return redirect()->back();
+            return redirect()
+                ->back()
+                ->with('success', 'Payment created successfully');
         } catch (\Exception $exception) {
-//            dd($exception->getMessage());
             DB::rollBack();
-            return redirect()->back();
+            return redirect()
+                ->back()
+                ->with('error', $exception->getMessage());
         }
     }
 
-
-    public function edit($payment_id){
-
+    public function edit($payment_id)
+    {
         $payment = Payment::with('tasks')->findOrFail($payment_id);
 
         $payment->dependent_payment_ids = $payment->tasks->pluck('id')->toArray();
-        $payment_task = Task::where('project_id', $payment->project_id)->get();
+        $project_tasks = Task::where('project_id', $payment->project_id)->get();
 
-        return view('payment.edit', compact('payment', 'payment_task'));
-
-
+        return view('payment.edit', compact('payment', 'project_tasks'));
     }
 
-    public function update(Request $request, $payment_id){
-//        dd($request);
-
+    public function update(Request $request, $payment_id)
+    {
         $request->validate([
-            'name' => 'required',
-            'date' => 'required|date_format:Y-m-d',
-            'amount' => 'required',
+            'name'              => 'required|string',
+            'amount'            => 'required',
+            'date'              => 'required|date_format:Y-m-d',
+            'payment_method'    => 'required'
         ]);
 
         $payment = Payment::with('taskPayments')->findOrFail($payment_id);
 
         $payment_data = [
-            'name'                      => $request->name,
-            'amount'                    => $request->amount,
-            'date'                      => $request->date,
-            'payment_method'            => $request->payment_method,
-            'comment'                   => $request->comment,
-
+            'name'              => $request->name,
+            'amount'            => $request->amount,
+            'date'              => $request->date,
+            'payment_method'    => $request->payment_method,
+            'comment'           => $request->comment,
         ];
 
         DB::beginTransaction();
@@ -118,15 +118,18 @@ class PaymentController extends Controller
                     ];
                 }
             }
-//            dd('ok');
-            if (count($payment_dependencies_data)){
-                $dependency = TaskPayment::insert($payment_dependencies_data);
-            }
+
+            if (count($payment_dependencies_data)) TaskPayment::insert($payment_dependencies_data);
+
             DB::commit();
-            return redirect()->route('payment.create', $payment->project_id);
+            return redirect()
+                ->route('payment.create', $payment->project_id)
+                ->with('success', 'Payment updated successfully');
         } catch (\Exception $exception) {
-//            dd($exception->getLine());
-            return redirect()->back();
+            DB::rollBack();
+            return redirect()
+                ->back()
+                ->with('error', $exception->getMessage());
         }
     }
 }

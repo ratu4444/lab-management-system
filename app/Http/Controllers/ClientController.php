@@ -41,9 +41,40 @@ class ClientController extends Controller
         try {
             User::create($client_data);
 
-            return redirect()->route('client.index');
+            return redirect()
+                ->route('client.index')
+                ->with('success', 'Client created successfully');
         } catch (\Exception $exception) {
-            return redirect()->back();
+            return redirect()
+                ->back()
+                ->with('error', $exception->getMessage());
+        }
+    }
+
+    public function storeClient(Request $request): \Illuminate\Http\JsonResponse
+    {
+        $request->validate([
+            'name'      => 'required|string',
+            'email'     => 'required|email|unique:users,email',
+            'password'  => 'required',
+        ]);
+
+        $client_data = [
+            'name'          => $request->name,
+            'email'         => $request->email,
+            'password'      => bcrypt($request->password),
+            'mobile'        => $request->mobile,
+            'company_name'  => $request->company_name,
+            'is_client'     => true,
+        ];
+
+        try {
+            $user = User::create($client_data);
+
+            $data = $this->formatUser($user);
+            return $this->apiResponse($data, 'User created successfully');
+        } catch (\Exception $exception) {
+            return $this->apiResponse([], $exception->getMessage(), 500);
         }
     }
 }

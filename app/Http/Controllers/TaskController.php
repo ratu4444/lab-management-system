@@ -14,17 +14,20 @@ class TaskController extends Controller
     public function create($project_id)
     {
         $project = Project::with('tasks')->findOrFail($project_id);
+
         return view('task.create', compact('project', 'project_id'));
     }
 
     public function store(Request $request , $project_id)
     {
         $request->validate([
+            'name'                      => 'required',
+            'estimated_start_date'      => 'required|date_format:Y-m-d',
             'estimated_completion_date' => 'required|date_format:Y-m-d',
             'total_budget'              => 'required',
         ]);
 
-        $project = Project::find($project_id);
+        $project = Project::findOrFail($project_id);
 
         $task_data = [
             'project_id'                => $project_id,
@@ -54,47 +57,24 @@ class TaskController extends Controller
 
             if (count($task_dependencies_data)) TaskDependency::insert($task_dependencies_data);
 
-            $project->total_budget += $request->total_budget;
-            $project->save();
-
             DB::commit();
 
-            return back();
+            return back()
+                ->with('success', 'Task created successfully');
         } catch (\Exception $exception) {
             DB::rollBack();
-            return redirect()->back();
+            return redirect()
+                ->back()
+                ->with('error', $exception->getMessage());
         }
     }
 
     public function edit($task_id)
     {
-//        dd($task_id);
         $task = Task::with('dependentTasks')->findOrFail($task_id);
 
         $task->dependent_task_ids = $task->dependentTasks->pluck('id')->toArray();
         $project_tasks = Task::where('project_id', $task->project_id)->where('id','!=', $task_id)->get();
-//
-//        $project = Project::where('id', $project_id)->first();
-//        dd('ok');
-//        $task = Task::where('project_id', $project_id)->first();
-//        $tasks = Task::get();
-//        $task = $tasks->where('project_id', $project_id)->first();
-
-
-//        $task_dependencies = TaskDependency::where('task_id', 7)->get();
-//        dd($task_dependencies->id);
-//         foreach ($task_dependencies as $task_dependency){
-//            $task_dependency_id[] =[
-//                $task_dependency->id];
-//        }
-//         dd($task_dependency_id);
-//        $dependent_task_name = $tasks->where('id',foreach($task_dependency_id as $task_dependencies_name){
-//
-//         dd($dependent_task_name);
-//        foreach ($task_dependencies as $task_dependency){
-//            $task_dependency;
-//        }
-//
 
         return view('task.edit', compact('task', 'project_tasks'));
     }
@@ -102,9 +82,10 @@ class TaskController extends Controller
     public function update(Request $request, $task_id)
     {
         $request->validate([
-            'name' => 'required',
-            'estimated_start_date' => 'required|date_format:Y-m-d',
-            'total_budget' => 'required',
+            'name'                          => 'required',
+            'estimated_start_date'          => 'required|date_format:Y-m-d',
+            'estimated_completion_date'     => 'required|date_format:Y-m-d',
+            'total_budget'                  => 'required',
         ]);
 
         $task = Task::with('taskDependencies')->findOrFail($task_id);
@@ -136,15 +117,17 @@ class TaskController extends Controller
                     ];
                 }
             }
-            if (count($task_dependencies_data)){
-                $dependency = TaskDependency::insert($task_dependencies_data);
-            }
+            if (count($task_dependencies_data)) TaskDependency::insert($task_dependencies_data);
+
             DB::commit();
-            return redirect()->route('task.create', $task->project_id);
+            return redirect()
+                ->route('task.create', $task->project_id)
+                ->with('success', 'Task updated successfully');
         } catch (\Exception $exception) {
-            dd($exception->getMessage());
-            return redirect()->back();
+            DB::rollBack();
+            return redirect()
+                ->back()
+                ->with('error', $exception->getMessage());
         }
     }
-
 }

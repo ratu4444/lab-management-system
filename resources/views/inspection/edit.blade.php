@@ -37,8 +37,8 @@
                             <div class="form-group form-float">
                                 <label>Dependency</label>
                                 <select class="form-control selectric" name="dependencies[]" multiple="">
-                                    @if(count($inspection_tasks))
-                                        @foreach($inspection_tasks as $task)
+                                    @if(count($project_tasks))
+                                        @foreach($project_tasks as $task)
                                             <option value="{{ $task->id }}" {{ in_array($task->id, $inspection->dependent_inspection_ids) ? 'selected' : '' }} >{{ $task->name }}</option>
                                         @endforeach
                                     @endif

@@ -9,12 +9,8 @@ use Illuminate\Http\Request;
 
 class SettingsController extends Controller
 {
-    public function taskCreate(){
-        return view('settings.create-task');
-    }
-
-    public function taskStore(Request $request){
-
+    public function taskStore(Request $request)
+    {
         $task_data = [
             'name'   => $request->name,
             'status' => $request->status,
@@ -26,56 +22,46 @@ class SettingsController extends Controller
         return redirect()->back();
     }
 
-    public function taskShow(){
+    public function taskShow()
+    {
         $task_show = SettingsTask::get();
         return view('settings.settings-task', compact('task_show'));
     }
 
-    public function paymentCreate(){
-        return view('settings.create-payment');
-    }
-
-    public function paymentStore(Request $request){
-
+    public function paymentStore(Request $request)
+    {
         $payment_data = [
-            'name'   => $request->name,
-            'amount' => $request->amount,
-            'payment_method' => $request->payment_method,
-            'comment'=> $request->comment,
+            'name'              => $request->name,
+            'amount'            => $request->amount,
+            'payment_method'    => $request->payment_method,
+            'comment'           => $request->comment,
         ];
-
 
         $settings_payment = SettingsPayment::create($payment_data);
         return redirect()->back();
     }
 
-    public function paymentShow(){
+    public function paymentShow()
+    {
         $payment_show = SettingsPayment::get();
         return view('settings.settings-payment', compact('payment_show'));
     }
 
-    public function inspectionCreate(){
-        return view('settings.create-inspection');
-    }
-
-    public function inspectionStore(Request $request){
-
+    public function inspectionStore(Request $request)
+    {
         $inspection_data = [
             'name'   => $request->name,
             'status' => $request->status,
             'comment'=> $request->comment,
         ];
 
-
         $settings_inspection = SettingsInspection::create($inspection_data);
         return redirect()->back();
     }
 
-    public function inspectionShow(){
+    public function inspectionShow()
+    {
         $inspection_show = SettingsInspection::get();
         return view('settings.settings-inspection', compact('inspection_show'));
     }
-
-
-
 }
