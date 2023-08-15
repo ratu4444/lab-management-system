@@ -12,6 +12,7 @@
             @auth
                 @include('custom-layout.navbar')
                 @include('custom-layout.sidebar')
+                @include('custom-layout.alert')
             @endauth
 
     {{--        @include('custom-layout.alert')--}}
