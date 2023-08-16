@@ -11,6 +11,7 @@ class ClientController extends Controller
     {
         $clients = User::where('is_client', true)
             ->withCount('projects')
+            ->latest()
             ->paginate(10);
 
         return view('client.index', compact('clients'));

@@ -59,12 +59,12 @@
                         </select>
                     </div>
 
-                    <div class="form-group form-float">
-                        <div class="form-line">
-                            <label class="form-label">Comment</label>
-                            <textarea name="comment" class="form-control"></textarea>
-                        </div>
-                    </div>
+{{--                    <div class="form-group form-float">--}}
+{{--                        <div class="form-line">--}}
+{{--                            <label class="form-label">Comment</label>--}}
+{{--                            <textarea name="comment" class="form-control"></textarea>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
                     <button type="submit" class="btn btn-primary">Create Payment</button>
                 </form>
             </div>

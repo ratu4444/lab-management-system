@@ -137,7 +137,7 @@
                             <div class="col-12 px-5">
                                 @if($project->tasks->count())
                                     <div class="activities">
-                                        @foreach($project->tasks->sortBy('estimated_start_date') as $task)
+                                        @foreach($project->tasks->sortBy('estimated_completion_date')->sortBy('estimated_start_date') as $task)
                                             @php
                                                 $status = array_search($task->status, config('app.STATUSES'));
                                                 $status_color = config("app.STATUSES_COLORS.$status");
@@ -317,6 +317,7 @@
             var tasks = @json($project?->tasks->where('status', '!=', config('app.STATUSES.Canceled')) ?? []);
             var payments = @json($project?->payments ?? []);
 
+            console.log(payments);
             if (tasks.length > 0) {
                 ganttChart(tasks);
             }
@@ -348,7 +349,6 @@
 
         function pieChart(data) {
             am4core.useTheme(am4themes_animated);
-
             // Create chart instance
             var chart = am4core.create("pieChart", am4charts.PieChart);
 
@@ -356,13 +356,11 @@
             data.forEach(function (singleData) {
                 chartData.push(
                     {
-                        "amount": singleData.name,
-                        "payment": singleData.amount,
+                        "payment": singleData.name,
+                        "amount": singleData.amount,
                     }
                 );
             });
-
-            console.log(chartData);
 
             // Add data
             chart.data = chartData;

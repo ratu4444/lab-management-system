@@ -58,7 +58,11 @@
             </div>
         </div>
     </div>
-    </div>
+
+    <a href="{{ route('project.index') }}" class="d-flex align-items-center text-muted font-15 font-weight-bold">
+        <i class="far fa-arrow-alt-circle-left font-25 mr-2"></i>
+        Back to Project List
+    </a>
 @endsection
 
 @section('modal')
