@@ -47,7 +47,7 @@
                     </a>
                 </li>
 
-                @if(true)
+                @if(false)
                     <li class="dropdown {{ Route::is('settings*') ? 'active' : '' }}">
                         <a href="" class="menu-toggle nav-link has-dropdown">
                             <i data-feather="briefcase"></i>
