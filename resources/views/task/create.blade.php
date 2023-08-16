@@ -85,6 +85,14 @@
 
                 validateDates(startElement, endElement);
             });
+
+            $('input[name="status"]').on('change', function() {
+                var statusValue = $(this).val();
+                var percentageElement = $('#completion_percentage');
+                var configStatuses = @json(config('app.STATUSES'));
+
+                modifyCompletionPercentage(statusValue, percentageElement, configStatuses);
+            });
         });
     </script>
 @endpush

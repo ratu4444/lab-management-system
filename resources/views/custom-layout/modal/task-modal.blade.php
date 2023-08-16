@@ -62,7 +62,7 @@
                                     $status_color = config("app.STATUSES_COLORS.$label");
                                 @endphp
                                 <label class="selectgroup-item">
-                                    <input type="radio" name="status" value="{{ $status_id }}" class="selectgroup-input-radio" {{ $status_id == 1 ? 'checked' : ''}} >
+                                    <input type="radio" name="status" value="{{ $status_id }}" class="selectgroup-input-radio" {{ $status_id == 1 ? 'checked' : ''}}>
                                     <span class="selectgroup-button" data-class="{{ "bg-$status_color" }}">{{ $label }}</span>
                                 </label>
                             @endforeach
@@ -72,6 +72,15 @@
 {{--                            <textarea name="comment" class="form-control"></textarea>--}}
 {{--                        </div>--}}
                     </div>
+                    <div class="form-group">
+                        <label class="form-label">Completion Percentage</label>
+                        <input name="completion_percentage" type="number" class="form-control" id="completion_percentage" min="0" max="100">
+
+                        <div class="invalid-feedback">
+                            Completion percentage must be between 0-100
+                        </div>
+                    </div>
+
                     <button type="submit" class="btn btn-primary">Create Task</button>
                 </form>
             </div>

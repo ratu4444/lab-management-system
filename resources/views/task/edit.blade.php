@@ -72,7 +72,7 @@
                                         @endif
                                     </select>
                                 </div>
-                                <div class="form-group col-12">
+                                <div class="form-group col-12 col-md-6">
                                     <label class="form-label">Status</label>
                                     <div class="selectgroup w-100">
                                         @foreach(config('app.STATUSES') as $label => $status_id)
@@ -89,6 +89,15 @@
     {{--                                    <label class="form-label">Comment</label>--}}
     {{--                                    <textarea name="comment" class="form-control">{{ $task->comment }}</textarea>--}}
     {{--                                </div>--}}
+                                </div>
+
+                                <div class="form-group col-12 col-md-6">
+                                    <label class="form-label">Completion Percentage</label>
+                                    <input name="completion_percentage" type="number" class="form-control" id="completion_percentage" min="0" max="100">
+
+                                    <div class="invalid-feedback">
+                                        Completion percentage must be between 0-100
+                                    </div>
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-primary">Update</button>
@@ -118,6 +127,14 @@
                 var endElement = $('#completion_date');
 
                 validateDates(startElement, endElement);
+            });
+
+            $('input[name="status"]').on('change', function() {
+                var statusValue = $(this).val();
+                var percentageElement = $('#completion_percentage');
+                var configStatuses = @json(config('app.STATUSES'));
+
+                modifyCompletionPercentage(statusValue, percentageElement, configStatuses);
             });
         });
     </script>

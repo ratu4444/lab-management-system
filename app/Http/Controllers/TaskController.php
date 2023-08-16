@@ -25,9 +25,22 @@ class TaskController extends Controller
             'estimated_start_date'      => 'required|date_format:Y-m-d',
             'estimated_completion_date' => 'required|date_format:Y-m-d|after:estimated_start_date',
             'total_budget'              => 'required',
+            'completion_percentage'     => 'nullable|between:0,100'
         ]);
 
         $project = Project::findOrFail($project_id);
+
+        $statuses = config('app.STATUSES');
+        switch ($request->completion_percentage) {
+            case $statuses['Pending']:
+                $completion_percentage = 0;
+            break;
+            case $statuses['Completed']:
+                $completion_percentage = 100;
+            break;
+            default:
+                $completion_percentage = $request->completion_percentage;
+        }
 
         $task_data = [
             'project_id'                => $project_id,
@@ -36,6 +49,7 @@ class TaskController extends Controller
             'estimated_completion_date' => $request->estimated_completion_date,
             'total_budget'              => $request->total_budget,
             'status'                    => $request->status,
+            'completion_percentage'     => $completion_percentage,
             'comment'                   => $request->comment,
         ];
 
@@ -88,9 +102,21 @@ class TaskController extends Controller
             'start_date'                => 'nullable|date_format:Y-m-d',
             'completion_date'           => 'nullable|date_format:Y-m-d|after:start_date',
             'total_budget'              => 'required',
+            'completion_percentage'     => 'nullable|between:0,100'
         ]);
 
         $task = Task::with('taskDependencies')->findOrFail($task_id);
+        $statuses = config('app.STATUSES');
+        switch ($request->completion_percentage) {
+            case $statuses['Pending']:
+                $completion_percentage = 0;
+                break;
+            case $statuses['Completed']:
+                $completion_percentage = 100;
+                break;
+            default:
+                $completion_percentage = $request->completion_percentage;
+        }
 
         $task_data = [
             'name'                      => $request->name,
@@ -100,6 +126,7 @@ class TaskController extends Controller
             'completion_date'           => $request->completion_date,
             'total_budget'              => $request->total_budget,
             'status'                    => $request->status,
+            'completion_percentage'     => $completion_percentage,
             'comment'                   => $request->comment,
         ];
 

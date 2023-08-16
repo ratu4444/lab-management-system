@@ -36,3 +36,19 @@ function validateDates(startElement, endElement) {
     }
 }
 
+function modifyCompletionPercentage(statusValue, percentageElement, configStatuses) {
+    switch (parseInt(statusValue)) {
+        case configStatuses.Pending:
+            percentageElement.val(0).attr('readonly', 'readonly');
+        break;
+        case configStatuses.Completed:
+            percentageElement.val(100).attr('readonly', 'readonly');
+        break;
+        case configStatuses.Canceled:
+            percentageElement.attr('readonly', 'readonly');
+        break;
+        default:
+            percentageElement.removeAttr('readonly');
+    }
+}
+
