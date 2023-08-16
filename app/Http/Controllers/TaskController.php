@@ -23,7 +23,7 @@ class TaskController extends Controller
         $request->validate([
             'name'                      => 'required',
             'estimated_start_date'      => 'required|date_format:Y-m-d',
-            'estimated_completion_date' => 'required|date_format:Y-m-d',
+            'estimated_completion_date' => 'required|date_format:Y-m-d|after:estimated_start_date',
             'total_budget'              => 'required',
         ]);
 
@@ -82,10 +82,12 @@ class TaskController extends Controller
     public function update(Request $request, $task_id)
     {
         $request->validate([
-            'name'                          => 'required',
-            'estimated_start_date'          => 'required|date_format:Y-m-d',
-            'estimated_completion_date'     => 'required|date_format:Y-m-d',
-            'total_budget'                  => 'required',
+            'name'                      => 'required',
+            'estimated_start_date'      => 'required|date_format:Y-m-d',
+            'estimated_completion_date' => 'required|date_format:Y-m-d|after:estimated_start_date',
+            'start_date'                => 'nullable|date_format:Y-m-d',
+            'completion_date'           => 'nullable|date_format:Y-m-d|after:start_date',
+            'total_budget'              => 'required',
         ]);
 
         $task = Task::with('taskDependencies')->findOrFail($task_id);
@@ -94,6 +96,8 @@ class TaskController extends Controller
             'name'                      => $request->name,
             'estimated_start_date'      => $request->estimated_start_date,
             'estimated_completion_date' => $request->estimated_completion_date,
+            'start_date'                => $request->start_date,
+            'completion_date'           => $request->completion_date,
             'total_budget'              => $request->total_budget,
             'status'                    => $request->status,
             'comment'                   => $request->comment,

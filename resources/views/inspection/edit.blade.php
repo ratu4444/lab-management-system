@@ -3,6 +3,7 @@
 
 @push('css')
     <link rel="stylesheet" href="{{ asset('assets/bundles/jquery-selectric/selectric.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/bundles/bootstrap-daterangepicker/daterangepicker.css') }}">
 @endpush
 
 @section('content')
@@ -28,8 +29,8 @@
                             </div>
                             <div class="form-group form-float">
                                 <div class="form-line">
-                                    <label class="form-label">Schedule Date <span class="text-danger">*</span></label>
-                                    <input type="date" name="scheduled_date" value="{{ $inspection->scheduled_date }}" class="form-control" required>
+                                    <label class="form-label">Scheduled Date <span class="text-danger">*</span></label>
+                                    <input type="text" name="scheduled_date" value="{{ $inspection->scheduled_date }}" class="form-control datepicker" required>
 
                                     <div class="invalid-feedback">
                                         Schedule date is required
@@ -38,8 +39,8 @@
                             </div>
                             <div class="form-group form-float">
                                 <div class="form-line">
-                                    <label class="form-label">Date</label>
-                                    <input type="date" name="date" value="{{ $inspection->date }}" class="form-control">
+                                    <label class="form-label">Inspected Date</label>
+                                    <input type="text" name="date" value="{{ $inspection->date }}" class="form-control datepicker">
                                 </div>
                             </div>
                             <div class="form-group form-float">
@@ -66,12 +67,12 @@
                                     @endforeach
                                 </div>
                             </div>
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <label class="form-label">Comment</label>
-                                    <textarea name="comment" class="form-control">{{ $inspection->comment }}</textarea>
-                                </div>
-                            </div>
+{{--                            <div class="form-group form-float">--}}
+{{--                                <div class="form-line">--}}
+{{--                                    <label class="form-label">Comment</label>--}}
+{{--                                    <textarea name="comment" class="form-control">{{ $inspection->comment }}</textarea>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
                             <button type="submit" class="btn btn-primary">Update</button>
                         </form>
 
@@ -84,5 +85,6 @@
 
 @push('js')
     <script src="{{ asset('assets/bundles/jquery-selectric/jquery.selectric.min.js') }}"></script>
+    <script src="{{ asset('assets/bundles/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
     <script src="{{ asset('js/select-button-bg-changer.js') }}"></script>
 @endpush

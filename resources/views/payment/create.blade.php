@@ -3,18 +3,14 @@
 
 @push('css')
     <link rel="stylesheet" href="{{ asset('assets/bundles/jquery-selectric/selectric.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/bundles/bootstrap-daterangepicker/daterangepicker.css') }}">
 @endpush
 
 @section('content')
     <div class="card">
         <div class="card-header d-flex justify-content-between">
             <h4 class="card-title text-muted">Payments</h4>
-
-            <div class="">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#paymentCreateModal">Add
-                    New Payment
-                </button>
-            </div>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#paymentCreateModal">Add New Payment</button>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -65,4 +61,5 @@
 
 @push('js')
     <script src="{{ asset('assets/bundles/jquery-selectric/jquery.selectric.min.js') }}"></script>
+    <script src="{{ asset('assets/bundles/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
 @endpush

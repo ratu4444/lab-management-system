@@ -33,7 +33,7 @@
                     <div class="form-group form-float">
                         <div class="form-line">
                             <label class="form-label">Date <span class="text-danger">*</span></label>
-                            <input type="date" name="date" class="form-control" required>
+                            <input type="text" name="date" class="form-control datepicker" required>
 
                             <div class="invalid-feedback">
                                 Payment date is required

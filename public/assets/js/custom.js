@@ -25,3 +25,14 @@ function animateValue(element, value, duration) {
     requestAnimationFrame(step);
 }
 
+function validateDates(startElement, endElement) {
+    const startDate = new Date(startElement.val());
+    const endDate = new Date(endElement.val());
+
+    if (startDate > endDate) {
+        endElement[0].setCustomValidity('Invalid');
+    } else {
+        endElement[0].setCustomValidity('');
+    }
+}
+

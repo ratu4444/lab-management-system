@@ -14,7 +14,8 @@ class Project extends Model
 
     public function getTotalBudgetAttribute()
     {
-        $total_budget = $this->tasks->where('status', '!=', config('app.STATUSES.Canceled'))->sum('amount');
+        $total_budget = $this->tasks->where('status', '!=', config('app.STATUSES.Canceled'))->sum('total_budget');
+
         return $total_budget ?: $this->estimated_budget;
     }
 

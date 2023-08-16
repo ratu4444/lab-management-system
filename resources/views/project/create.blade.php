@@ -82,10 +82,10 @@
                                         @endforeach
                                     </div>
                                 </div>
-                                <div class="form-group col-12">
-                                    <label class="form-label" for="comment">Comment</label>
-                                    <textarea name="comment" class="form-control" id="comment">{{ old('comment') }}</textarea>
-                                </div>
+{{--                                <div class="form-group col-12">--}}
+{{--                                    <label class="form-label" for="comment">Comment</label>--}}
+{{--                                    <textarea name="comment" class="form-control" id="comment">{{ old('comment') }}</textarea>--}}
+{{--                                </div>--}}
                             </div>
                             <div class="text-right">
                                 <button type="submit" class="btn btn-primary">Next</button>
@@ -103,7 +103,6 @@
 @endsection
 
 @push('js')
-
     <script src="{{ asset('assets/bundles/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
     <script src="{{ asset('js/form-submission.js') }}"></script>
     <script src="{{ asset('js/select-button-bg-changer.js') }}"></script>

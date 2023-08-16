@@ -3,6 +3,7 @@
 
 @push('css')
     <link rel="stylesheet" href="{{ asset('assets/bundles/jquery-selectric/selectric.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/bundles/bootstrap-daterangepicker/daterangepicker.css') }}">
 @endpush
 
 @section('content')
@@ -46,7 +47,7 @@
                             @endforeach
                         @else
                             <tr>
-                                <td colspan="100%" class="text-center text-muted font-weight-bold">No Task Found</td>
+                                <td colspan="100%" class="text-center text-muted font-weight-bold">No Inspection Found</td>
                             </tr>
                         @endif
                     </tbody>
@@ -66,5 +67,6 @@
 
 @push('js')
     <script src="{{ asset('assets/bundles/jquery-selectric/jquery.selectric.min.js') }}"></script>
+    <script src="{{ asset('assets/bundles/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
     <script src="{{ asset('js/select-button-bg-changer.js') }}"></script>
 @endpush

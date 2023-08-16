@@ -21,7 +21,7 @@
                     </div>
                     <div class="form-group">
                         <label class="form-label">Estimated Start Date <span class="text-danger">*</span></label>
-                        <input type="date" name="estimated_start_date" class="form-control" required>
+                        <input type="text" name="estimated_start_date" class="form-control datepicker" id="estimated_start_date" required>
 
                         <div class="invalid-feedback">
                             Estimated start date is required
@@ -29,10 +29,10 @@
                     </div>
                     <div class="form-group">
                         <label class="form-label">Estimated Completion Date <span class="text-danger">*</span></label>
-                        <input type="date" name="estimated_completion_date" class="form-control" required>
+                        <input type="text" name="estimated_completion_date" class="form-control datepicker" id="estimated_completion_date" required>
 
                         <div class="invalid-feedback">
-                            Estimated completion date is required
+                            Estimated completion date must be after estimated start date
                         </div>
                     </div>
 
@@ -67,10 +67,10 @@
                                 </label>
                             @endforeach
                         </div>
-                        <div class="form-group">
-                            <label class="form-label">Comment</label>
-                            <textarea name="comment" class="form-control"></textarea>
-                        </div>
+{{--                        <div class="form-group">--}}
+{{--                            <label class="form-label">Comment</label>--}}
+{{--                            <textarea name="comment" class="form-control"></textarea>--}}
+{{--                        </div>--}}
                     </div>
                     <button type="submit" class="btn btn-primary">Create Task</button>
                 </form>

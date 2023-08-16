@@ -3,6 +3,7 @@
 
 @push('css')
     <link rel="stylesheet" href="{{ asset('assets/bundles/jquery-selectric/selectric.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/bundles/bootstrap-daterangepicker/daterangepicker.css') }}">
 @endpush
 
 @section('content')
@@ -73,5 +74,17 @@
 
 @push('js')
     <script src="{{ asset('assets/bundles/jquery-selectric/jquery.selectric.min.js') }}"></script>
+    <script src="{{ asset('assets/bundles/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
     <script src="{{ asset('js/select-button-bg-changer.js') }}"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#estimated_start_date, #estimated_completion_date').on('change', function () {
+                var startElement = $('#estimated_start_date');
+                var endElement = $('#estimated_completion_date');
+
+                validateDates(startElement, endElement);
+            });
+        });
+    </script>
 @endpush

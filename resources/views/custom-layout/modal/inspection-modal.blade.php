@@ -10,33 +10,23 @@
             <div class="modal-body">
                 <form action="{{ route('inspection.store', $project->id) }}" method="post" class="needs-validation" novalidate>
                     @csrf
-                    <div class="form-group form-float">
-                        <div class="form-line">
-                            <label class="form-label">Name <span class="text-danger">*</span></label>
-                            <input type="text" name="name" class="form-control" required>
+                    <div class="form-group">
+                        <label class="form-label">Name <span class="text-danger">*</span></label>
+                        <input type="text" name="name" class="form-control" required>
 
-                            <div class="invalid-feedback">
-                                Inspection name is required
-                            </div>
+                        <div class="invalid-feedback">
+                            Inspection name is required
                         </div>
                     </div>
-                    <div class="form-group form-float">
-                        <div class="form-line">
-                            <label class="form-label">Schedule Date <span class="text-danger">*</span></label>
-                            <input type="date" name="scheduled_date" class="form-control" required>
+                    <div class="form-group">
+                        <label class="form-label">Scheduled Date <span class="text-danger">*</span></label>
+                        <input type="text" name="scheduled_date" class="form-control datepicker" required>
 
-                            <div class="invalid-feedback">
-                                Schedule date is required
-                            </div>
+                        <div class="invalid-feedback">
+                            Schedule date is required
                         </div>
                     </div>
-                    <div class="form-group form-float">
-                        <div class="form-line">
-                            <label class="form-label">Inspection Date</label>
-                            <input type="date" name="date" class="form-control">
-                        </div>
-                    </div>
-                    <div class="form-group form-float">
+                    <div class="form-group">
                         <label>Dependency</label>
                         <select class="form-control selectric" name="dependencies[]" multiple="">
                             @if(count($project->tasks))
@@ -46,7 +36,7 @@
                             @endif
                         </select>
                     </div>
-                    <div class="form-group form-float">
+                    <div class="form-group">
                         <label class="form-label">Status</label>
                         <div class="selectgroup w-100">
                             @foreach(config('app.STATUSES') as $label => $status_id)
@@ -60,12 +50,10 @@
                             @endforeach
                         </div>
                     </div>
-                    <div class="form-group form-float">
-                        <div class="form-line">
-                            <label class="form-label">Comment</label>
-                            <textarea name="comment" class="form-control"></textarea>
-                        </div>
-                    </div>
+{{--                    <div class="form-group">--}}
+{{--                        <label class="form-label">Comment</label>--}}
+{{--                        <textarea name="comment" class="form-control"></textarea>--}}
+{{--                    </div>--}}
 
                     <button type="submit" class="btn btn-primary">Create Inspection</button>
                 </form>

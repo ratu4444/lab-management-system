@@ -17,7 +17,8 @@ class ProjectController extends Controller
 {
     public function index(Request $request)
     {
-        $projects = Project::with('client');
+        $projects = Project::with('client')
+            ->latest();
 
         $client_id = $request->client;
         if ($client_id) $projects->where('client_id', $request->client);

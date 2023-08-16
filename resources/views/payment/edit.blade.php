@@ -40,7 +40,7 @@
                             <div class="form-group form-float">
                                 <div class="form-line">
                                     <label class="form-label">Date <span class="text-danger">*</span></label>
-                                    <input type="date" name="date" value="{{ $payment->date }}" class="form-control" required>
+                                    <input type="text" name="date" value="{{ $payment->date }}" class="form-control datepicker" required>
 
                                     <div class="invalid-feedback">
                                         Payment date is required
@@ -66,12 +66,12 @@
                                 </select>
                             </div>
 
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <label class="form-label">Comment</label>
-                                    <textarea name="comment" class="form-control">{{ $payment->comment }}</textarea>
-                                </div>
-                            </div>
+{{--                            <div class="form-group form-float">--}}
+{{--                                <div class="form-line">--}}
+{{--                                    <label class="form-label">Comment</label>--}}
+{{--                                    <textarea name="comment" class="form-control">{{ $payment->comment }}</textarea>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
                             <button type="submit" class="btn btn-primary">Update</button>
                         </form>
                     </div>
