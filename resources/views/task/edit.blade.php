@@ -93,7 +93,7 @@
 
                                 <div class="form-group col-12 col-md-6">
                                     <label class="form-label">Completion Percentage</label>
-                                    <input name="completion_percentage" type="number" class="form-control" id="completion_percentage" min="0" max="100">
+                                    <input name="completion_percentage" type="number" class="form-control" id="completion_percentage" value="{{ $task->completion_percentage }}" min="0" max="100">
 
                                     <div class="invalid-feedback">
                                         Completion percentage must be between 0-100

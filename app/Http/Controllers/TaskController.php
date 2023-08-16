@@ -39,7 +39,7 @@ class TaskController extends Controller
                 $completion_percentage = 100;
             break;
             default:
-                $completion_percentage = $request->completion_percentage;
+                $completion_percentage = $request->completion_percentage ?? 0;
         }
 
         $task_data = [
@@ -115,7 +115,7 @@ class TaskController extends Controller
                 $completion_percentage = 100;
                 break;
             default:
-                $completion_percentage = $request->completion_percentage;
+                $completion_percentage = $request->completion_percentage ?? 0;
         }
 
         $task_data = [
