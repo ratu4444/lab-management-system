@@ -46,23 +46,21 @@
                         <span>Project Dashboard</span>
                     </a>
                 </li>
-            @endif
 
-            @if(false)
-
-                <li class="dropdown {{ Route::is('settings*') ? 'active' : '' }}">
-                    <a href="" class="menu-toggle nav-link has-dropdown">
-                        <i data-feather="briefcase"></i>
-                        <span>Settings</span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li class="{{ Route::is('settings.task.show') ? 'active' : '' }}"><a class="nav-link" href="{{ route('settings.task.show') }}"> Task Settings</a></li>
-                        <li class="{{ Route::is('settings.payment.show') ? 'active' : '' }}"><a class="nav-link" href="{{ route('settings.payment.show') }}">Payment Settings</a></li>
-                        <li class="{{ Route::is('settings.inspection.show') ? 'active' : '' }}"><a class="nav-link" href="{{ route('settings.inspection.show') }}">Inspection Settings</a></li>
-                        <li class=""><a class="nav-link" href="">Elements Settings</a></li>
-                    </ul>
-                </li>
-
+                @if(true)
+                    <li class="dropdown {{ Route::is('settings*') ? 'active' : '' }}">
+                        <a href="" class="menu-toggle nav-link has-dropdown">
+                            <i data-feather="briefcase"></i>
+                            <span>Settings</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="{{ Route::is('settings.task.show') ? 'active' : '' }}"><a class="nav-link" href="{{ route('settings.task.show') }}"> Task Settings</a></li>
+                            <li class="{{ Route::is('settings.payment.show') ? 'active' : '' }}"><a class="nav-link" href="{{ route('settings.payment.show') }}">Payment Settings</a></li>
+                            <li class="{{ Route::is('settings.inspection.show') ? 'active' : '' }}"><a class="nav-link" href="{{ route('settings.inspection.show') }}">Inspection Settings</a></li>
+                            <li class=""><a class="nav-link" href="">Elements Settings</a></li>
+                        </ul>
+                    </li>
+                @endif
             @endif
 
 
