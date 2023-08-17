@@ -64,4 +64,8 @@ class SettingsController extends Controller
         $inspection_show = SettingsInspection::get();
         return view('settings.settings-inspection', compact('inspection_show'));
     }
+
+    public function elementShow(){
+        return view('settings.settings-element');
+    }
 }
