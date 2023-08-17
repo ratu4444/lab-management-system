@@ -44,34 +44,37 @@
     @if($project)
         <!-- Main Content -->
         <div class="row">
-            <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                <div class="card card-primary h-90">
-                    <div class="card-statistic-4">
-                        <div class="align-items-center justify-content-between">
-                            <div class="row">
-                                <div class="col-12 py-3">
-                                    <div class="card-content ">
-                                        <h5 class="matrix-title"> Project Completion </h5>
-                                    </div>
+            @if($project->elementSettings->where('element_id', 1)->first()?->is_enabled)
+                <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <div class="card card-primary h-90">
+                        <div class="card-statistic-4">
+                            <div class="align-items-center justify-content-between">
+                                <div class="row">
+                                    <div class="col-12 py-3">
+                                        <div class="card-content ">
+                                            <h5 class="matrix-title"> {{ $project->elementSettings->where('element_id', 1)->first()?->element_name ?? 'Project Completion' }} </h5>
+                                        </div>
 
-                                    <div>
-                                        <div class="progress-text font-20 font-weight-bold {{ $project->completion_percentage < 50 ? 'col-red' : 'col-green' }}">{{ $project->completion_percentage.'%' }}</div>
-                                        <div class="progress mt-2" data-height="6">
-                                            <div class="progress-bar {{ $project->completion_percentage < 50 ? 'bg-danger' : 'bg-success' }}" data-width="{{ $project->completion_percentage.'%' }}"></div>
+                                        <div>
+                                            <div class="progress-text font-20 font-weight-bold {{ $project->completion_percentage < 50 ? 'col-red' : 'col-green' }}">{{ $project->completion_percentage.'%' }}</div>
+                                            <div class="progress mt-2" data-height="6">
+                                                <div class="progress-bar {{ $project->completion_percentage < 50 ? 'bg-danger' : 'bg-success' }}" data-width="{{ $project->completion_percentage.'%' }}"></div>
+                                            </div>
                                         </div>
                                     </div>
+                                    {{--                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">--}}
+                                    {{--                                    <div class="banner-img">--}}
+                                    {{--                                        <img src="{{ asset('assets/img/banner/3.png') }}" alt="">--}}
+                                    {{--                                    </div>--}}
+                                    {{--                                </div>--}}
                                 </div>
-{{--                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">--}}
-{{--                                    <div class="banner-img">--}}
-{{--                                        <img src="{{ asset('assets/img/banner/3.png') }}" alt="">--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            @endif
             <!--            FINAL BUDGET-->
+
             <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-xs-12">
                 <div class="card card-primary h-90">
                     <div class="card-statistic-4">

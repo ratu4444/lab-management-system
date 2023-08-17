@@ -24,7 +24,9 @@
 @section('content')
 
         <!-- Main Content -->
-        <div class="row">
+        <form action="{{ route('settings.element.store', $project->id) }}" method="post">
+            @csrf
+            <div class="row">
             <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-xs-12">
                 <div class="card card-primary h-90">
                     <div class="card-statistic-4">
@@ -32,16 +34,19 @@
                             <div class="row">
                                 <div class="col-12 py-3">
                                     <div class="card-content ">
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <h5 class="matrix-title"><input type="text" name="project_completion_name" class="border-0" value="name"></h5>
-
-                                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                                <label class="btn btn-secondary active btn-sm">
-                                                    <input type="radio" name="options" id="option1" autocomplete="off" checked> Show
-                                                </label>
-                                                <label class="btn btn-secondary btn-sm">
-                                                    <input type="radio" name="options" id="option2" autocomplete="off"> Hide
-                                                </label>
+                                        <div class="row">
+                                            <div class="col-8">
+                                            <h5 class="matrix-title"><input type="text" name="elements[0][title]" class="border-0 w-100" value=""></h5>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                                    <label class="btn btn-secondary active btn-sm">
+                                                        <input type="radio" name="elements[0][is_enabled]" value="1" checked> Show
+                                                    </label>
+                                                    <label class="btn btn-secondary btn-sm">
+                                                        <input type="radio" name="elements[0][is_enabled]"  value="0"> Hide
+                                                    </label>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -53,11 +58,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                {{--                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">--}}
-                                {{--                                    <div class="banner-img">--}}
-                                {{--                                        <img src="{{ asset('assets/img/banner/3.png') }}" alt="">--}}
-                                {{--                                    </div>--}}
-                                {{--                                </div>--}}
                             </div>
                         </div>
                     </div>
@@ -71,20 +71,30 @@
                             <div class="row">
                                 <div class="col-12 pt-3">
                                     <div class="card-content">
-                                        <h5 class="matrix-title"><h4><input type="text" class="border-0" name="project_budget_name"></h4></h5>
+                                        <div class="row">
+                                            <div class="col-8">
+                                                <h4 class="matrix-title"><input type="text" class="border-0 w-100" value="sakib vai" name="elements[1][title]"></h4>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                                    <label class="btn btn-secondary active btn-sm">
+                                                        <input type="radio" name="elements[1][is_enabled]" value="1" checked> Show
+                                                    </label>
+                                                    <label class="btn btn-secondary btn-sm">
+                                                        <input type="radio" name="elements[1][is_enabled]" value="0"> Hide
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div>
                                             <h2 class="font-18">$50000</h2>
                                             <p class="col-orange mb-0"><span class="col-orange font-20">50%</span>
                                                 Increase
                                             </p>
                                         </div>
+
                                     </div>
                                 </div>
-                                {{--                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">--}}
-                                {{--                                    <div class="banner-img">--}}
-                                {{--                                        <img src="{{ asset('assets/img/banner/4.png') }}" alt="">--}}
-                                {{--                                    </div>--}}
-                                {{--                                </div>--}}
                             </div>
                         </div>
                     </div>
@@ -98,18 +108,27 @@
                             <div class="row ">
                                 <div class="col-12 pt-3">
                                     <div class="card-content">
-                                        <h5 class="matrix-title"><h4><input type="text" name="payment_completion_name " class="border-0"></h4></h5>
-                                    </div>
-                                    <div>
-                                        <h2 class="font-18">$25000</h2>
-                                        <p class="mb-0"><span class="col-green font-20">50%</span></p>
+                                        <div class="row">
+                                            <div class="col-8">
+                                                <h4 class="matrix-title"><input type="text" name="elements[2][title]" value="sabbir vai" class="border-0 w-100"></h4>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                                    <label class="btn btn-secondary active btn-sm">
+                                                        <input type="radio" name="elements[2][is_enabled]" value="1"  checked> Show
+                                                    </label>
+                                                    <label class="btn btn-secondary btn-sm">
+                                                        <input type="radio" name="elements[2][is_enabled]" value="0" > Hide
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <h2 class="font-18">$25000</h2>
+                                            <p class="mb-0"><span class="col-green font-20">50%</span></p>
+                                        </div>
                                     </div>
                                 </div>
-                                {{--                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">--}}
-                                {{--                                    <div class="banner-img">--}}
-                                {{--                                        <img src="{{ asset('assets/img/banner/4.png') }}" alt="">--}}
-                                {{--                                    </div>--}}
-                                {{--                                </div>--}}
                             </div>
                         </div>
                     </div>
@@ -121,9 +140,20 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header">
-                        <h4><input type="text" name="project_timeline_name" class="border-0"></h4>
+                    <div class="card-header d-flex justify-content-between">
+
+                        <h4 class="matrix-title"><input type="text"  value="liakot vai" name="elements[3][title]" class="border-0"></h4>
+
+                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                            <label class="btn btn-secondary active btn-sm">
+                                <input type="radio" name="elements[3][is_enabled]" value="1" checked> Show
+                            </label>
+                            <label class="btn btn-secondary btn-sm">
+                                <input type="radio" name="elements[3][is_enabled]" value="0"> Hide
+                            </label>
+                        </div>
                     </div>
+
                     <div class="card-body">
                         <div class="row">
                             <div class="col-12 px-5">
@@ -158,7 +188,17 @@
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12">
                 <div class="card">
-                    <div class="card-header"><h4><h4><input type="text" name="project_schedule_name" class="border-0"></h4></h4></div>
+                    <div class="card-header d-flex justify-content-between">
+                        <h4><input type="text" name="elements[4][title]" value="tonoy vai"  class="border-0"></h4>
+                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                            <label class="btn btn-secondary active btn-sm">
+                                <input type="radio" name="elements[4][is_enabled]" value="1"  checked> Show
+                            </label>
+                            <label class="btn btn-secondary btn-sm">
+                                <input type="radio" name="elements[4][is_enabled]" value="0" > Hide
+                            </label>
+                        </div>
+                    </div>
                     <div class="card-body">
                         <div class="recent-report__chart">
                                 <div id="gantt"></div>
@@ -172,8 +212,16 @@
         <div class="row">
             <div class="col-md-12 col-lg-12 col-xl-12">
                 <div class="card">
-                    <div class="card-header">
-                        <h4><h4><input type="text" name="payment_name" class="border-0"></h4></h4>
+                    <div class="card-header d-flex justify-content-between">
+                       <h4><input type="text" value="minhaz vai" name="elements[5][title]" class="border-0"></h4>
+                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                            <label class="btn btn-secondary active btn-sm">
+                                <input type="radio" name="elements[5][is_enabled]"  value="1" checked> Show
+                            </label>
+                            <label class="btn btn-secondary btn-sm">
+                                <input type="radio" name="elements[5][is_enabled]"  value="0" > Hide
+                            </label>
+                        </div>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -209,8 +257,16 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header">
-                        <h4><h4><input type="text" name="task_details_name" class="border-0"></h4></h4>
+                    <div class="card-header d-flex justify-content-between">
+                        <h4><input type="text" name="elements[6][title]" value="sifat vai" class="border-0"></h4>
+                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                            <label class="btn btn-secondary active btn-sm">
+                                <input type="radio" name="elements[6][is_enabled]" value="1" checked> Show
+                            </label>
+                            <label class="btn btn-secondary btn-sm">
+                                <input type="radio" name="elements[6][is_enabled]" value="0" > Hide
+                            </label>
+                        </div>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -251,7 +307,17 @@
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12">
                 <div class="card">
-                    <div class="card-header"><h4><h4><input type="text" name="pie_chart_name" class="border-0"></h4></h4></div>
+                    <div class="card-header d-flex justify-content-between">
+                        <h4><input type="text" name="elements[7][title]" value="tultul" class="border-0"></h4>
+                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                            <label class="btn btn-secondary active btn-sm">
+                                <input type="radio" name="elements[7][is_enabled]" value="1" checked> Show
+                            </label>
+                            <label class="btn btn-secondary btn-sm">
+                                <input type="radio" name="elements[7][is_enabled]"  value="0"> Hide
+                            </label>
+                        </div>
+                    </div>
                     <div class="card-body">
                         <div class="recent-report__chart">
                             <div id="pieChart"></div>
@@ -260,6 +326,8 @@
                 </div>
             </div>
         </div>
+            <button type="submit" class="btn btn-primary mb-3">Submit</button>
+        </form>
 @endsection
 @push('js')
     <!--  FOR PIE CHART-->
@@ -360,8 +428,8 @@
             data.forEach(function (singleData) {
                 chartData.push(
                     {
-                        "amount": singleData.name,
-                        "payment": singleData.amount,
+                        "amount": singleData.amount,
+                        "payment": singleData.name,
                     }
                 );
             });

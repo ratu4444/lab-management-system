@@ -98,14 +98,15 @@ class DashboardController extends Controller
         ]);
 
         if (auth()->user()->is_client) $all_projects = Project::where('client_id', auth()->id());
-        elseif($request->client) $all_projects = Project::where('client_id',$request->client);
+        elseif($request->client) $all_projects = Project::where('client_id', $request->client);
         else $all_projects = Project::query();
 
         $all_projects = $all_projects->with([
                 'client',
                 'tasks',
                 'payments.tasks',
-                'inspections'
+                'inspections',
+                'elementSettings'
             ])
             ->latest()
             ->get();

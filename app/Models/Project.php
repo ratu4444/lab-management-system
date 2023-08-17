@@ -89,4 +89,9 @@ class Project extends Model
     {
         return $this->hasMany(Inspection::class );
     }
+
+    public function elementSettings()
+    {
+        return $this->hasMany(ElementSetting::class);
+    }
 }

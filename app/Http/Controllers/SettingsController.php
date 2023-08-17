@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ElementSetting;
+use App\Models\Project;
 use App\Models\SettingsInspection;
 use App\Models\SettingsPayment;
 use App\Models\SettingsTask;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SettingsController extends Controller
 {
@@ -65,7 +69,47 @@ class SettingsController extends Controller
         return view('settings.settings-inspection', compact('inspection_show'));
     }
 
-    public function elementShow(){
-        return view('settings.settings-element');
+    public function elementShow(Request $request)
+    {
+//        dd($request->all());
+        $all_projects = Project::get();
+        $project = $request->project ? $all_projects->where('id', $request->project)->first()  : $all_projects->first();
+
+        return view('settings.settings-element', compact('all_projects', 'project'));
+    }
+
+    public function elementStore(Request $request, $project_id)
+    {
+        $element_data = [];
+        foreach ($request->elements as $index => $element) {
+            $element_data[] = [
+                'project_id'    => $project_id,
+                'element_id'    => $index+1,
+                'element_name'  => $element['title'],
+                'is_enabled'    => $element['is_enabled'],
+                'created_at'    => Carbon::now(),
+                'updated_at'    => Carbon::now(),
+            ];
+        }
+
+        DB::beginTransaction();
+        try {
+            if (count($element_data)) {
+                ElementSetting::where('project_id', $project_id)->delete();
+                ElementSetting::insert($element_data);
+            }
+
+            DB::commit();
+            return redirect()
+                ->route('dashboard.client-index', ['project' => $project_id])
+                ->with('success', 'Settings updated successfully');
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            return redirect()
+                ->back()
+                ->with('error', $exception->getMessage());
+        }
+
+
     }
 }

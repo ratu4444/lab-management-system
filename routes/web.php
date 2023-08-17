@@ -45,6 +45,8 @@ Route::middleware('auth')->group(function () {
             Route::get('inspection/show', [SettingsController::class, 'inspectionShow'])->name('settings.inspection.show');
 //          SETTINGS ELEMENT
             Route::get('element/show',[SettingsController::class, 'elementShow'])->name('settings.element');
+            Route::post('project/{project_id}/element/store',[SettingsController::class, 'elementStore'])->name('settings.element.store');
+
 
         });
 
