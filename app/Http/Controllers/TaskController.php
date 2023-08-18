@@ -23,7 +23,7 @@ class TaskController extends Controller
         $request->validate([
             'name'                      => 'required',
             'estimated_start_date'      => 'required|date_format:Y-m-d',
-            'estimated_completion_date' => 'required|date_format:Y-m-d|after:estimated_start_date',
+            'estimated_completion_date' => 'required|date_format:Y-m-d|after_or_equal:estimated_start_date',
             'total_budget'              => 'required',
             'completion_percentage'     => 'nullable|between:0,100'
         ]);
@@ -98,9 +98,9 @@ class TaskController extends Controller
         $request->validate([
             'name'                      => 'required',
             'estimated_start_date'      => 'required|date_format:Y-m-d',
-            'estimated_completion_date' => 'required|date_format:Y-m-d|after:estimated_start_date',
+            'estimated_completion_date' => 'required|date_format:Y-m-d|after_or_equal:estimated_start_date',
             'start_date'                => 'nullable|date_format:Y-m-d',
-            'completion_date'           => 'nullable|date_format:Y-m-d|after:start_date',
+            'completion_date'           => 'nullable|date_format:Y-m-d|after_or_equal:start_date',
             'total_budget'              => 'required',
             'completion_percentage'     => 'nullable|between:0,100'
         ]);

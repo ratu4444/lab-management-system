@@ -1,5 +1,5 @@
 @extends('custom-layout.master')
-
+@section('title', 'Edit Project')
 @push('css')
     <link rel="stylesheet" href="{{ asset('assets/bundles/bootstrap-daterangepicker/daterangepicker.css') }}">
 @endpush
@@ -19,7 +19,7 @@
                                 <div class="form-group col-12">
                                     <label class="form-label" for="estimated_budget"> Estimated Budget
                                         <span class="text-danger">*</span></label>
-                                    <input type="number" name="estimated_budget" class="form-control" value="{{ $project->estimated_budget }}" id="estimated_budget" required>
+                                    <input type="number" name="estimated_budget" class="form-control" value="{{ $project->estimated_budget }}" id="estimated_budget" min="1" required>
                                 </div>
                                 <div class="form-group col-12 col-md-6">
                                     <label class="form-label" for="name">Project Name <span class="text-danger">*</span></label>
@@ -44,13 +44,9 @@
                                         </label>
                                     @endforeach
                                 </div>
-
-                                <div class="form-group col-12">
-                                    <label class="form-label" for="comment">Comment</label>
-                                    <textarea name="comment" class="form-control" id="comment"> {{ $project->comment }}</textarea>
-                                </div>
+                                <code class="mx-2 font-weight-bold" id="statusAlert"></code>
                             </div>
-                            <button type="submit" class="btn btn-primary"> Submit</button>
+                            <button type="submit" class="btn btn-primary mt-3">Update Project</button>
                         </form>
                     </div>
                 </div>
@@ -61,4 +57,20 @@
 @push('js')
     <script src="{{ asset('assets/bundles/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
     <script src="{{ asset('js/select-button-bg-changer.js') }}"></script>
+
+    <script>
+        $(document).ready(function() {
+            var statusRadio = $('input[name="status"]');
+            var statusAlert = $('#statusAlert');
+            var hasRunningTask = @json($project->has_running_task);
+
+            statusRadio.on('change', function() {
+                if (this.value == 3 && hasRunningTask) {
+                    statusAlert.text('FYI : All tasks are not completed yet.');
+                } else {
+                    statusAlert.text('');
+                }
+            });
+        });
+    </script>
 @endpush

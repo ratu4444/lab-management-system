@@ -61,6 +61,15 @@ class Project extends Model
         return sprintf("%.2f", $paid_amount_percentage);
     }
 
+    public function getHasRunningTaskAttribute()
+    {
+        $statuses = config('app.STATUSES');
+        $incomplete_tasks = $this->tasks
+            ->whereNotIn('status',  [$statuses['Completed'], $statuses['Canceled']]);
+
+        return (bool) $incomplete_tasks->count();
+    }
+
     public function client()
     {
         return $this->belongsTo(User::class, 'client_id');

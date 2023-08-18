@@ -7,3 +7,20 @@
     height: 40px;
     font-size: large;
 }
+
+.badge-dot {
+    position: relative;
+    display: inline-block;
+}
+
+.badge-dot::after {
+    content: "";
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    width: 15px;
+    height: 15px;
+    background-color: red;
+    border-radius: 50%;
+    border: 1px solid #fff;
+}

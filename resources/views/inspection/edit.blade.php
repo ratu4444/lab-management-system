@@ -30,7 +30,7 @@
                             <div class="form-group form-float">
                                 <div class="form-line">
                                     <label class="form-label">Scheduled Date <span class="text-danger">*</span></label>
-                                    <input type="text" name="scheduled_date" value="{{ $inspection->scheduled_date }}" class="form-control datepicker" required>
+                                    <input type="text" name="scheduled_date" value="{{ $inspection->scheduled_date }}" class="form-control datepicker" id="scheduled_date" required>
 
                                     <div class="invalid-feedback">
                                         Schedule date is required
@@ -40,7 +40,11 @@
                             <div class="form-group form-float">
                                 <div class="form-line">
                                     <label class="form-label">Inspected Date</label>
-                                    <input type="text" name="date" value="{{ $inspection->date }}" class="form-control datepicker">
+                                    <input type="text" name="inspected_date" value="{{ $inspection->date }}" class="form-control datepicker" id="inspected_date">
+
+                                    <div class="invalid-feedback">
+                                        Inspected date must be after scheduled date
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group form-float">
@@ -87,4 +91,15 @@
     <script src="{{ asset('assets/bundles/jquery-selectric/jquery.selectric.min.js') }}"></script>
     <script src="{{ asset('assets/bundles/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
     <script src="{{ asset('js/select-button-bg-changer.js') }}"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#scheduled_date, #inspected_date').on('change', function () {
+                var startElement = $('#scheduled_date');
+                var endElement = $('#inspected_date');
+
+                validateDates(startElement, endElement);
+            });
+        });
+    </script>
 @endpush

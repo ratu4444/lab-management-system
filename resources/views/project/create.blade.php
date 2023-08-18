@@ -1,4 +1,5 @@
 @extends('custom-layout.master')
+@section('title', 'Create Project')
 
 @push('css')
     <link rel="stylesheet" href="{{ asset('assets/bundles/jquery-selectric/selectric.css') }}">

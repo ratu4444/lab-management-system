@@ -29,6 +29,7 @@ class DashboardController extends Controller
 
         $upcoming_inspections = Inspection::where('status', $statuses['Pending'])
             ->whereDate('scheduled_date', '<=', Carbon::now()->addDays(7))
+            ->whereDate('scheduled_date', '>=', Carbon::now())
             ->with('project')
             ->get();
 

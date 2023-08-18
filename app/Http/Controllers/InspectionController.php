@@ -82,6 +82,7 @@ class InspectionController extends Controller
         $request->validate([
             'name'              => 'required',
             'scheduled_date'    => 'required|date_format:Y-m-d',
+            'inspected_date'    => 'nullable|date_format:Y-m-d|after_or_equal:scheduled_date',
         ]);
 
         $inspection = Inspection::with('inspectionDependencies')->findOrFail($inspection_id);
@@ -89,7 +90,7 @@ class InspectionController extends Controller
         $inspection_data = [
             'name'              => $request->name,
             'status'            => $request->status,
-            'date'              => $request->date,
+            'date'              => $request->inspected_date,
             'scheduled_date'    => $request->scheduled_date,
             'comment'           => $request->comment,
         ];

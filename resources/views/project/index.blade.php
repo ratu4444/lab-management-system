@@ -1,6 +1,8 @@
 @extends('custom-layout.master')
 @section('title', 'Projects')
 
+@push('css')
+@endpush
 @section('content')
     <div class="container">
         <div class="row">
@@ -33,7 +35,8 @@
                                     @foreach($projects as $project)
                                         @php
                                             $status = array_search($project->status, config('app.STATUSES'));
-                                            $status_color = config("app.STATUSES_COLORS.$status")
+                                            $status_color = config("app.STATUSES_COLORS.$status");
+                                            $show_incomplete_badge = $project->status == config('app.STATUSES.Completed') && $project->has_running_task;
                                         @endphp
                                         <tr>
                                             <th scope="row">{{ (($projects->currentpage()-1) * $projects->perpage()) + $loop->index + 1 }}</th>
@@ -43,7 +46,7 @@
                                             <td class="text-nowrap">{{ '$'.number_format($project->estimated_budget) }}</td>
                                             <td class="text-nowrap">{{ '$'.number_format($project->total_budget) }}</td>
                                             <td class="text-nowrap">
-                                                <div class="badge {{ 'badge-'.$status_color }}">{{ $status }}</div>
+                                                <div class="badge {{ 'badge-'.$status_color}} {{ $show_incomplete_badge ? 'badge-dot' : ''}}">{{ $status }}</div>
                                             </td>
                                             <td class="text-nowrap">
                                                 <a href="{{ route('task.create', $project->id) }}" class="btn btn-primary btn-sm" target="_blank">See Tasks</a>

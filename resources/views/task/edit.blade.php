@@ -67,7 +67,7 @@
                                     <select class="form-control selectric" name="dependencies[]" id="taskDependencyDropdown" multiple="">
                                         @if(count($project_tasks))
                                             @foreach($project_tasks as $project_task)
-                                                        <option value="{{ $project_task->id }}" {{ in_array( $project_task->id, $task->dependent_task_ids,) ? 'selected' : '' }}>{{ $project_task->name }}</option>
+                                                <option value="{{ $project_task->id }}" {{ in_array( $project_task->id, $task->dependent_task_ids,) ? 'selected' : '' }}>{{ $project_task->name }}</option>
                                             @endforeach
                                         @endif
                                     </select>
