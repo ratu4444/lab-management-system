@@ -2,16 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Inspection;
-use App\Models\InspectionDependency;
-use App\Models\Payment;
 use App\Models\Project;
-use App\Models\Task;
-use App\Models\TaskDependency;
-use App\Models\TaskPayment;
 use Illuminate\Http\Request;
 use App\Models\User;
-use Illuminate\Support\Facades\DB;
 
 class ProjectController extends Controller
 {

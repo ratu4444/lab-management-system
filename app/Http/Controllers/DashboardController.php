@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ElementSetting;
 use App\Models\Inspection;
 use App\Models\Project;
 use App\Models\User;

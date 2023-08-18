@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Inspection;
 use App\Models\InspectionDependency;
 use App\Models\Project;
-use App\Models\Task;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
