@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ElementSetting;
 use App\Models\Inspection;
 use App\Models\Project;
 use App\Models\User;
@@ -100,19 +101,27 @@ class DashboardController extends Controller
         if (auth()->user()->is_client) $all_projects = Project::where('client_id', auth()->id());
         elseif($request->client) $all_projects = Project::where('client_id', $request->client);
         else $all_projects = Project::query();
-
-        $all_projects = $all_projects->with([
-                'client',
-                'tasks',
-                'payments.tasks',
-                'inspections',
-                'elementSettings'
-            ])
-            ->latest()
-            ->get();
+        $all_projects = $all_projects->latest()->get();
 
         $project = $request->project ? $all_projects->where('id', $request->project)->first() : $all_projects->first();
+        if (!$project) return abort(404);
 
-        return view('client-index', compact('project', 'all_projects'));
+        $project = $project->load([
+            'client',
+            'tasks',
+            'payments.tasks',
+            'inspections',
+            'elementSettings'
+        ]);
+
+        $elements = [];
+        foreach ($project->elementSettings as $element_setting) {
+            $elements[$element_setting->element_id - 1] = [
+                'element_name'  => $element_setting->element_name,
+                'is_enabled'    => (bool) $element_setting->is_enabled,
+            ];
+        }
+
+        return view('client-index', compact('project', 'all_projects', 'elements'));
     }
 }

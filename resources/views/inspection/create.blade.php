@@ -20,7 +20,7 @@
                             <th>#</th>
                             <th class="text-nowrap">Name</th>
                             <th class="text-nowrap">Scheduled Date</th>
-                            <th class="text-nowrap">Inspection Date</th>
+                            <th class="text-nowrap">Inspected Date</th>
                             <th class="text-nowrap">Status</th>
                             <th class="text-nowrap">Action</th>
                         </tr>
@@ -41,7 +41,7 @@
                                         <div class="badge {{ 'badge-'.$status_color }}">{{ $status }}</div>
                                     </td>
                                     <td class="text-nowrap">
-                                        <a href="{{ route('inspection.edit', $inspection->id) }}" class="btn btn-primary btn-sm">Edit</a>
+                                        <a href="{{ route('inspection.edit', [$project->id, $inspection->id]) }}" class="btn btn-primary btn-sm">Edit</a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -73,4 +73,10 @@
     <script src="{{ asset('assets/bundles/jquery-selectric/jquery.selectric.min.js') }}"></script>
     <script src="{{ asset('assets/bundles/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
     <script src="{{ asset('js/select-button-bg-changer.js') }}"></script>
+
+    <script>
+        $(document).ready(function() {
+            selectButtonBgChange('.selectgroup-input-radio');
+        });
+    </script>
 @endpush

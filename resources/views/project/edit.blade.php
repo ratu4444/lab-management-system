@@ -72,6 +72,8 @@
                     statusAlert.text('');
                 }
             });
+
+            selectButtonBgChange('.selectgroup-input-radio');
         });
     </script>
 @endpush

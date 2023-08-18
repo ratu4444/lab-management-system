@@ -135,6 +135,8 @@
 
                 modifyCompletionPercentage(statusValue, percentageElement, configStatuses);
             });
+
+            selectButtonBgChange('.selectgroup-input-radio');
         });
     </script>
 @endpush

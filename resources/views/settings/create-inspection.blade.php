@@ -77,4 +77,10 @@
 @push('js')
     <script src="{{ asset('assets/bundles/jquery-selectric/jquery.selectric.min.js') }}"></script>
     <script src="{{ asset('js/select-button-bg-changer.js') }}"></script>
+
+    <script>
+        $(document).ready(function() {
+            selectButtonBgChange('.selectgroup-input-radio');
+        });
+    </script>
 @endpush

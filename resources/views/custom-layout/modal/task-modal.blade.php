@@ -67,10 +67,6 @@
                                 </label>
                             @endforeach
                         </div>
-{{--                        <div class="form-group">--}}
-{{--                            <label class="form-label">Comment</label>--}}
-{{--                            <textarea name="comment" class="form-control"></textarea>--}}
-{{--                        </div>--}}
                     </div>
                     <div class="form-group">
                         <label class="form-label">Completion Percentage</label>

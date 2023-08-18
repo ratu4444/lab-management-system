@@ -99,6 +99,8 @@
 
                 validateDates(startElement, endElement);
             });
+
+            selectButtonBgChange('.selectgroup-input-radio');
         });
     </script>
 @endpush

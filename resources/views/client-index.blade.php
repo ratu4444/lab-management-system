@@ -44,7 +44,7 @@
     @if($project)
         <!-- Main Content -->
         <div class="row">
-            @if($project->elementSettings->where('element_id', 1)->first()?->is_enabled)
+            @if(!isset($elements[0]['is_enabled']) || $elements[0]['is_enabled'])
                 <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div class="card card-primary h-90">
                         <div class="card-statistic-4">
@@ -52,7 +52,7 @@
                                 <div class="row">
                                     <div class="col-12 py-3">
                                         <div class="card-content ">
-                                            <h5 class="matrix-title"> {{ $project->elementSettings->where('element_id', 1)->first()?->element_name ?? 'Project Completion' }} </h5>
+                                            <h5 class="matrix-title">{{ $elements[0]['element_name'] ?? 'Project Completion' }}</h5>
                                         </div>
 
                                         <div>
@@ -69,7 +69,7 @@
                 </div>
             @endif
             <!--            FINAL BUDGET-->
-            @if($project->elementSettings->where('element_id', 2)->first()?->is_enabled)
+            @if(!isset($elements[1]['is_enabled']) || $elements[1]['is_enabled'])
                 <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div class="card card-primary h-90">
                         <div class="card-statistic-4">
@@ -77,7 +77,7 @@
                                 <div class="row">
                                     <div class="col-12 pt-3">
                                         <div class="card-content">
-                                            <h5 class="matrix-title"> {{ $project->elementSettings->where('element_id', 2)->first()?->element_name ?? 'Project Budget' }} </h5>
+                                            <h5 class="matrix-title"> {{ $elements[1]['element_name'] ?? 'Project Budget' }} </h5>
                                             <div>
                                                 <h2 class="font-18">{{ '$'.(number_format($project->total_budget)) }}</h2>
                                                 <p class="col-orange mb-0"><span class="col-orange font-20">{{ abs($project->budget_increament_percentage).'%' }}</span>
@@ -93,7 +93,7 @@
                 </div>
             @endif
             <!--            PAYMENT COMPLETION-->
-            @if($project->elementSettings->where('element_id', 3)->first()?->is_enabled)
+            @if(!isset($elements[2]['is_enabled']) || $elements[2]['is_enabled'])
                 <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div class="card card-primary h-90">
                         <div class="card-statistic-4">
@@ -101,7 +101,7 @@
                                 <div class="row ">
                                     <div class="col-12 pt-3">
                                         <div class="card-content">
-                                            <h5 class="matrix-title"> {{ $project->elementSettings->where('element_id', 3)->first()?->element_name ?? 'Payments' }} </h5>
+                                            <h5 class="matrix-title"> {{ $elements[2]['element_name'] ?? 'Payments' }} </h5>
                                         </div>
                                         <div>
                                             <h2 class="font-18">{{ '$'.number_format($project->paid_amount) }}</h2>
@@ -117,13 +117,12 @@
         </div>
 
         <!--         PROJECT TIMELINE-->
-
-        <div class="row">
-            @if($project->elementSettings->where('element_id', 4)->first()?->is_enabled)
+        @if(!isset($elements[3]['is_enabled']) || $elements[3]['is_enabled'])
+            <div class="row">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>{{ $project->elementSettings->where('element_id', 4)->first()?->element_name ?? 'Project Timeline' }}</h4>
+                            <h4>{{ $elements[3]['element_name'] ?? 'Project Timeline' }}</h4>
                         </div>
                         <div class="card-body">
                             <div class="row">
@@ -160,16 +159,17 @@
                         </div>
                     </div>
                 </div>
-            @endif
-        </div>
+            </div>
+        @endif
 
 {{--        Project schedule --}}
-
-        <div class="row">
-            @if($project->elementSettings->where('element_id', 5)->first()?->is_enabled)
+        @if(!isset($elements[4]['is_enabled']) || $elements[4]['is_enabled'])
+            <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12">
                     <div class="card">
-                        <div class="card-header"><h4>{{ $project->elementSettings->where('element_id', 5)->first()?->element_name ?? 'Project Schedule' }}</h4></div>
+                        <div class="card-header">
+                            <h4>{{ $elements[4]['element_name'] ?? 'Project Schedule' }}</h4>
+                        </div>
                         <div class="card-body">
                             <div class="recent-report__chart">
                                 @if($project->tasks->count())
@@ -181,17 +181,16 @@
                         </div>
                     </div>
                 </div>
-            @endif
-        </div>
-
+            </div>
+        @endif
 
         <!--          PAYMENT HISTORY-->
-        <div class="row">
-            @if($project->elementSettings->where('element_id', 6)->first()?->is_enabled)
+        @if(!isset($elements[5]['is_enabled']) || $elements[5]['is_enabled'])
+            <div class="row">
                 <div class="col-md-12 col-lg-12 col-xl-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>{{ $project->elementSettings->where('element_id', 6)->first()?->element_name ?? 'Payment History' }}</h4>
+                            <h4>{{ $elements[5]['element_name'] ?? 'Payment History' }}</h4>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -229,16 +228,16 @@
                         </div>
                     </div>
                 </div>
-           @endif
-        </div>
+            </div>
+       @endif
 
         <!--          TASK DETAILS-->
-        <div class="row">
-            @if($project->elementSettings->where('element_id', 7)->first()?->is_enabled)
+        @if(!isset($elements[6]['is_enabled']) || $elements[6]['is_enabled'])
+            <div class="row">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>{{ $project->elementSettings->where('element_id', 7)->first()?->element_name ?? 'Tasks' }} </h4>
+                            <h4>{{ $elements[6]['element_name'] ?? 'Tasks' }} </h4>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -283,15 +282,17 @@
                         </div>
                     </div>
                 </div>
-           @endif
-        </div>
+            </div>
+       @endif
 
         <!--          PIE CHART-->
-        <div class="row">
-            @if($project->elementSettings->where('element_id', 8)->first()?->is_enabled)
+        @if(!isset($elements[7]['is_enabled']) || $elements[7]['is_enabled'])
+            <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12">
                     <div class="card">
-                        <div class="card-header"><h4>{{ $project->elementSettings->where('element_id', 8)->first()?->element_name ?? 'Pie Chart' }}</h4></div>
+                        <div class="card-header">
+                            <h4>{{ $elements[7]['element_name'] ?? 'Pie Chart' }}</h4>
+                        </div>
                         <div class="card-body">
                             <div class="recent-report__chart">
                                 @if($project->payments->count())
@@ -303,7 +304,11 @@
                         </div>
                     </div>
                 </div>
-            @endif
+            </div>
+        @endif
+    @else
+        <div class="text-center">
+            <span class="text-muted font-weight-bold">Project Not Found</span>
         </div>
     @endif
 @endsection

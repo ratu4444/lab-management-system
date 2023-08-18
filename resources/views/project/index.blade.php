@@ -57,6 +57,7 @@
                                             <td class="text-nowrap">
                                                 <a href="{{ route('dashboard.client-index', ['project' => $project->id]) }}" class="btn btn-primary btn-sm">Project Dashboard</a>
                                                 <a href="{{ route('project.edit', $project->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                                                <a href="{{ route('settings.element', ['project' => $project->id]) }}" class="btn btn-warning btn-sm">Edit Dashboard Settings</a>
                                             </td>
                                         </tr>
                                     @endforeach

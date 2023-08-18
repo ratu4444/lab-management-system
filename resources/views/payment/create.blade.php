@@ -35,7 +35,7 @@
                                 <td>{{ $payment->date}}</td>
                                 <td>{{ $payment->payment_method }}</td>
                                 <td class="text-nowrap">
-                                    <a href="{{ route('payment.edit', $payment->id) }}" class="btn btn-primary btn-sm">Edit</a>
+                                    <a href="{{ route('payment.edit', [$project->id, $payment->id]) }}" class="btn btn-primary btn-sm">Edit</a>
                                 </td>
                             </tr>
                         @endforeach

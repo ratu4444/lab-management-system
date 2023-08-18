@@ -54,10 +54,18 @@
                             <span>Settings</span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li class="{{ Route::is('settings.task.show') ? 'active' : '' }}"><a class="nav-link" href="{{ route('settings.task.show') }}"> Task Settings</a></li>
-                            <li class="{{ Route::is('settings.payment.show') ? 'active' : '' }}"><a class="nav-link" href="{{ route('settings.payment.show') }}">Payment Settings</a></li>
-                            <li class="{{ Route::is('settings.inspection.show') ? 'active' : '' }}"><a class="nav-link" href="{{ route('settings.inspection.show') }}">Inspection Settings</a></li>
-                            <li class="{{ Route::is('settings.element') ? 'active' : '' }}"><a class="nav-link" href="{{ route('settings.element') }}">Elements Settings</a></li>
+                            <li class="{{ Route::is('settings.task.show') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ route('settings.task.show') }}">Default Tasks</a>
+                            </li>
+                            <li class="{{ Route::is('settings.payment.show') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ route('settings.payment.show') }}">Default Payments</a>
+                            </li>
+                            <li class="{{ Route::is('settings.inspection.show') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ route('settings.inspection.show') }}">Default Inspections</a>
+                            </li>
+                            <li class="{{ Route::is('settings.element') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ route('settings.element') }}">Client Dashboard Settings</a>
+                            </li>
                         </ul>
                     </li>
                 @endif
