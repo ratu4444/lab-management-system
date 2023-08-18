@@ -16,7 +16,7 @@ class   Inspection extends Model
         return $this->belongsTo(Project::class);
     }
 
-    public function dependentTask()
+    public function dependentTasks()
     {
         return $this->belongsToMany(Task::class,'inspection_dependencies','inspection_id','dependent_task_id')
             ->where('inspection_dependencies.deleted_at', null);

@@ -15,8 +15,9 @@
                         <h4 class="card-title text-muted">Inspection Edit</h4>
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('inspection.update', $inspection->id) }}" method="post" class="needs-validation" novalidate>
+                        <form action="{{ route('inspection.update', [$project->id, $inspection->id]) }}" method="post" class="needs-validation" novalidate>
                             @csrf
+                            @method('put')
                             <div class="form-group form-float">
                                 <div class="form-line">
                                     <label class="form-label">Name <span class="text-danger">*</span></label>
@@ -50,11 +51,9 @@
                             <div class="form-group form-float">
                                 <label>Dependency</label>
                                 <select class="form-control selectric" name="dependencies[]" multiple="">
-                                    @if(count($project_tasks))
-                                        @foreach($project_tasks as $task)
-                                            <option value="{{ $task->id }}" {{ in_array($task->id, $inspection->dependent_inspection_ids) ? 'selected' : '' }} >{{ $task->name }}</option>
-                                        @endforeach
-                                    @endif
+                                    @foreach($project->tasks as $task)
+                                        <option value="{{ $task->id }}" {{ in_array($task->id, $inspection->dependent_task_ids) ? 'selected' : '' }} >{{ $task->name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="form-group form-float">

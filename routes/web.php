@@ -21,29 +21,15 @@ Route::middleware('auth')->group(function () {
 //      ADMIN DASHBOARD
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
 
-        Route::prefix('project')->group(function () {
-//          PROJECT
-            Route::get('', [ProjectController::class, 'index'])->name('project.index');
-            Route::get('create', [ProjectController::class, 'create'])->name('project.create');
-            Route::post('', [ProjectController::class, 'store'])->name('project.store');
-            Route::get('{project_id}', [ProjectController::class, 'show'])->name('project.show');
-            Route::get('{project_id}/edit', [ProjectController::class, 'edit'])->name('project.edit');
-            Route::post('{project_id}/update', [ProjectController::class, 'update'])->name('project.update');
+//      PROJECT
+        Route::resource('project', ProjectController::class);
+        Route::prefix('project/{project_id}')->group(function () {
 //          TASK
-            Route::get('{project_id}/task/create', [TaskController::class, 'create'])->name('task.create');
-            Route::post('{project_id}/task', [TaskController::class, 'store'])->name('task.store');
-            Route::get('task/{task_id}/edit', [TaskController::class, 'edit'])->name('task.edit');
-            Route::post('task/{task_id}/update', [TaskController::class, 'update'])->name('task.update');
+            Route::resource('task', TaskController::class);
 //          PAYMENT
-            Route::get('{project_id}/payment/create', [PaymentController::class, 'create'])->name('payment.create');
-            Route::post('{project_id}/payment', [PaymentController::class, 'store'])->name('payment.store');
-            Route::get('payment/{payment_id}/edit', [PaymentController::class, 'edit'])->name('payment.edit');
-            Route::post('payment/{payment_id}/update', [PaymentController::class, 'update'])->name('payment.update');
+            Route::resource('payment', PaymentController::class);
 //          INSPECTION
-            Route::get('{project_id}/inspection/create', [InspectionController::class, 'create'])->name('inspection.create');
-            Route::post('{project_id}/inspection', [InspectionController::class, 'store'])->name('inspection.store');
-            Route::get('inspection/{inspection_id}/edit', [InspectionController::class, 'edit'])->name('inspection.edit');
-            Route::post('inspection/{inspection_id}/update', [InspectionController::class, 'update'])->name('inspection.update');
+            Route::resource('inspection', InspectionController::class);
         });
 
 //      SETTINGS
@@ -60,11 +46,7 @@ Route::middleware('auth')->group(function () {
         });
 
 //      CLIENT
-        Route::prefix('client')->group(function () {
-            Route::get('/', [ClientController::class, 'index'])->name('client.index');
-            Route::get('create', [ClientController::class, 'create'])->name('client.create');
-            Route::post('', [ClientController::class, 'store'])->name('client.store');
-        });
+        Route::resource('client', ClientController::class);
     });
 });
 

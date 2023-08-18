@@ -15,8 +15,9 @@
                         <h4 class="card-title text-muted">Task Edit</h4>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('task.update', $task->id) }}" class="needs-validation" novalidate>
+                        <form method="POST" action="{{ route('task.update', [$project->id, $task->id]) }}" class="needs-validation" novalidate>
                             @csrf
+                            @method('put')
                             <div class="form-row">
                                 <div class="form-group col-12">
                                     <label class="form-label">Name <span class="text-danger">*</span></label>
@@ -65,11 +66,9 @@
                                 <div class="form-group col-12 col-md-6">
                                     <label> Dependency</label>
                                     <select class="form-control selectric" name="dependencies[]" id="taskDependencyDropdown" multiple="">
-                                        @if(count($project_tasks))
-                                            @foreach($project_tasks as $project_task)
-                                                <option value="{{ $project_task->id }}" {{ in_array( $project_task->id, $task->dependent_task_ids,) ? 'selected' : '' }}>{{ $project_task->name }}</option>
-                                            @endforeach
-                                        @endif
+                                        @foreach($project->tasks->where('id', '!=', $task->id) as $project_task)
+                                            <option value="{{ $project_task->id }}" {{ in_array( $project_task->id, $task->dependent_task_ids,) ? 'selected' : '' }}>{{ $project_task->name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="form-group col-12 col-md-6">

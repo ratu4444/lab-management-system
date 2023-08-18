@@ -83,17 +83,19 @@ class TaskController extends Controller
         }
     }
 
-    public function edit($task_id)
+    public function edit($project_id, $task_id)
     {
-        $task = Task::with('dependentTasks')->findOrFail($task_id);
+        $project = Project::with('tasks.dependentTasks')
+            ->findOrFail($project_id);
 
+        $task = $project->tasks->where('id', $task_id)->first();
+        if (!$task) return abort(404);
         $task->dependent_task_ids = $task->dependentTasks->pluck('id')->toArray();
-        $project_tasks = Task::where('project_id', $task->project_id)->where('id','!=', $task_id)->get();
 
-        return view('task.edit', compact('task', 'project_tasks'));
+        return view('task.edit', compact('task', 'project'));
     }
 
-    public function update(Request $request, $task_id)
+    public function update(Request $request, $project_id, $task_id)
     {
         $request->validate([
             'name'                      => 'required',
@@ -152,7 +154,7 @@ class TaskController extends Controller
 
             DB::commit();
             return redirect()
-                ->route('task.create', $task->project_id)
+                ->route('task.create', $project_id)
                 ->with('success', 'Task updated successfully');
         } catch (\Exception $exception) {
             DB::rollBack();

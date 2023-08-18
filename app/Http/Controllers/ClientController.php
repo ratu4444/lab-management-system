@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use http\Client;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class ClientController extends Controller
 {
@@ -76,6 +78,50 @@ class ClientController extends Controller
             return $this->apiResponse($data, 'User created successfully');
         } catch (\Exception $exception) {
             return $this->apiResponse([], $exception->getMessage(), 500);
+        }
+    }
+
+    public function edit($client_id)
+    {
+        $client = User::where('is_client', true)
+            ->findOrFail($client_id);
+
+        return view('client.edit', compact('client'));
+    }
+
+    public function update(Request $request, $client_id)
+    {
+        $request->validate([
+            'name'      => 'required|string',
+            'email'     => [
+                'required',
+                'email',
+                Rule::unique('users', 'email')->ignore($client_id, 'id'),
+            ],
+        ]);
+
+        $client = User::where('is_client', true)
+            ->findOrFail($client_id);
+
+        $client_data = [
+            'name'          => $request->name,
+            'email'         => $request->email,
+            'mobile'        => $request->mobile,
+            'company_name'  => $request->company_name,
+        ];
+
+        if ($request->password) $client_data['password'] = bcrypt($request->password);
+
+        try {
+            $client->update($client_data);
+
+            return redirect()
+                ->route('client.index')
+                ->with('success', 'Client updated successfully');
+        } catch (\Exception $exception) {
+            return redirect()
+                ->back()
+                ->with('error', $exception->getMessage());
         }
     }
 }

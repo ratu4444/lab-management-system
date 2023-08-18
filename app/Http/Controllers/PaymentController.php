@@ -71,17 +71,19 @@ class PaymentController extends Controller
         }
     }
 
-    public function edit($payment_id)
+    public function edit($project_id, $payment_id)
     {
-        $payment = Payment::with('tasks')->findOrFail($payment_id);
+        $project = Project::with('tasks', 'payments.tasks')
+            ->findOrFail($project_id);
 
-        $payment->dependent_payment_ids = $payment->tasks->pluck('id')->toArray();
-        $project_tasks = Task::where('project_id', $payment->project_id)->get();
+        $payment = $project->payments->where('id', $payment_id)->first();
+        if (!$payment) return abort(404);
+        $payment->dependent_task_ids = $payment->tasks->pluck('id')->toArray();
 
-        return view('payment.edit', compact('payment', 'project_tasks'));
+        return view('payment.edit', compact('payment', 'project'));
     }
 
-    public function update(Request $request, $payment_id)
+    public function update(Request $request, $project_id, $payment_id)
     {
         $request->validate([
             'name'              => 'required|string',
@@ -123,7 +125,7 @@ class PaymentController extends Controller
 
             DB::commit();
             return redirect()
-                ->route('payment.create', $payment->project_id)
+                ->route('payment.create', $project_id)
                 ->with('success', 'Payment updated successfully');
         } catch (\Exception $exception) {
             DB::rollBack();

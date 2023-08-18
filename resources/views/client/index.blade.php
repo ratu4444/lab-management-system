@@ -42,6 +42,7 @@
                                                     <a href="{{ route('dashboard.client-index', ['client' => $client->id]) }}" class="btn btn-primary btn-sm">Project Dashboard</a>
                                                 @endif
                                                 <a href="{{ route('project.create', ['client' => $client->id]) }}" class="btn btn-success btn-sm">Create New Projects</a>
+                                                <a href="{{ route('client.edit', $client->id) }}" class="btn btn-warning btn-sm">Edit Client</a>
                                             </td>
                                         </tr>
                                     @endforeach

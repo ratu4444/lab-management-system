@@ -15,8 +15,9 @@
                         <h4 class="card-title text-muted">Payment Edit</h4>
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('payment.update', $payment->id) }}" method="post">
+                        <form action="{{ route('payment.update', [$project->id, $payment->id]) }}" method="post">
                             @csrf
+                            @method('put')
                             <div class="form-group form-float">
                                 <div class="form-line">
                                     <label class="form-label">Name <span class="text-danger">*</span></label>
@@ -60,8 +61,8 @@
                             <div class="form-group form-float">
                                 <label>Payment For</label>
                                 <select class="form-control selectric" name="tasks[]" multiple="">
-                                    @foreach($project_tasks as $task)
-                                        <option value="{{ $task->id }}"  {{ in_array($task->id , $payment->dependent_payment_ids) ? 'selected' : '' }}>{{ $task->name }}</option>
+                                    @foreach($payment->tasks as $task)
+                                        <option value="{{ $task->id }}" {{ in_array($task->id , $payment->dependent_task_ids) ? 'selected' : '' }}>{{ $task->name }}</option>
                                     @endforeach
                                 </select>
                             </div>

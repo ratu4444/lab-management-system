@@ -66,18 +66,19 @@ class InspectionController extends Controller
         }
     }
 
-    public function edit($inspection_id)
+    public function edit($project_id, $inspection_id)
     {
-        $inspection = Inspection::with('dependentTask')
-            ->findOrFail($inspection_id);
+        $project = Project::with('tasks', 'inspections.dependentTasks')
+            ->findOrFail($project_id);
 
-        $inspection->dependent_inspection_ids = $inspection->dependentTask->pluck('id')->toArray();
-        $project_tasks = Task::where('project_id', $inspection->project_id)->get();
+        $inspection = $project->inspections->where('id', $inspection_id)->first();
+        if (!$inspection) return abort(404);
+        $inspection->dependent_task_ids = $inspection->dependentTasks->pluck('id')->toArray();
 
-        return view('inspection.edit', compact('inspection', 'project_tasks'));
+        return view('inspection.edit', compact('inspection', 'project'));
     }
 
-    public function update(Request $request, $inspection_id)
+    public function update(Request $request, $project_id, $inspection_id)
     {
         $request->validate([
             'name'              => 'required',
@@ -118,8 +119,8 @@ class InspectionController extends Controller
 
             DB::commit();
             return redirect()
-                ->route('inspection.create', $inspection->project_id)
-                ->with('success', 'Inspection updated successfully');;
+                ->route('inspection.create', $project_id)
+                ->with('success', 'Inspection updated successfully');
         } catch (\Exception $exception) {
             DB::rollBack();
 
