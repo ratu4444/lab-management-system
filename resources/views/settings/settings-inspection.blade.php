@@ -19,8 +19,10 @@
                         <tr>
                             <th>#</th>
                             <th class="text-nowrap">Name</th>
-                            <th class="text-nowrap">Status</th>
+{{--                            <th class="text-nowrap">Status</th>--}}
                             <th class="text-nowrap">Is Enabled?</th>
+                            <th class="text-nowrap">Action</th>
+
                         </tr>
                     </thead>
                     <tbody>
@@ -33,12 +35,15 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $inspection->name }}</td>
-                                    <td>
-                                        <div class="badge {{ 'badge-'.$status_color }}">{{ $status }}</div>
-                                    </td>
+{{--                                    <td>--}}
+{{--                                        <div class="badge {{ 'badge-'.$status_color }}">{{ $status }}</div>--}}
+{{--                                    </td>--}}
                                     <td>
                                         <div class="badge {{ $inspection->is_enabled ? 'badge-success' : 'badge-danger' }}">{{ $inspection->is_enabled ? 'Yes' : 'No' }}</div>
                                     </td>
+
+                                    <td><a class="btn btn-primary" href="{{ route('settings.inspection.edit', $inspection->id) }}">Edit</a></td>
+
                                 </tr>
                             @endforeach
                         @else
@@ -75,20 +80,20 @@
                                 Inspection name is required
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="form-label">Status</label>
-                            <div class="selectgroup w-100">
-                                @foreach(config('app.STATUSES') as $label => $status_id)
-                                    @php
-                                        $status_color = config("app.STATUSES_COLORS.$label");
-                                    @endphp
-                                    <label class="selectgroup-item">
-                                        <input type="radio" name="status" value="{{ $status_id }}" class="status-select selectgroup-input-radio" {{ $status_id == 1 ? 'checked' : ''}}>
-                                        <span class="selectgroup-button" data-class="{{ "bg-$status_color" }}">{{ $label }}</span>
-                                    </label>
-                                @endforeach
-                            </div>
-                        </div>
+{{--                        <div class="form-group">--}}
+{{--                            <label class="form-label">Status</label>--}}
+{{--                            <div class="selectgroup w-100">--}}
+{{--                                @foreach(config('app.STATUSES') as $label => $status_id)--}}
+{{--                                    @php--}}
+{{--                                        $status_color = config("app.STATUSES_COLORS.$label");--}}
+{{--                                    @endphp--}}
+{{--                                    <label class="selectgroup-item">--}}
+{{--                                        <input type="radio" name="status" value="{{ $status_id }}" class="status-select selectgroup-input-radio" {{ $status_id == 1 ? 'checked' : ''}}>--}}
+{{--                                        <span class="selectgroup-button" data-class="{{ "bg-$status_color" }}">{{ $label }}</span>--}}
+{{--                                    </label>--}}
+{{--                                @endforeach--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
                         <div class="form-group">
                             <div class="selectgroup w-100">
                                 <label class="selectgroup-item">
@@ -115,7 +120,7 @@
 
     <script>
         $(document).ready(function() {
-            selectButtonBgChange('.status-select');
+            // selectButtonBgChange('.status-select');
             selectButtonBgChange('.enabled-select');
         });
     </script>

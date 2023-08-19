@@ -29,9 +29,8 @@ class SettingsController extends Controller
 
         $task_data = [
             'name'          => $request->name,
-            'status'        => $request->status,
             'budget'        => $request->total_budget,
-            'is_enabled'    => $request->is_enabled
+            'is_enabled'    => $request->is_enabled,
         ];
 
         try {
@@ -47,6 +46,33 @@ class SettingsController extends Controller
         }
     }
 
+    public function taskEdit($default_task_id)
+    {
+        $settings_task = SettingsTask::findOrFail($default_task_id );
+        return view('settings.settings-task-edit', compact('settings_task', 'default_task_id'));
+    }
+
+    public function taskUpdate(Request $request, $default_task_id){
+//        return $default_task_id;
+
+        $settings_task_update_data = [
+            'name' =>$request->name,
+            'budget' =>$request->total_budget,
+            'is_enabled' =>$request->is_enabled,
+        ];
+
+        try {
+            $settings_task = SettingsTask::findOrFail($default_task_id );
+            $settings_task->update($settings_task_update_data);
+            return redirect()->route('settings.task.show')
+                ->with('success', 'Default Task created successfully');
+        }
+        catch (\Exception $exception){
+            return back()
+                ->with('error', $exception->getMessage());
+        }
+
+    }
     public function paymentShow()
     {
         $settings_payments = SettingsPayment::get();
@@ -81,6 +107,34 @@ class SettingsController extends Controller
         }
     }
 
+    public function paymentEdit($default_task_id)
+    {
+        $settings_payment = SettingsPayment::findOrFail($default_task_id);
+        return view('settings.settings-payment-edit', compact('settings_payment', 'default_task_id'));
+    }
+
+    public function paymentUpdate(Request $request, $default_task_id){
+
+        $settings_payment_update_data = [
+            'name' =>$request->name,
+            'amount' =>$request->amount,
+            'payment_method' =>$request->payment_method,
+            'is_enabled' =>$request->is_enabled,
+        ];
+
+        try {
+            $settings_payment = SettingsPayment::findOrFail($default_task_id );
+            $settings_payment->update($settings_payment_update_data);
+            return redirect()->route('settings.payment.show')
+                ->with('success', 'Default Task created successfully');
+        }
+        catch (\Exception $exception){
+            return back()
+                ->with('error', $exception->getMessage());
+        }
+
+    }
+
     public function inspectionShow()
     {
         $settings_inspections = SettingsInspection::get();
@@ -95,7 +149,6 @@ class SettingsController extends Controller
 
         $inspection_data = [
             'name'          => $request->name,
-            'status'        => $request->status,
             'is_enabled'    => $request->is_enabled,
         ];
 
@@ -110,6 +163,34 @@ class SettingsController extends Controller
                 ->back()
                 ->with('error', $exception->getMessage());
         }
+    }
+
+    public function inspectionEdit($default_task_id)
+    {
+        $settings_inspection = SettingsInspection::findOrFail($default_task_id);
+//        dd($settings_payment);
+        return view('settings.settings-inspection-edit', compact('settings_inspection', 'default_task_id'));
+    }
+
+    public function inspectionUpdate(Request $request, $default_task_id){
+//        return $default_task_id;
+
+        $settings_inspection_update_data = [
+            'name' =>$request->name,
+            'is_enabled' =>$request->is_enabled,
+        ];
+
+        try {
+            $settings_inspection = SettingsInspection::findOrFail($default_task_id );
+            $settings_inspection->update($settings_inspection_update_data);
+            return redirect()->route('settings.inspection.show')
+                ->with('success', 'Default Task created successfully');
+        }
+        catch (\Exception $exception){
+            return back()
+                ->with('error', $exception->getMessage());
+        }
+
     }
 
     public function elementShow(Request $request)

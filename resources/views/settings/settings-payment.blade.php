@@ -21,6 +21,7 @@
                             <th class="text-nowrap">Amount</th>
                             <th class="text-nowrap">Payment Method</th>
                             <th class="text-nowrap">Is Enabled?</th>
+                            <th class="text-nowrap">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -34,6 +35,8 @@
                                     <td>
                                         <div class="badge {{ $payment->is_enabled ? 'badge-success' : 'badge-danger' }}">{{ $payment->is_enabled ? 'Yes' : 'No' }}</div>
                                     </td>
+                                    <td><a class="btn btn-primary" href="{{ route('settings.payment.edit', $payment->id) }}">Edit</a></td>
+
                                 </tr>
                             @endforeach
                         @else

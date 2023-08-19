@@ -43,12 +43,19 @@ Route::middleware('auth')->group(function () {
 //          SETTINGS TASK
             Route::post('task/store', [SettingsController::class, 'taskStore'])->name('settings.task.store');
             Route::get('task/show', [SettingsController::class, 'taskShow'])->name('settings.task.show');
+            Route::get('task/{default_task_id}/edit', [SettingsController::class, 'taskEdit'])->name('settings.task.edit');
+            Route::put('task/{default_task_id}/update', [SettingsController::class, 'taskUpdate'])->name('settings.task.update');
+
 //          SETTINGS PAYMENTS
             Route::post('payment/store', [SettingsController::class, 'paymentStore'])->name('settings.payment.store');
             Route::get('payment/show', [SettingsController::class, 'paymentShow'])->name('settings.payment.show');
+            Route::get('payment/{default_task_id}/edit', [SettingsController::class, 'paymentEdit'])->name('settings.payment.edit');
+            Route::put('payment/{default_task_id}/update', [SettingsController::class, 'paymentUpdate'])->name('settings.payment.update');
 //          SETTINGS INSPECTION
             Route::post('inspection/store', [SettingsController::class, 'inspectionStore'])->name('settings.inspection.store');
             Route::get('inspection/show', [SettingsController::class, 'inspectionShow'])->name('settings.inspection.show');
+            Route::get('inspection/{default_task_id}/edit', [SettingsController::class, 'inspectionEdit'])->name('settings.inspection.edit');
+            Route::put('inspection/{default_task_id}/update', [SettingsController::class, 'inspectionUpdate'])->name('settings.inspection.update');
 //          SETTINGS ELEMENT
             Route::get('element/show',[SettingsController::class, 'elementShow'])->name('settings.element');
             Route::post('project/{project_id}/element/store',[SettingsController::class, 'elementStore'])->name('settings.element.store');
