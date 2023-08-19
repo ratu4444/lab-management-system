@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Inspection;
 use App\Models\Payment;
 use App\Models\Project;
+use App\Models\SettingsInspection;
 use App\Models\SettingsPayment;
 use App\Models\SettingsTask;
 use App\Models\Task;
@@ -126,10 +128,10 @@ class ProjectController extends Controller
     {
         $request->validate([
             'tasks'                                 => 'required|array',
-            'array.*.name'                          => 'required',
-            'array.*.estimated_start_date'          => 'required|date_format:Y-m-d',
-            'array.*.estimated_completion_date'     => 'required|date_format:Y-m-d|after_or_equal:tasks.*.estimated_start_date',
-            'array.*.total_budget'                  => 'required|min:1',
+            'tasks.*.name'                          => 'required',
+            'tasks.*.estimated_start_date'          => 'required|date_format:Y-m-d',
+            'tasks.*.estimated_completion_date'     => 'required|date_format:Y-m-d|after_or_equal:tasks.*.estimated_start_date',
+            'tasks.*.total_budget'                  => 'required|min:1',
         ]);
 
         $project = Project::findOrFail($project_id);
@@ -143,7 +145,7 @@ class ProjectController extends Controller
                 'name'                      => $task['name'],
                 'estimated_start_date'      => $task['estimated_start_date'],
                 'estimated_completion_date' => $task['estimated_completion_date'],
-                'status'                    => $task['status'],
+                'status'                    => $task['status'] ?? config('app.STATUSES.Pending'),
                 'total_budget'              => $task['total_budget'],
                 'completion_percentage'     => $task['status'] == config('app.STATUSES.Completed') ? 100 : 0,
                 'created_at'                => Carbon::now(),
@@ -208,6 +210,53 @@ class ProjectController extends Controller
             return redirect()
                 ->route('project.default-inspection', $project_id)
                 ->with('success', 'Payment added successfully');
+        } catch (\Exception $exception) {
+            return redirect()
+                ->back()
+                ->with('error', $exception->getMessage());
+        }
+    }
+
+    public function defaultInspection($project_id)
+    {
+        $project = Project::withCount('inspections')->findOrFail($project_id);
+        if ($project->inspections_count) return redirect()->route('inspection.create', $project->id);
+
+        $default_inspections = SettingsInspection::where('is_enabled', true)->get();
+
+        return view('project.default-inspection', compact('default_inspections', 'project'));
+    }
+
+    public function defaultInspectionStore(Request $request, $project_id)
+    {
+        $request->validate([
+            'inspections'                   => 'required|array',
+            'inspections.*.name'            => 'required',
+            'inspections.*.scheduled_date'  => 'required|date_format:Y-m-d',
+        ]);
+
+        $project = Project::findOrFail($project_id);
+
+        $inspection_data = [];
+        foreach ($request->inspections as $inspection) {
+            if (!isset($inspection['checked']) || !$inspection['checked']) continue;
+
+            $inspection_data[] = [
+                'project_id'        => $project_id,
+                'name'              => $inspection['name'],
+                'scheduled_date'    => $inspection['scheduled_date'],
+                'status'            => $inspection['status'] ?? config('app.STATUSES.Pending'),
+                'created_at'        => Carbon::now(),
+                'updated_at'        => Carbon::now(),
+            ];
+        }
+
+        try {
+            if (count($inspection_data)) Inspection::insert($inspection_data);
+
+            return redirect()
+                ->route('task.create', $project_id)
+                ->with('success', 'Inspection added successfully');
         } catch (\Exception $exception) {
             return redirect()
                 ->back()
