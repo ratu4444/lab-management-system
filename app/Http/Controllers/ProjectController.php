@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Payment;
 use App\Models\Project;
+use App\Models\SettingsPayment;
 use App\Models\SettingsTask;
 use App\Models\Task;
 use Carbon\Carbon;
@@ -115,7 +117,7 @@ class ProjectController extends Controller
         $project = Project::withCount('tasks')->findOrFail($project_id);
         if ($project->tasks_count) return redirect()->route('task.create', $project->id);
 
-        $default_tasks = SettingsTask::get();
+        $default_tasks = SettingsTask::where('is_enabled', true)->get();
 
         return view('project.default-task', compact('default_tasks', 'project'));
     }
@@ -155,6 +157,57 @@ class ProjectController extends Controller
             return redirect()
                 ->route('project.default-payment', $project_id)
                 ->with('success', 'Task added successfully');
+        } catch (\Exception $exception) {
+            return redirect()
+                ->back()
+                ->with('error', $exception->getMessage());
+        }
+    }
+
+    public function defaultPayment($project_id)
+    {
+        $project = Project::withCount('payments')->findOrFail($project_id);
+        if ($project->payments_count) return redirect()->route('payment.create', $project->id);
+
+        $default_payments = SettingsPayment::where('is_enabled', true)->get();
+
+        return view('project.default-payment', compact('default_payments', 'project'));
+    }
+
+    public function defaultPaymentStore(Request $request, $project_id)
+    {
+        $request->validate([
+            'payments'                              => 'required|array',
+            'payments.*.name'                       => 'required',
+            'payments.*.date'                       => 'required|date_format:Y-m-d',
+            'payments.*.amount'                     => 'required|min:1',
+            'payments.*.payment_method'             => 'required',
+        ]);
+
+        $project = Project::findOrFail($project_id);
+
+        $payment_data = [];
+        foreach ($request->payments as $payment) {
+            if (!isset($payment['checked']) || !$payment['checked']) continue;
+
+            $payment_data[] = [
+                'project_id'        => $project_id,
+                'client_id'         => $project->client_id,
+                'name'              => $payment['name'],
+                'date'              => $payment['date'],
+                'amount'            => $payment['amount'],
+                'payment_method'    => $payment['payment_method'],
+                'created_at'        => Carbon::now(),
+                'updated_at'        => Carbon::now(),
+            ];
+        }
+
+        try {
+            if (count($payment_data)) Payment::insert($payment_data);
+
+            return redirect()
+                ->route('project.default-inspection', $project_id)
+                ->with('success', 'Payment added successfully');
         } catch (\Exception $exception) {
             return redirect()
                 ->back()
