@@ -26,10 +26,16 @@ Route::middleware('auth')->group(function () {
         Route::prefix('project/{project_id}')->group(function () {
 //          TASK
             Route::resource('task', TaskController::class);
+            Route::get('default-task', [ProjectController::class, 'defaultTask'])->name('project.default-task');
+            Route::post('default-task', [ProjectController::class, 'defaultTaskStore'])->name('project.default-task.store');
 //          PAYMENT
             Route::resource('payment', PaymentController::class);
+            Route::get('default-payment', [ProjectController::class, 'defaultPayment'])->name('project.default-payment');
+            Route::post('default-payment', [ProjectController::class, 'defaultPaymentStore'])->name('project.default-payment.store');
 //          INSPECTION
             Route::resource('inspection', InspectionController::class);
+            Route::get('default-inspection', [ProjectController::class, 'defaultInspection'])->name('project.default-inspection');
+            Route::post('default-inspection', [ProjectController::class, 'defaultInspectionStore'])->name('project.default-inspection.store');
         });
 
 //      SETTINGS
@@ -46,8 +52,6 @@ Route::middleware('auth')->group(function () {
 //          SETTINGS ELEMENT
             Route::get('element/show',[SettingsController::class, 'elementShow'])->name('settings.element');
             Route::post('project/{project_id}/element/store',[SettingsController::class, 'elementStore'])->name('settings.element.store');
-
-
         });
 
 //      CLIENT
