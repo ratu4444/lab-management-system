@@ -14,6 +14,7 @@ class TaskController extends Controller
     public function create($project_id)
     {
         $project = Project::with('tasks')->findOrFail($project_id);
+//        $project_name = $project->name;
 
         return view('task.create', compact('project', 'project_id'));
     }

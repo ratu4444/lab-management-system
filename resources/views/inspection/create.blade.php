@@ -9,7 +9,7 @@
 @section('content')
     <div class="card">
         <div class="card-header d-flex justify-content-between">
-            <h4 class="card-title text-muted">Inspections</h4>
+            <h4 class="card-title text-muted">{{ $project->name }} : Inspections</h4>
             <button type="button" class="btn btn-primary " data-toggle="modal" data-target="#inspectionCreateModal">Add New Inspection</button>
         </div>
         <div class="card-body">
