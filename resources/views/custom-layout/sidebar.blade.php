@@ -9,14 +9,20 @@
 
         <ul class="sidebar-menu">
             <li class="menu-header">Main</li>
-            <li class="dropdown {{ Route::is('dashboard*') && !Route::is('dashboard.client-index') ? 'active' : '' }}">
-                <a href="{{ route('dashboard.index') }}" class="nav-link">
-                    <i data-feather="monitor"></i>
-                    <span>Dashboard</span>
-                </a>
-            </li>
-
-            @if(!auth()->user()->is_client)
+            @if(auth()->user()->is_client)
+                <li class="dropdown {{ Route::is('dashboard*') ? 'active' : '' }}">
+                    <a href="{{ route('dashboard.index') }}" class="nav-link">
+                        <i data-feather="monitor"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+            @else
+                <li class="dropdown {{ Route::is('dashboard*') && !Route::is('dashboard.client-index') ? 'active' : '' }}">
+                    <a href="{{ route('dashboard.index') }}" class="nav-link">
+                        <i data-feather="monitor"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
 
                 <li class="dropdown {{ Route::is('client*') ? 'active' : '' }}">
                     <a href="" class="menu-toggle nav-link has-dropdown">

@@ -24,7 +24,7 @@
             font-size: 20px;
         }
 
-        .floating-submit-button {
+        .floating-button {
             position: fixed;
             bottom: 20px;
             right: 20px;
@@ -400,7 +400,7 @@
                 </div>
             </div>
 
-            <div class="floating-submit-button">
+            <div class="floating-button">
                 <button type="submit" class="btn btn-warning btn-lg mb-3 shadow-lg">Update Dashboard</button>
             </div>
         </form>

@@ -18,12 +18,19 @@
         .activity-icon i {
             font-size: 20px;
         }
+
+        .floating-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
     </style>
 @endpush
 
 @section('content')
-    @if($all_projects->count() > 1)
-        <div class="row">
+    <div class="row justify-content-between align-items-center">
+        @if($all_projects->count() > 1)
             <div class="col-12 col-md-6 col-lg-4">
                 <div class="dropdown mb-4">
                     <button class="btn btn-primary dropdown-toggle btn-lg" type="button" data-toggle="dropdown">
@@ -38,8 +45,13 @@
                     </div>
                 </div>
             </div>
-        </div>
-    @endif
+        @endif
+        @if(!auth()->user()->is_client)
+            <div class="col-12 col-md-6 text-right">
+                <h4>{{ $project->client->name }}</h4>
+            </div>
+        @endif
+    </div>
 
     @if($project)
         <!-- Main Content -->
@@ -304,6 +316,12 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        @endif
+
+        @if(!auth()->user()->is_client)
+            <div class="floating-button">
+                <a href="{{ route('settings.element', ['project' => $project->id]) }}" class="btn btn-lg btn-warning shadow-lg">Dashboard Settings</a>
             </div>
         @endif
     @else
