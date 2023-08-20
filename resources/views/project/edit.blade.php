@@ -17,15 +17,18 @@
                             @csrf
                             @method('put')
                             <div class="form-row">
-                                <div class="form-group col-12">
-                                    <label class="form-label" for="estimated_budget"> Estimated Budget
-                                        <span class="text-danger">*</span></label>
-                                    <input type="number" name="estimated_budget" class="form-control" value="{{ $project->estimated_budget }}" id="estimated_budget" min="1" required>
-                                </div>
-                                <div class="form-group col-12 col-md-6">
+
+                                <div class="form-group col-12 col-md-12">
                                     <label class="form-label" for="name">Project Name <span class="text-danger">*</span></label>
                                     <input type="text" name="name" class="form-control" value="{{ $project->name }}" id="name" required>
                                 </div>
+
+                                <div class="form-group col-12 col-12 col-md-6">
+                                    <label class="form-label" for="estimated_budget"> Estimated Budget
+                                        <span class="text-danger">*</span></label>
+                                    <input type="number" name="estimated_budget" class="form-control" value="{{ $project->estimated_budget }}" id="estimated_budget" min="0" required>
+                                </div>
+
 
                                 <div class="form-group col-12 col-12 col-md-6">
                                     <label class="form-label" for="estimated_completion_date">Estimated Completion Date

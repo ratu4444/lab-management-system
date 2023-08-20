@@ -63,7 +63,7 @@
                                 </div>
                                 <div class="form-group col-12 col-md-6">
                                     <label class="form-label" for="estimated_budget">Estimated Budget <span class="text-danger">*</span></label>
-                                    <input type="number" name="estimated_budget" class="form-control" id="estimated_budget" value="{{ old('estimated_budget') }}" required>
+                                    <input type="number" name="estimated_budget" class="form-control" id="estimated_budget" min="0" value="{{ old('estimated_budget') }}" required>
 
                                     <div class="invalid-feedback">
                                         Estimated budget is required
