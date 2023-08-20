@@ -178,6 +178,7 @@ class ProjectController extends Controller
 
     public function defaultPaymentStore(Request $request, $project_id)
     {
+        dd($request->all());
         $request->validate([
             'payments'                              => 'required|array',
             'payments.*.name'                       => 'required',

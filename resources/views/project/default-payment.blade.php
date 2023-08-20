@@ -17,46 +17,51 @@
                     <div class="card-body">
                         <form action="{{ route('project.default-payment.store', $project->id) }}" method="post" class="needs-validation" novalidate>
                             @csrf
-                            @foreach($default_payments as $index => $default_payment)
-                                <div class="d-flex align-items-center">
-                                    <div class="pretty p-icon p-smooth">
-                                        <input type="checkbox" name="payments[{{ $index }}][checked]" checked/>
-                                        <div class="state p-success">
-                                            <i class="icon material-icons">done</i>
-                                            <label></label>
+                            <div id="paymentContainer">
+                                @foreach($default_payments as $index => $default_payment)
+                                    <div class="d-flex align-items-center payment-element">
+                                        <div class="pretty p-icon p-smooth">
+                                            <input type="checkbox" name="payments[{{ $index }}][checked]" class="payment-checkbox" checked/>
+                                            <div class="state p-success">
+                                                <i class="icon material-icons">done</i>
+                                                <label></label>
+                                            </div>
+                                        </div>
+                                        <div class="form-row w-100 payment-input">
+                                            <div class="form-group col-4">
+                                                <label class="form-label">Name <span class="text-danger">*</span></label>
+                                                <input type="text" name="payments[{{ $index }}][name]" class="form-control" value="{{ $default_payment->name }}" data-required="true" required>
+
+                                                <div class="invalid-feedback">
+                                                    Payment name is required
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <label class="form-label">Date <span class="text-danger">*</span></label>
+                                                <input type="text" name="payments[{{ $index }}][date]" class="form-control datepicker" data-required="true" required>
+
+                                                <div class="invalid-feedback">
+                                                    Date is required
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <label class="form-label">Amount <span class="text-danger">*</span></label>
+                                                <input name="payments[{{ $index }}][amount]" type="number" class="form-control" value="{{ $default_payment->amount ?? 1 }}" min="1" data-required="true" required>
+
+                                                <div class="invalid-feedback">
+                                                    Amount is required
+                                                </div>
+                                            </div>
+                                            <input type="hidden" name="payments[{{ $index }}][payment_method]" value="{{ $default_payment->payment_method }}">
                                         </div>
                                     </div>
-                                    <div class="form-row w-100">
-                                        <div class="form-group col-4">
-                                            <label class="form-label">Name <span class="text-danger">*</span></label>
-                                            <input type="text" name="payments[{{ $index }}][name]" class="form-control" value="{{ $default_payment->name }}" style="pointer-events: none" readonly required>
+                                @endforeach
+                            </div>
 
-                                            <div class="invalid-feedback">
-                                                Payment name is required
-                                            </div>
-                                        </div>
-                                        <div class="form-group col-4">
-                                            <label class="form-label">Date <span class="text-danger">*</span></label>
-                                            <input type="text" name="payments[{{ $index }}][date]" class="form-control datepicker" required>
-
-                                            <div class="invalid-feedback">
-                                                Date is required
-                                            </div>
-                                        </div>
-                                        <div class="form-group col-4">
-                                            <label class="form-label">Amount <span class="text-danger">*</span></label>
-                                            <input name="payments[{{ $index }}][amount]" type="number" class="form-control bg-light" value="{{ $default_payment->amount ?? 1 }}" min="1" required>
-
-                                            <div class="invalid-feedback">
-                                                Amount is required
-                                            </div>
-                                        </div>
-                                        <input type="hidden" name="payments[{{ $index }}][payment_method]" value="{{ $default_payment->payment_method }}">
-                                    </div>
-                                </div>
-                            @endforeach
-
-                            <button type="submit" class="btn btn-primary">Add Payments</button>
+                            <div class="d-flex justify-content-between">
+                                <a href="void(0)" class="btn btn-primary" id="addMoreButton">Add New Payments</a>
+                                <button type="submit" class="btn btn-success">Next</button>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -67,4 +72,15 @@
 
 @push('js')
     <script src="{{ asset('assets/bundles/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
+
+    <script>
+        $('#addMoreButton').click(function(e) {
+            e.preventDefault();
+            cloneField('.payment-element', '.payment-input', '#paymentContainer');
+        });
+
+        $(document).on('change', '.payment-checkbox',function() {
+            checkboxAction($(this), '.payment-element', '.payment-input');
+        });
+    </script>
 @endpush

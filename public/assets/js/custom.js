@@ -52,3 +52,36 @@ function modifyCompletionPercentage(statusValue, percentageElement, configStatus
     }
 }
 
+function cloneField(elementSelector, inputSelector, containerSelector) {
+    var elements = $(elementSelector);
+    var clonedElement = elements.first().clone();
+
+    clonedElement.find('input[type="text"], input[type="number"]').val('');
+    clonedElement.find('input[type="checkbox"]').prop('checked', true);
+
+    checkboxAction(clonedElement, elementSelector, inputSelector, true);
+
+    clonedElement.find('input').each(function(index, element) {
+        var clonedElementName = $(element).attr('name').replace(/\[\d+\]/g, '[' + elements.length + ']');
+        $(element).attr('name', clonedElementName);
+    });
+
+    clonedElement.find('.datepicker').daterangepicker({
+        singleDatePicker: true,
+        locale: {
+            format: 'YYYY-MM-DD',
+        }
+    });
+
+    $(containerSelector).append(clonedElement);
+}
+
+function checkboxAction(checkbox, elementSelector, inputSelector, isNew = false) {
+    const isChecked = isNew || checkbox.is(':checked');
+    const inputField = checkbox.closest(elementSelector).find(inputSelector);
+
+    inputField.find('input[data-required="true"]').attr('required', isChecked);
+    inputField.find('input').attr('disabled', !isChecked);
+    inputField.find('label span').toggle(isChecked);
+}
+

@@ -66,7 +66,7 @@
                                 @endforeach
                             </div>
                             <div class="d-flex justify-content-between">
-                                <a href="void(0)" class="btn btn-primary" id="addNewTaskButton">Add New Tasks</a>
+                                <a href="void(0)" class="btn btn-primary" id="addMoreButton">Add New Tasks</a>
                                 <button type="submit" class="btn btn-success">Next</button>
                             </div>
                         </form>
@@ -79,31 +79,15 @@
 
 @push('js')
     <script src="{{ asset('assets/bundles/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
+
     <script>
-        $('#addNewTaskButton').click(function(e) {
+        $('#addMoreButton').click(function(e) {
             e.preventDefault();
-            var taskElements = $('.task-element');
-            var clonedTask = taskElements.first().clone();
-
-            clonedTask.find('input[type="text"], input[type="number"]').val('');
-            clonedTask.find('input').each(function(index, element) {
-                var clonedTaskName = $(element).attr('name').replace(/\[\d+\]/g, '[' + taskElements.length + ']');
-                $(element).attr('name', clonedTaskName);
-            });
-
-            $('#taskContainer').append(clonedTask);
-
-            clonedTask.find('.datepicker').daterangepicker({
-                singleDatePicker: true,
-            });
+            cloneField('.task-element', '.task-input', '#taskContainer');
         });
 
         $(document).on('change', '.task-checkbox',function() {
-            const isChecked = $(this).is(':checked');
-            const taskInput = $(this).closest('.task-element').find('.task-input');
-
-            taskInput.find('input[data-required="true"]').attr('required', isChecked);
-            taskInput.find('label span').toggle(isChecked);
+            checkboxAction($(this), '.task-element', '.task-input');
         });
     </script>
 @endpush
