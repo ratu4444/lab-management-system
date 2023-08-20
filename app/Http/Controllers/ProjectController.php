@@ -131,7 +131,7 @@ class ProjectController extends Controller
             'tasks.*.name'                          => 'required',
             'tasks.*.estimated_start_date'          => 'required|date_format:Y-m-d',
             'tasks.*.estimated_completion_date'     => 'required|date_format:Y-m-d|after_or_equal:tasks.*.estimated_start_date',
-            'tasks.*.total_budget'                  => 'required|min:1',
+            'tasks.*.total_budget'                  => 'required',
         ]);
 
         $project = Project::findOrFail($project_id);

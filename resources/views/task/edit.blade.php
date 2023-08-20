@@ -57,7 +57,7 @@
                                 </div>
                                 <div class="form-group col-12 col-md-6">
                                     <label class="form-label">Budget <span class="text-danger">*</span></label>
-                                    <input name="total_budget" type="number" value="{{ $task->total_budget}}" class="form-control" min="1" required>
+                                    <input name="total_budget" type="number" value="{{ $task->total_budget}}" class="form-control" min="0" required>
 
                                     <div class="invalid-feedback">
                                         Budget is required
