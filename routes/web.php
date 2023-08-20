@@ -45,7 +45,6 @@ Route::middleware('auth')->group(function () {
             Route::get('task/show', [SettingsController::class, 'taskShow'])->name('settings.task.show');
             Route::get('task/{default_task_id}/edit', [SettingsController::class, 'taskEdit'])->name('settings.task.edit');
             Route::put('task/{default_task_id}/update', [SettingsController::class, 'taskUpdate'])->name('settings.task.update');
-
 //          SETTINGS PAYMENTS
             Route::post('payment/store', [SettingsController::class, 'paymentStore'])->name('settings.payment.store');
             Route::get('payment/show', [SettingsController::class, 'paymentShow'])->name('settings.payment.show');

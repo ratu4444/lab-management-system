@@ -17,20 +17,20 @@
                     <div class="card-body">
                         <form action="{{ route('project.default-task.store', $project->id) }}" method="post" class="needs-validation" novalidate>
                             @csrf
-                            <div id="defaultTaskSection">
+                            <div id="taskContainer">
                                 @foreach($default_tasks as $index => $default_task)
-                                    <div class="d-flex align-items-center task-container">
+                                    <div class="d-flex align-items-center task-element">
                                         <div class="pretty p-icon p-smooth">
-                                            <input type="checkbox" name="tasks[{{ $index }}][checked]" checked/>
+                                            <input type="checkbox" name="tasks[{{ $index }}][checked]" class="task-checkbox" checked/>
                                             <div class="state p-success">
                                                 <i class="icon material-icons">done</i>
                                                 <label></label>
                                             </div>
                                         </div>
-                                        <div class="form-row w-100">
+                                        <div class="form-row w-100 task-input">
                                             <div class="form-group col-3">
                                                 <label class="form-label">Name <span class="text-danger">*</span></label>
-                                                <input type="text" name="tasks[{{ $index }}][name]" class="form-control" value="{{ $default_task->name }}" required>
+                                                <input type="text" name="tasks[{{ $index }}][name]" class="form-control" value="{{ $default_task->name }}" data-required="true" required>
 
                                                 <div class="invalid-feedback">
                                                     Task name is required
@@ -38,7 +38,7 @@
                                             </div>
                                             <div class="form-group col-3">
                                                 <label class="form-label">Estimated Start Date <span class="text-danger">*</span></label>
-                                                <input type="text" name="tasks[{{ $index }}][estimated_start_date]" class="form-control datepicker" required>
+                                                <input type="text" name="tasks[{{ $index }}][estimated_start_date]" class="form-control datepicker" data-required="true" required>
 
                                                 <div class="invalid-feedback">
                                                     Estimated start date is required
@@ -46,7 +46,7 @@
                                             </div>
                                             <div class="form-group col-3">
                                                 <label class="form-label">Estimated Completion Date <span class="text-danger">*</span></label>
-                                                <input type="text" name="tasks[{{ $index }}][estimated_completion_date]" class="form-control datepicker" required>
+                                                <input type="text" name="tasks[{{ $index }}][estimated_completion_date]" class="form-control datepicker" data-required="true" required>
 
                                                 <div class="invalid-feedback">
                                                     Estimated completion date must be after estimated start date
@@ -54,7 +54,7 @@
                                             </div>
                                             <div class="form-group col-3">
                                                 <label class="form-label">Budget <span class="text-danger">*</span></label>
-                                                <input name="tasks[{{ $index }}][total_budget]" type="number" class="form-control" value="{{ $default_task->budget ?? 1 }}" min="1" required>
+                                                <input name="tasks[{{ $index }}][total_budget]" type="number" class="form-control" value="{{ $default_task->budget ?? 1 }}" min="1" data-required="true" required>
 
                                                 <div class="invalid-feedback">
                                                     Budget is required
@@ -66,8 +66,8 @@
                                 @endforeach
                             </div>
                             <div class="d-flex justify-content-between">
-                            <button class="btn btn-primary" id="addNewTaskButton">Add New Tasks</button>
-                            <button type="submit" class="btn btn-primary">Next</button>
+                                <a href="void(0)" class="btn btn-primary" id="addNewTaskButton">Add New Tasks</a>
+                                <button type="submit" class="btn btn-success">Next</button>
                             </div>
                         </form>
                     </div>
@@ -82,24 +82,28 @@
     <script>
         $('#addNewTaskButton').click(function(e) {
             e.preventDefault();
-            var taskContainers = $('.task-container'); // Get all task containers
-            var totalContainers = taskContainers.length;
+            var taskElements = $('.task-element');
+            var clonedTask = taskElements.first().clone();
 
-            var taskContainer = taskContainers.first(); // Assuming there's only one task container template
-            var clonedTask = taskContainer.clone();
-
-            // Clear input values in the cloned task
             clonedTask.find('input[type="text"], input[type="number"]').val('');
-
-            // Update the index in the cloned task's name attributes
-            clonedTask.find('input[type="text"]').each(function(index, element) {
-                var nameAttr = $(element).attr('name');
-                var newNameAttr = nameAttr.replace(/\[\d+\]/g, '[' + totalContainers + ']');
-                $(element).attr('name', newNameAttr);
+            clonedTask.find('input').each(function(index, element) {
+                var clonedTaskName = $(element).attr('name').replace(/\[\d+\]/g, '[' + taskElements.length + ']');
+                $(element).attr('name', clonedTaskName);
             });
 
-            // Append the cloned task after the form
-            $('#defaultTaskSection').append(clonedTask);
+            $('#taskContainer').append(clonedTask);
+
+            clonedTask.find('.datepicker').daterangepicker({
+                singleDatePicker: true,
+            });
+        });
+
+        $(document).on('change', '.task-checkbox',function() {
+            const isChecked = $(this).is(':checked');
+            const taskInput = $(this).closest('.task-element').find('.task-input');
+
+            taskInput.find('input[data-required="true"]').attr('required', isChecked);
+            taskInput.find('label span').toggle(isChecked);
         });
     </script>
 @endpush

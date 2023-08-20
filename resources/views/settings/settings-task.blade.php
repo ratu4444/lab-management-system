@@ -21,7 +21,7 @@
 {{--                            <th class="text-nowrap">Status</th>--}}
                             <th class="text-nowrap">Budget</th>
                             <th class="text-nowrap">Is Enabled?</th>
-                            <th class="text-nowrap">Edit</th>
+                            <th class="text-nowrap">Action</th>
                         </tr>
                     </thead>
                     <tbody>
