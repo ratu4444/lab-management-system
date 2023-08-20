@@ -55,8 +55,8 @@
                                                 <td>{{ $project->name }}</td>
                                                 <td>{{ $project->client?->name }}</td>
                                                 <td class="align-middle" style="min-width: 200px">
-                                                    <div class="progress" data-height="4" data-toggle="tooltip" title="{{ $project->completion_percentage.'% Completed' }}">
-                                                        <div class="progress-bar {{ $project->completion_percentage < 50 ? 'bg-danger' : 'bg-success' }}" data-width="{{ $project->completion_percentage }}"></div>
+                                                    <div class="progress" data-height="6" data-toggle="tooltip" title="{{ $project->completion_percentage.'% Completed' }}">
+                                                        <div class="progress-bar {{ $project->completion_percentage < 50 ? 'bg-danger' : 'bg-success' }}" data-width="{{ $project->completion_percentage.'%' }}"></div>
                                                     </div>
                                                 </td>
                                                 <td>{{ $project->estimated_completion_date }}</td>
