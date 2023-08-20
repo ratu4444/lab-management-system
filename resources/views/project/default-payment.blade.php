@@ -52,7 +52,15 @@
                                                     Amount is required
                                                 </div>
                                             </div>
-                                            <input type="hidden" name="payments[{{ $index }}][payment_method]" value="{{ $default_payment->payment_method }}">
+
+                                            <div class="form-group col-4">
+                                                <label class="form-label">Payment Method <span class="text-danger">*</span></label>
+                                                <input name="payments[{{ $index }}][payment_method]" type="text" class="form-control" value="{{ $default_payment->payment_method }}" data-required="true" required>
+
+                                                <div class="invalid-feedback">
+                                                    Payment Method is required
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 @endforeach
