@@ -8,6 +8,7 @@ use App\Http\Controllers\TaskController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\InspectionController;
 use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\OauthController;
 
 Route::middleware('auth')->group(function () {
 //  CLIENT DASHBOARD
@@ -62,6 +63,9 @@ Route::middleware('auth')->group(function () {
 
 //      CLIENT
         Route::resource('client', ClientController::class);
+
+        Route::get('oauth/{app_name}/authorize', [OauthController::class, 'oauthAuthorize'])->name('oauth.authorize');
+        Route::any('oauth/{app_name}/redirect', [OauthController::class, 'oauthRedirect'])->name('oauth.redirect');
     });
 });
 
