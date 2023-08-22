@@ -14,17 +14,21 @@
                         <th class="text-nowrap">User Name</th>
                         <th class="text-nowrap">User Email</th>
                         <th class="text-nowrap">Is Token Valid</th>
+                        <th class="text-nowrap">Expiration Time</th>
+                        <th class="text-nowrap">Last Refreshed Time</th>
                         <th class="text-nowrap">Action</th>
                     </tr>
                     </thead>
                     <tbody>
                     @if($outlook_account)
                         <tr>
-                            <td>{{ $outlook_account->user_name }}</td>
-                            <td>{{ $outlook_account->user_email }}</td>
-                            <td>
+                            <td class="text-nowrap">{{ $outlook_account->user_name }}</td>
+                            <td class="text-nowrap">{{ $outlook_account->user_email }}</td>
+                            <td class="text-nowrap">
                                 <div class="badge {{ $outlook_account->is_expired ? 'badge-danger' : 'badge-success' }}">{{ $outlook_account->is_expired ? 'No': 'Yes' }}</div>
                             </td>
+                            <td class="text-nowrap">{{ $outlook_account->expiration_time }}</td>
+                            <td class="text-nowrap">{{ $outlook_account->last_refreshed_time }}</td>
                             <td class="text-nowrap">
                                 @if($outlook_account->is_expired)
                                     <a href="{{ route('oauth.authorize', $outlook_account->app_name) }}" class="btn btn-success btn-sm">Relogin</a>
