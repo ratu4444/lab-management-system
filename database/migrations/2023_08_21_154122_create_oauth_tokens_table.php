@@ -20,7 +20,11 @@ class CreateOauthTokensTable extends Migration
             $table->longText('access_token');
             $table->longText('refresh_token')->nullable();
             $table->dateTime('expiration_time')->nullable();
-            $table->json('response_data');
+            $table->json('response_data')->nullable();
+            $table->string('user_name')->nullable();
+            $table->string('user_email')->nullable();
+            $table->json('user_data')->nullable();
+            $table->boolean('is_expired')->default(false);
             $table->timestamps();
             $table->softDeletes();
         });
