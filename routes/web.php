@@ -60,7 +60,7 @@ Route::middleware('auth')->group(function () {
             Route::get('element/show',[SettingsController::class, 'elementShow'])->name('settings.element');
             Route::post('project/{project_id}/element/store',[SettingsController::class, 'elementStore'])->name('settings.element.store');
 //          OUTLOOK CONFIGURATION
-            Route::get('outlook-configuration',[SettingsController::class, 'outlookConfiguration'])->name('outlook.configuration');
+            Route::get('outlook-configuration',[SettingsController::class, 'outlookConfiguration'])->name('settings.outlook-configuration');
         });
 
 //      CLIENT
@@ -68,6 +68,7 @@ Route::middleware('auth')->group(function () {
 
         Route::get('oauth/{app_name}/authorize', [OauthController::class, 'oauthAuthorize'])->name('oauth.authorize');
         Route::any('oauth/{app_name}/redirect', [OauthController::class, 'oauthRedirect'])->name('oauth.redirect');
+        Route::get('oauth/{app_name}/refresh', [OauthController::class, 'oauthRefresh'])->name('oauth.refresh');
     });
 });
 

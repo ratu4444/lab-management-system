@@ -26,6 +26,8 @@ class InspectionController extends Controller
             'scheduled_date'    => 'required|date_format:Y-m-d'
         ]);
 
+        $project = Project::with('client')->findOrFail($project_id);
+
         $inspection_data = [
             'project_id'                => $project_id,
             'name'                      => $request->name,
@@ -51,6 +53,15 @@ class InspectionController extends Controller
                 }
             }
             if(count($inspection_dependecies)) InspectionDependency::insert($inspection_dependecies);
+
+            $project_client_email = $project->client?->email;
+            if ($request->status == config('app.STATUSES.Completed') && $project_client_email) {
+                $subject = 'Project has just passed an inspection';
+                $message = 'We have great news. Your project has just passed an inspection. Be sure to check out your Dashboard for what is coming up next in the build process. As always feel free to reach out to us if you have any questions about what to expect.';
+                $recipients_emails = [$project_client_email];
+
+                sendMailFromOutlook($subject, $message, $recipients_emails);
+            }
 
             DB::commit();
 
@@ -85,7 +96,8 @@ class InspectionController extends Controller
             'inspected_date'    => 'nullable|date_format:Y-m-d|after_or_equal:scheduled_date',
         ]);
 
-        $inspection = Inspection::with('inspectionDependencies')->findOrFail($inspection_id);
+        $inspection = Inspection::with('inspectionDependencies', 'project.client')->findOrFail($inspection_id);
+        $project = $inspection->project;
 
         $inspection_data = [
             'name'              => $request->name,
@@ -96,7 +108,6 @@ class InspectionController extends Controller
         ];
 
         DB::beginTransaction();
-
         try {
             $inspection->update($inspection_data);
 
@@ -115,6 +126,15 @@ class InspectionController extends Controller
             }
 
             if (count($inspection_dependencies_data)) InspectionDependency::insert($inspection_dependencies_data);
+
+            $project_client_email = $project?->client?->email;
+            if ($request->status == config('app.STATUSES.Completed') && $project_client_email) {
+                $subject = 'Project has just passed an inspection';
+                $message = 'We have great news. Your project has just passed an inspection. Be sure to check out your Dashboard for what is coming up next in the build process. As always feel free to reach out to us if you have any questions about what to expect.';
+                $recipients_emails = [$project_client_email];
+
+                sendMailFromOutlook($subject, $message, $recipients_emails);
+            }
 
             DB::commit();
             return redirect()

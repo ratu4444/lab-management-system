@@ -254,9 +254,9 @@ class SettingsController extends Controller
         }
     }
 
-    public  function outlookConfiguration(){
-        $oauth_token = OauthToken::get();
-//        dd($oauth_token);
-        return view('settings.outlook-configuration', compact('oauth_token'));
+    public  function outlookConfiguration()
+    {
+        $outlook_account = OauthToken::where('app_name', OauthToken::APP_NAMES['OUTLOOK'])->first();
+        return view('settings.outlook-configuration', compact('outlook_account'));
     }
 }
