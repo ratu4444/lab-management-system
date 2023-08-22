@@ -28,7 +28,7 @@
                                             </div>
                                         </div>
                                         <div class="form-row w-100 payment-input">
-                                            <div class="form-group col-4">
+                                            <div class="form-group col-3">
                                                 <label class="form-label">Name <span class="text-danger">*</span></label>
                                                 <input type="text" name="payments[{{ $index }}][name]" class="form-control" value="{{ $default_payment->name }}" data-required="true" required>
 
@@ -36,7 +36,7 @@
                                                     Payment name is required
                                                 </div>
                                             </div>
-                                            <div class="form-group col-4">
+                                            <div class="form-group col-3">
                                                 <label class="form-label">Date <span class="text-danger">*</span></label>
                                                 <input type="text" name="payments[{{ $index }}][date]" class="form-control datepicker" data-required="true" required>
 
@@ -44,7 +44,7 @@
                                                     Date is required
                                                 </div>
                                             </div>
-                                            <div class="form-group col-4">
+                                            <div class="form-group col-3">
                                                 <label class="form-label">Amount <span class="text-danger">*</span></label>
                                                 <input name="payments[{{ $index }}][amount]" type="number" class="form-control" value="{{ $default_payment->amount ?? 1 }}" min="1" data-required="true" required>
 
@@ -53,7 +53,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="form-group col-4">
+                                            <div class="form-group col-3">
                                                 <label class="form-label">Payment Method <span class="text-danger">*</span></label>
                                                 <input name="payments[{{ $index }}][payment_method]" type="text" class="form-control" value="{{ $default_payment->payment_method }}" data-required="true" required>
 
