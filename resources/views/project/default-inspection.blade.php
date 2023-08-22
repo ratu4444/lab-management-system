@@ -44,7 +44,6 @@
                                                     Scheduled Date is required
                                                 </div>
                                             </div>
-                                            <input type="hidden" name="inspections[{{ $index }}][status]" value="{{ $default_inspection->status }}">
                                         </div>
                                     </div>
                                 @endforeach

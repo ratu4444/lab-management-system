@@ -145,9 +145,9 @@ class ProjectController extends Controller
                 'name'                      => $task['name'],
                 'estimated_start_date'      => $task['estimated_start_date'],
                 'estimated_completion_date' => $task['estimated_completion_date'],
-                'status'                    => $task['status'] ?? config('app.STATUSES.Pending'),
+                'status'                    => config('app.STATUSES.Pending'),
                 'total_budget'              => $task['total_budget'],
-                'completion_percentage'     => $task['status'] == config('app.STATUSES.Completed') ? 100 : 0,
+                'completion_percentage'     => 0,
                 'created_at'                => Carbon::now(),
                 'updated_at'                => Carbon::now(),
             ];
@@ -245,7 +245,7 @@ class ProjectController extends Controller
                 'project_id'        => $project_id,
                 'name'              => $inspection['name'],
                 'scheduled_date'    => $inspection['scheduled_date'],
-                'status'            => $inspection['status'] ?? config('app.STATUSES.Pending'),
+                'status'            => config('app.STATUSES.Pending'),
                 'created_at'        => Carbon::now(),
                 'updated_at'        => Carbon::now(),
             ];

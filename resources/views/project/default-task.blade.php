@@ -60,7 +60,6 @@
                                                     Budget is required
                                                 </div>
                                             </div>
-                                            <input type="hidden" name="tasks[{{ $index }}][status]" value="{{ $default_task->status }}">
                                         </div>
                                     </div>
                                 @endforeach

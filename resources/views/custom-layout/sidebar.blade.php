@@ -71,6 +71,11 @@
                         <li class="{{ Route::is('settings.element') ? 'active' : '' }}">
                             <a class="nav-link" href="{{ route('settings.element') }}">Client Dashboard Settings</a>
                         </li>
+                        <li>
+                        <li class="{{ Route::is('outlook.configuration') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('outlook.configuration') }}">Outlook Configuration</a>
+                        </li>
+
                     </ul>
                 </li>
             @endif

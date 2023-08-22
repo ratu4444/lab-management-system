@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ElementSetting;
+use App\Models\OauthToken;
 use App\Models\Project;
 use App\Models\SettingsInspection;
 use App\Models\SettingsPayment;
@@ -251,5 +252,11 @@ class SettingsController extends Controller
                 ->back()
                 ->with('error', $exception->getMessage());
         }
+    }
+
+    public  function outlookConfiguration(){
+        $oauth_token = OauthToken::get();
+//        dd($oauth_token);
+        return view('settings.outlook-configuration', compact('oauth_token'));
     }
 }
