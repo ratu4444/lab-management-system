@@ -103,15 +103,16 @@ class OauthController extends Controller
         $user_data = getOutlookUserData($response_data['access_token']);
 
         $oauth_token_data = [
-            'token_type'        => $response_data['token_type'] ?? null,
-            'access_token'      => $response_data['access_token'],
-            'refresh_token'     => $response_data['refresh_token'] ?? null,
-            'expiration_time'   => $response_data['expires_in'] ? Carbon::now()->addSeconds($response_data['expires_in']) : null,
-            'response_data'     => json_encode($response_data),
-            'user_name'         => $user_data['displayName'] ?? null,
-            'user_email'        => $user_data['mail'] ?? null,
-            'user_data'         => json_encode($user_data),
-            'is_expired'        => false,
+            'token_type'            => $response_data['token_type'] ?? null,
+            'access_token'          => $response_data['access_token'],
+            'refresh_token'         => $response_data['refresh_token'] ?? null,
+            'expiration_time'       => $response_data['expires_in'] ? Carbon::now()->addSeconds($response_data['expires_in']) : null,
+            'response_data'         => json_encode($response_data),
+            'user_name'             => $user_data['displayName'] ?? null,
+            'user_email'            => $user_data['mail'] ?? null,
+            'user_data'             => json_encode($user_data),
+            'is_expired'            => false,
+            'last_refreshed_time'   => Carbon::now(),
         ];
 
         return $this->storeTokenAndReturn($app_name, $oauth_token_data, $return_view);

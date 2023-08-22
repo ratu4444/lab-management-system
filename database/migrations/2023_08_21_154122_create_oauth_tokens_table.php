@@ -25,6 +25,7 @@ class CreateOauthTokensTable extends Migration
             $table->string('user_email')->nullable();
             $table->json('user_data')->nullable();
             $table->boolean('is_expired')->default(false);
+            $table->dateTime('last_refreshed_time')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
