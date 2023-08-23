@@ -1,14 +1,21 @@
 <?php
 
+use App\Models\MailConfiguration;
 use App\Models\OauthToken;
 use Illuminate\Support\Facades\Http;
 
 if (!function_exists('sendMailFromOutlook')) {
-    function sendMailFromOutlook(string $subject, string $message, array $recipients_emails, string $outlook_base_url = 'https://graph.microsoft.com/v1.0')
+    function sendMailFromOutlook(array $recipients_emails, string $outlook_base_url = 'https://graph.microsoft.com/v1.0')
     {
         $app_name = OauthToken::APP_NAMES['OUTLOOK'];
 
-        $oauth_token = OauthToken::where('app_name', $app_name)->first();
+        $mail_configuration = MailConfiguration::where('app_name', $app_name)
+            ->with('oauthToken')
+            ->first();
+        $oauth_token = $mail_configuration?->oauthToken ?? OauthToken::where('app_name', $app_name)->first();
+        $subject = $mail_configuration?->mail_subject ?? 'Project has just passed an inspection';
+        $message = $mail_configuration?->mail_body ?? 'We have great news. Your project has just passed an inspection. Be sure to check out your Dashboard for what is coming up next in the build process. As always feel free to reach out to us if you have any questions about what to expect.';
+
         if (!$oauth_token) return response()->json([
             'success'   => false,
             'status'    => 400,

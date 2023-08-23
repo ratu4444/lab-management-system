@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ElementSetting;
+use App\Models\MailConfiguration;
 use App\Models\OauthToken;
 use App\Models\Project;
 use App\Models\SettingsInspection;
@@ -256,7 +257,48 @@ class SettingsController extends Controller
 
     public  function outlookConfiguration()
     {
-        $outlook_account = OauthToken::where('app_name', OauthToken::APP_NAMES['OUTLOOK'])->first();
-        return view('settings.outlook-configuration', compact('outlook_account'));
+        $app_name = OauthToken::APP_NAMES['OUTLOOK'];
+
+        $mail_configuration = MailConfiguration::where('app_name', $app_name)
+            ->with('oauthToken')
+            ->first();
+        $outlook_account = $mail_configuration?->oauthToken ?? OauthToken::where('app_name', $app_name)->first();
+
+        return view('settings.outlook-configuration', compact('outlook_account', 'mail_configuration'));
+    }
+
+    public function mailConfiguration(Request $request)
+    {
+        $request->validate([
+            'mail_subject'  => 'required',
+            'mail_body'     => 'required',
+            'app_name'      => 'required|in:'.implode(',', OauthToken::APP_NAMES),
+        ]);
+
+        $app_name = $request->app_name;
+        $mail_configuration = MailConfiguration::where('app_name', $app_name)
+            ->with('oauthToken')
+            ->first();
+        $oauth_token = $mail_configuration?->oauthToken ?? OauthToken::where('app_name', $app_name)->first();
+
+        $mail_configuration_data = [
+            'app_name'          => $app_name,
+            'oauth_token_id'    => $oauth_token?->id,
+            'mail_subject'      => $request->mail_subject,
+            'mail_body'         => $request->mail_body
+        ];
+
+        try {
+            if ($mail_configuration) $mail_configuration->update($mail_configuration_data);
+            else MailConfiguration::create($mail_configuration_data);
+
+            return redirect()
+                ->back()
+                ->with('success', ucfirst($app_name).' Mail Configuration Updated Successfully');
+        } catch (\Exception $exception) {
+            return redirect()
+                ->back()
+                ->with('error', $exception->getMessage());
+        }
     }
 }

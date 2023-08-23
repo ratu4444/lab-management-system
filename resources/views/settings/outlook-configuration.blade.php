@@ -48,5 +48,35 @@
                 </table>
             </div>
         </div>
+    </div>
+    <div class="card">
+        <div class="card-header d-flex justify-content-between">
+            <h4 class="card-title text-muted">Inspection Mail Configuration</h4>
+        </div>
+        <div class="card-body">
+            <form action="{{ route('settings.mail-configuration') }}" method="post" class="needs-validation" novalidate>
+                @csrf
+                <div class="form-row">
+                    <div class="form-group col-12">
+                        <label class="form-label" for="mail_subject">Mail Subject <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" name="mail_subject" id="mail_subject" value="{{ old('mail_subject') ?? $mail_configuration?->mail_subject }}" required>
 
+                        <div class="invalid-feedback">
+                            Mail Subject is required
+                        </div>
+                    </div>
+                    <div class="form-group col-12">
+                        <label class="form-label" for="mail_body">Mail Body <span class="text-danger">*</span></label>
+                        <textarea class="form-control" name="mail_body" id="mail_body" required>{{ old('mail_body') ?? $mail_configuration?->mail_body }}</textarea>
+                        <div class="invalid-feedback">
+                            Mail Body is required
+                        </div>
+                    </div>
+
+                    <input type="hidden" name="app_name" value="{{ \App\Models\OauthToken::APP_NAMES['OUTLOOK'] }}">
+                </div>
+                <button type="submit" class="btn btn-primary">Update Configuration</button>
+            </form>
+        </div>
+    </div>
 @endsection

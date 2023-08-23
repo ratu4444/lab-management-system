@@ -61,6 +61,7 @@ Route::middleware('auth')->group(function () {
             Route::post('project/{project_id}/element/store',[SettingsController::class, 'elementStore'])->name('settings.element.store');
 //          OUTLOOK CONFIGURATION
             Route::get('outlook-configuration',[SettingsController::class, 'outlookConfiguration'])->name('settings.outlook-configuration');
+            Route::post('mail-configuration',[SettingsController::class, 'mailConfiguration'])->name('settings.mail-configuration');
         });
 
 //      CLIENT

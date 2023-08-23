@@ -56,11 +56,8 @@ class InspectionController extends Controller
 
             $project_client_email = $project->client?->email;
             if ($request->status == config('app.STATUSES.Completed') && $project_client_email) {
-                $subject = 'Project has just passed an inspection';
-                $message = 'We have great news. Your project has just passed an inspection. Be sure to check out your Dashboard for what is coming up next in the build process. As always feel free to reach out to us if you have any questions about what to expect.';
                 $recipients_emails = [$project_client_email];
-
-                sendMailFromOutlook($subject, $message, $recipients_emails);
+                sendMailFromOutlook($recipients_emails);
             }
 
             DB::commit();
@@ -129,11 +126,8 @@ class InspectionController extends Controller
 
             $project_client_email = $project?->client?->email;
             if ($request->status == config('app.STATUSES.Completed') && $project_client_email) {
-                $subject = 'Project has just passed an inspection';
-                $message = 'We have great news. Your project has just passed an inspection. Be sure to check out your Dashboard for what is coming up next in the build process. As always feel free to reach out to us if you have any questions about what to expect.';
                 $recipients_emails = [$project_client_email];
-
-                sendMailFromOutlook($subject, $message, $recipients_emails);
+                sendMailFromOutlook($recipients_emails);
             }
 
             DB::commit();
