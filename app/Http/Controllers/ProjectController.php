@@ -141,7 +141,7 @@ class ProjectController extends Controller
             if (!isset($task['checked']) || !$task['checked']) continue;
 
             $task_data[] = [
-                'project_id'                => $project_id,
+                'project_id'                => $project->id,
                 'name'                      => $task['name'],
                 'estimated_start_date'      => $task['estimated_start_date'],
                 'estimated_completion_date' => $task['estimated_completion_date'],
@@ -193,7 +193,7 @@ class ProjectController extends Controller
             if (!isset($payment['checked']) || !$payment['checked']) continue;
 
             $payment_data[] = [
-                'project_id'        => $project_id,
+                'project_id'        => $project->id,
                 'client_id'         => $project->client_id,
                 'name'              => $payment['name'],
                 'date'              => $payment['date'],
@@ -242,7 +242,7 @@ class ProjectController extends Controller
             if (!isset($inspection['checked']) || !$inspection['checked']) continue;
 
             $inspection_data[] = [
-                'project_id'        => $project_id,
+                'project_id'        => $project->id,
                 'name'              => $inspection['name'],
                 'scheduled_date'    => $inspection['scheduled_date'],
                 'status'            => config('app.STATUSES.Pending'),

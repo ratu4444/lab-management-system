@@ -15,7 +15,7 @@
                         <h4 class="card-title text-muted"> Settings Task Edit</h4>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('settings.task.update', $default_task_id) }}" class="needs-validation" novalidate>
+                        <form method="POST" action="{{ route('settings.task.update', $settings_task->id) }}" class="needs-validation" novalidate>
                             @method('PUT')
                             @csrf
 

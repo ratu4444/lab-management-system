@@ -15,7 +15,7 @@
                         <h4 class="card-title text-muted"> Settings Payment Edit</h4>
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('settings.payment.update', $default_task_id) }}" method="post" class="needs-validation" novalidate>
+                        <form action="{{ route('settings.payment.update', $settings_payment->id) }}" method="post" class="needs-validation" novalidate>
                             @method('PUT')
                             @csrf
                             <div class="form-group">

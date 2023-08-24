@@ -25,7 +25,6 @@ class SettingsController extends Controller
     {
         $request->validate([
             'name'      => 'required|string',
-            'status'    => 'required',
             'budget'    => 'required'
         ]);
 
@@ -50,27 +49,35 @@ class SettingsController extends Controller
 
     public function taskEdit($default_task_id)
     {
-        $settings_task = SettingsTask::findOrFail($default_task_id );
-        return view('settings.settings-task-edit', compact('settings_task', 'default_task_id'));
+        $settings_task = SettingsTask::findOrFail($default_task_id);
+
+        return view('settings.settings-task-edit', compact('settings_task'));
     }
 
-    public function taskUpdate(Request $request, $default_task_id){
-//        return $default_task_id;
+    public function taskUpdate(Request $request, $default_task_id)
+    {
+        $request->validate([
+            'name'      => 'required|string',
+            'budget'    => 'required'
+        ]);
 
         $settings_task_update_data = [
-            'name' =>$request->name,
-            'budget' =>$request->total_budget,
-            'is_enabled' =>$request->is_enabled,
+            'name'          => $request->name,
+            'budget'        => $request->total_budget,
+            'is_enabled'    => $request->is_enabled,
         ];
 
+        $settings_task = SettingsTask::findOrFail($default_task_id );
         try {
-            $settings_task = SettingsTask::findOrFail($default_task_id );
             $settings_task->update($settings_task_update_data);
-            return redirect()->route('settings.task.show')
-                ->with('success', 'Default Task created successfully');
+
+            return redirect()
+                ->route('settings.task.show')
+                ->with('success', 'Default Task Updated successfully');
         }
         catch (\Exception $exception){
-            return back()
+            return redirect()
+                ->back()
                 ->with('error', $exception->getMessage());
         }
 
@@ -109,32 +116,41 @@ class SettingsController extends Controller
         }
     }
 
-    public function paymentEdit($default_task_id)
+    public function paymentEdit($default_payment_id)
     {
-        $settings_payment = SettingsPayment::findOrFail($default_task_id);
-        return view('settings.settings-payment-edit', compact('settings_payment', 'default_task_id'));
+        $settings_payment = SettingsPayment::findOrFail($default_payment_id);
+
+        return view('settings.settings-payment-edit', compact('settings_payment'));
     }
 
-    public function paymentUpdate(Request $request, $default_task_id){
+    public function paymentUpdate(Request $request, $default_payment_id)
+    {
+        $request->validate([
+            'name'              => 'required|string',
+            'amount'            => 'required',
+            'payment_method'    => 'required'
+        ]);
 
         $settings_payment_update_data = [
-            'name' =>$request->name,
-            'amount' =>$request->amount,
-            'payment_method' =>$request->payment_method,
-            'is_enabled' =>$request->is_enabled,
+            'name'              => $request->name,
+            'amount'            => $request->amount,
+            'payment_method'    => $request->payment_method,
+            'is_enabled'        => $request->is_enabled,
         ];
 
+        $settings_payment = SettingsPayment::findOrFail($default_payment_id);
         try {
-            $settings_payment = SettingsPayment::findOrFail($default_task_id );
             $settings_payment->update($settings_payment_update_data);
-            return redirect()->route('settings.payment.show')
-                ->with('success', 'Default Task created successfully');
+
+            return redirect()
+                ->route('settings.payment.show')
+                ->with('success', 'Default Payment updated successfully');
         }
         catch (\Exception $exception){
-            return back()
+            return redirect()
+                ->back()
                 ->with('error', $exception->getMessage());
         }
-
     }
 
     public function inspectionShow()
@@ -146,7 +162,7 @@ class SettingsController extends Controller
     public function inspectionStore(Request $request)
     {
         $request->validate([
-            'name'              => 'required|string',
+            'name'  => 'required|string',
         ]);
 
         $inspection_data = [
@@ -167,32 +183,38 @@ class SettingsController extends Controller
         }
     }
 
-    public function inspectionEdit($default_task_id)
+    public function inspectionEdit($default_inspection_id)
     {
-        $settings_inspection = SettingsInspection::findOrFail($default_task_id);
-//        dd($settings_payment);
-        return view('settings.settings-inspection-edit', compact('settings_inspection', 'default_task_id'));
+        $settings_inspection = SettingsInspection::findOrFail($default_inspection_id);
+
+        return view('settings.settings-inspection-edit', compact('settings_inspection'));
     }
 
-    public function inspectionUpdate(Request $request, $default_task_id){
-//        return $default_task_id;
+    public function inspectionUpdate(Request $request, $default_inspection_id)
+    {
+        $request->validate([
+            'name'  => 'required|string',
+        ]);
 
         $settings_inspection_update_data = [
-            'name' =>$request->name,
-            'is_enabled' =>$request->is_enabled,
+            'name'          => $request->name,
+            'is_enabled'    => $request->is_enabled,
         ];
 
+        $settings_inspection = SettingsInspection::findOrFail($default_inspection_id);
+
         try {
-            $settings_inspection = SettingsInspection::findOrFail($default_task_id );
             $settings_inspection->update($settings_inspection_update_data);
-            return redirect()->route('settings.inspection.show')
-                ->with('success', 'Default Task created successfully');
+
+            return redirect()
+                ->route('settings.inspection.show')
+                ->with('success', 'Default Inspection Updated successfully');
         }
         catch (\Exception $exception){
-            return back()
+            return redirect()
+                ->back()
                 ->with('error', $exception->getMessage());
         }
-
     }
 
     public function elementShow(Request $request)
