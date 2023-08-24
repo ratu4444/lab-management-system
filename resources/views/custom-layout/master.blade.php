@@ -9,10 +9,11 @@
     <div id="app">
         <div class="main-wrapper main-wrapper-1">
 
-{{--            @auth--}}
+            @auth
                 @include('custom-layout.navbar')
                 @include('custom-layout.sidebar')
-{{--            @endauth--}}
+                @include('custom-layout.alert')
+            @endauth
 
     {{--        @include('custom-layout.alert')--}}
             <!-- Main Content -->
@@ -22,7 +23,8 @@
                         @yield('content')
                     </div>
                 </section>
-    {{--            @yield('modal')--}}
+
+                @yield('modal')
             </div>
         </div>
     </div>
