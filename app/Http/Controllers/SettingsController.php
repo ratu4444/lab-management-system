@@ -24,8 +24,8 @@ class SettingsController extends Controller
     public function taskStore(Request $request)
     {
         $request->validate([
-            'name'      => 'required|string',
-            'budget'    => 'required'
+            'name'              => 'required|string',
+            'total_budget'      => 'required'
         ]);
 
         $task_data = [
@@ -57,8 +57,8 @@ class SettingsController extends Controller
     public function taskUpdate(Request $request, $default_task_id)
     {
         $request->validate([
-            'name'      => 'required|string',
-            'budget'    => 'required'
+            'name'              => 'required|string',
+            'total_budget'      => 'required'
         ]);
 
         $settings_task_update_data = [
