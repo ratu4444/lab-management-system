@@ -16,7 +16,6 @@ class CreateSettingsInspectionsTable extends Migration
         Schema::create('settings_inspections', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
-            $table->integer('status')->default(1)->comment('1 = Pending, 2 = In Progress, Completed, Canceled');
             $table->longText('comment')->nullable();
             $table->boolean('is_enabled')->default(true);
             $table->timestamps();

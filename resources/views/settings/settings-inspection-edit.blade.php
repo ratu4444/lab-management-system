@@ -15,7 +15,7 @@
                         <h4 class="card-title text-muted"> Settings Inspection Edit</h4>
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('settings.inspection.update', $default_task_id) }}" method="post" class="needs-validation" novalidate>
+                        <form action="{{ route('settings.inspection.update', $settings_inspection->id) }}" method="post" class="needs-validation" novalidate>
                             @method('PUT')
                             @csrf
                             <div class="form-group">
