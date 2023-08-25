@@ -54,7 +54,7 @@
                                             </div>
                                             <div class="form-group col-3">
                                                 <label class="form-label">Budget <span class="text-danger">*</span></label>
-                                                <input name="tasks[{{ $index }}][total_budget]" type="number" class="form-control" value="{{ $default_task->budget ?? 1 }}" min="1" data-required="true" required>
+                                                <input name="tasks[{{ $index }}][total_budget]" type="number" class="form-control" value="{{ $default_task->budget ?? 1 }}" min="0" data-required="true" required>
 
                                                 <div class="invalid-feedback">
                                                     Budget is required
