@@ -185,7 +185,7 @@
                         <div class="card-body">
                             <div class="recent-report__chart">
                                 @if($project->tasks->count())
-                                    <div id="gantt"></div>
+                                    <div id="ganttChart"></div>
                                 @else
                                     <div class="font-weight-bold text-center text-muted">No Data Found</div>
                                 @endif
@@ -344,17 +344,16 @@
             var tasks = @json($project?->tasks->where('status', '!=', config('app.STATUSES.Canceled')) ?? []);
             var payments = @json($project?->payments ?? []);
 
-            console.log(payments);
-            if (tasks.length > 0) {
-                ganttChart(tasks);
+            if (tasks.length > 0 && $("#ganttChart").length > 0) {
+                ganttChart(tasks, '#ganttChart');
             }
 
-            if (payments.length > 0) {
-                pieChart(payments);
+            if (payments.length > 0 && $("#pieChart").length > 0) {
+                pieChart(payments, 'pieChart');
             }
         });
 
-        function ganttChart(tasks) {
+        function ganttChart(tasks, chartElementSelector) {
             var chartTasks = [];
             tasks.forEach(function (task) {
                 chartTasks.push(
@@ -370,14 +369,14 @@
                 );
             });
 
-            var gantt = new Gantt("#gantt", chartTasks);
+            var gantt = new Gantt(chartElementSelector, chartTasks);
             gantt.change_view_mode('Week');
         }
 
-        function pieChart(data) {
+        function pieChart(data, chartElementId) {
             am4core.useTheme(am4themes_animated);
             // Create chart instance
-            var chart = am4core.create("pieChart", am4charts.PieChart);
+            var chart = am4core.create(chartElementId, am4charts.PieChart);
 
             var chartData = [];
             data.forEach(function (singleData) {
