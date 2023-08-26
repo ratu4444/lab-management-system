@@ -61,7 +61,7 @@
                             <div class="form-group form-float">
                                 <label>Payment For</label>
                                 <select class="form-control selectric" name="tasks[]" multiple="">
-                                    @foreach($payment->tasks as $task)
+                                    @foreach($project->tasks as $task)
                                         <option value="{{ $task->id }}" {{ in_array($task->id , $payment->dependent_task_ids) ? 'selected' : '' }}>{{ $task->name }}</option>
                                     @endforeach
                                 </select>
