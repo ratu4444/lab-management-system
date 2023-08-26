@@ -30,8 +30,8 @@
 
 @section('content')
     <div class="row justify-content-between align-items-center">
-        @if($all_projects->count() > 1)
-            <div class="col-12 col-md-6 col-lg-4">
+        <div class="col-12 col-md-6 col-lg-4">
+            @if($all_projects->count() > 1)
                 <div class="dropdown mb-4">
                     <button class="btn btn-primary dropdown-toggle btn-lg" type="button" data-toggle="dropdown">
                         {{ $project ? 'Project : '.$project->name : 'Select Another Project' }}
@@ -44,8 +44,8 @@
                         @endforeach
                     </div>
                 </div>
-            </div>
-        @endif
+          @endif
+        </div>
         @if(!auth()->user()->is_client)
             <div class="col-12 col-md-6 text-right">
                 <h4>{{ $project->client->name }}</h4>
