@@ -66,6 +66,8 @@ Route::middleware('auth')->group(function () {
 
 //      CLIENT
         Route::resource('client', ClientController::class);
+        Route::view('profile/edit', 'auth.edit-profile')->name('profile.edit');
+        Route::put('profile/update', [ClientController::class, 'profileUpdate'])->name('profile.update');
 
         Route::get('oauth/{app_name}/authorize', [OauthController::class, 'oauthAuthorize'])->name('oauth.authorize');
         Route::any('oauth/{app_name}/redirect', [OauthController::class, 'oauthRedirect'])->name('oauth.redirect');
