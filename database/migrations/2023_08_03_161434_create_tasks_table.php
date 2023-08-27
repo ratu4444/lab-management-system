@@ -21,7 +21,7 @@ class CreateTasksTable extends Migration
             $table->date('estimated_completion_date');
             $table->date('start_date')->nullable();
             $table->date('completion_date')->nullable();
-            $table->integer('status')->default(1)->comment('1 = Pending, 2 = In Progress, Completed, Canceled');
+            $table->integer('status')->default(1)->comment('1 = Pending, 2 = In Progress, 3 = Completed, 4 = Canceled');
             $table->bigInteger('total_budget')->nullable();
             $table->integer('completion_percentage')->default(0);
             $table->integer('parent_id')->nullable();

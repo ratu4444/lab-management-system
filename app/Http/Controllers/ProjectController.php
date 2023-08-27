@@ -25,9 +25,7 @@ class ProjectController extends Controller
 
         $projects = $projects->paginate(10);
 
-        $filter_data = [
-            'client' => $client_id,
-        ];
+        $filter_data = $request->all();
         $projects->appends(array_filter($filter_data));
 
         return view('project.index', compact('projects', 'client_id'));
@@ -105,7 +103,7 @@ class ProjectController extends Controller
             $project->update($project_data);
 
             return redirect()
-                ->route('task.create', $project_id)
+                ->route('task.index', $project_id)
                 ->with('success', 'Project updated successfully');
         } catch (\Exception $exception) {
             return redirect()
@@ -117,7 +115,7 @@ class ProjectController extends Controller
     public function defaultTask($project_id)
     {
         $project = Project::withCount('tasks')->findOrFail($project_id);
-        if ($project->tasks_count) return redirect()->route('task.create', $project->id);
+        if ($project->tasks_count) return redirect()->route('task.index', $project->id);
 
         $default_tasks = SettingsTask::where('is_enabled', true)->get();
 
@@ -169,7 +167,7 @@ class ProjectController extends Controller
     public function defaultPayment($project_id)
     {
         $project = Project::withCount('payments')->findOrFail($project_id);
-        if ($project->payments_count) return redirect()->route('payment.create', $project->id);
+        if ($project->payments_count) return redirect()->route('payment.index', $project->id);
 
         $default_payments = SettingsPayment::where('is_enabled', true)->get();
 
@@ -220,7 +218,7 @@ class ProjectController extends Controller
     public function defaultInspection($project_id)
     {
         $project = Project::withCount('inspections')->findOrFail($project_id);
-        if ($project->inspections_count) return redirect()->route('inspection.create', $project->id);
+        if ($project->inspections_count) return redirect()->route('inspection.index', $project->id);
 
         $default_inspections = SettingsInspection::where('is_enabled', true)->get();
 
@@ -255,7 +253,7 @@ class ProjectController extends Controller
             if (count($inspection_data)) Inspection::insert($inspection_data);
 
             return redirect()
-                ->route('task.create', $project_id)
+                ->route('task.index', $project_id)
                 ->with('success', 'Inspection added successfully');
         } catch (\Exception $exception) {
             return redirect()

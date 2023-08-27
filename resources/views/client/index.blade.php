@@ -31,16 +31,14 @@
                                     @foreach($clients as $client)
                                         <tr>
                                             <th scope="row">{{ (($clients->currentpage()-1) * $clients->perpage()) + $loop->index + 1 }}</th>
-                                            <td>{{ $client->name }}</td>
-                                            <td>{{ $client->email }}</td>
-                                            <td>{{ $client->mobile ?? '-' }}</td>
-                                            <td>{{ $client->company_name ?? '-' }}</td>
+                                            <td class="text-nowrap">{{ $client->name }}</td>
+                                            <td class="text-nowrap">{{ $client->email }}</td>
+                                            <td class="text-nowrap">{{ $client->mobile ?? '-' }}</td>
+                                            <td class="text-nowrap">{{ $client->company_name ?? '-' }}</td>
                                             <td>{{ $client->projects_count }}</td>
                                             <td class="text-nowrap">
-                                                @if($client->projects_count)
-                                                    <a href="{{ route('project.index', ['client' => $client->id]) }}" class="btn btn-primary btn-sm">See Projects</a>
-                                                    <a href="{{ route('dashboard.client-index', ['client' => $client->id]) }}" class="btn btn-primary btn-sm">Project Dashboard</a>
-                                                @endif
+                                                <a href="{{ route('project.index', ['client' => $client->id]) }}" class="btn btn-primary btn-sm {{ !$client->projects_count ? 'disabled' : '' }}">See Projects</a>
+                                                <a href="{{ route('dashboard.client-index', ['client' => $client->id]) }}" class="btn btn-primary btn-sm {{ !$client->projects_count ? 'disabled' : '' }}">Project Dashboard</a>
                                                 <a href="{{ route('project.create', ['client' => $client->id]) }}" class="btn btn-success btn-sm">Create New Projects</a>
                                                 <a href="{{ route('client.edit', $client->id) }}" class="btn btn-warning btn-sm">Edit Client</a>
                                             </td>

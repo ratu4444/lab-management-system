@@ -19,7 +19,7 @@ class CreateProjectsTable extends Migration
             $table->string('name')->nullable();
             $table->date('estimated_completion_date');
             $table->bigInteger('estimated_budget');
-            $table->integer('status')->default(1)->comment('1 = Pending, 2 = In Progress, Completed, Canceled');
+            $table->integer('status')->default(1)->comment('1 = Pending, 2 = In Progress, 3 = Completed, 4 = Canceled');
             $table->longText('comment')->nullable();
             $table->timestamps();
             $table->softDeletes();

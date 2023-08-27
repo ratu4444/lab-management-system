@@ -22,18 +22,28 @@
                         <th class="text-nowrap">Amount</th>
                         <th class="text-nowrap">Date</th>
                         <th class="text-nowrap">Payment Method</th>
+                        <th class="text-nowrap">Status</th>
                         <th class="text-nowrap">Action</th>
                     </tr>
                     </thead>
                     <tbody>
                     @if(count($project->payments))
                         @foreach($project->payments as $payment)
+                            @php
+                                $status = array_search($payment->status, config('app.STATUSES'));
+                                $status_color = config("app.STATUSES_COLORS.$status");
+                                $status = $status == 'Completed' ? 'Paid' : $status;
+                            @endphp
+
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $payment->name }}</td>
                                 <td>{{ '$'.number_format($payment->amount) }}</td>
                                 <td>{{ $payment->date}}</td>
                                 <td>{{ $payment->payment_method }}</td>
+                                <td>
+                                    <div class="badge {{ 'badge-'.$status_color }}">{{ $status }}</div>
+                                </td>
                                 <td class="text-nowrap">
                                     <a href="{{ route('payment.edit', [$project->id, $payment->id]) }}" class="btn btn-primary btn-sm">Edit</a>
                                 </td>
@@ -47,16 +57,16 @@
                     </tbody>
                 </table>
                 <div class="d-flex justify-content-between">
-                    <a class="btn btn-primary" href="{{ route('task.create', $project->id) }}">Previous</a>
-                    <a class="btn btn-primary" href="{{ route('inspection.create', $project->id) }}">Next</a>
+                    <a class="btn btn-primary" href="{{ route('task.index', $project->id) }}">Previous</a>
+                    <a class="btn btn-primary" href="{{ route('inspection.index', $project->id) }}">Next</a>
                 </div>
             </div>
         </div>
     </div>
 
-    <a href="{{ route('project.index') }}" class="d-flex align-items-center text-muted font-15 font-weight-bold">
+    <a href="{{ route('dashboard.client-index', ['project' => $project->id]) }}" class="d-flex align-items-center text-muted font-15 font-weight-bold">
         <i class="far fa-arrow-alt-circle-left font-25 mr-2"></i>
-        Back to Project List
+        Back to Project Dashboard
     </a>
 @endsection
 
@@ -67,4 +77,11 @@
 @push('js')
     <script src="{{ asset('assets/bundles/jquery-selectric/jquery.selectric.min.js') }}"></script>
     <script src="{{ asset('assets/bundles/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
+    <script src="{{ asset('js/select-button-bg-changer.js') }}"></script>
+
+    <script>
+        $(document).ready(function() {
+            selectButtonBgChange('.selectgroup-input-radio');
+        });
+    </script>
 @endpush

@@ -11,11 +11,11 @@ use Illuminate\Support\Facades\DB;
 
 class PaymentController extends Controller
 {
-    public function create($project_id)
+    public function index($project_id)
     {
         $project = Project::with('tasks')->findOrFail($project_id);
 
-        return view('payment.create', compact(  'project'));
+        return view('payment.index', compact(  'project'));
     }
 
     public function store(Request $request, $project_id)
@@ -37,6 +37,7 @@ class PaymentController extends Controller
             'amount'                    => $request->amount,
             'date'                      => $request->date,
             'payment_method'            => $request->payment_method,
+            'status'                    => $request->status,
             'comment'                   => $request->comment,
         ];
 
@@ -98,6 +99,7 @@ class PaymentController extends Controller
             'amount'            => $request->amount,
             'date'              => $request->date,
             'payment_method'    => $request->payment_method,
+            'status'            => $request->status,
             'comment'           => $request->comment,
         ];
 
@@ -124,7 +126,7 @@ class PaymentController extends Controller
 
             DB::commit();
             return redirect()
-                ->route('payment.create', $project_id)
+                ->route('payment.index', $project_id)
                 ->with('success', 'Payment updated successfully');
         } catch (\Exception $exception) {
             DB::rollBack();
