@@ -14,8 +14,9 @@ class TaskController extends Controller
     public function index($project_id)
     {
         $project = Project::with('tasks')->findOrFail($project_id);
+        $tasks = $project->tasks()->paginate(10);
 
-        return view('task.index', compact('project'));
+        return view('task.index', compact('project', 'tasks'));
     }
 
     public function store(Request $request , $project_id)

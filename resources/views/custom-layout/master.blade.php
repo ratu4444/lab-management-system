@@ -17,7 +17,7 @@
 
     {{--        @include('custom-layout.alert')--}}
             <!-- Main Content -->
-            <div class="main-content">
+            <div class="main-content pb-5">
                 <section class="section">
                     <div class="section-body">
                         @yield('content')

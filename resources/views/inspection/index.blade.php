@@ -26,14 +26,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @if(count($project->inspections))
-                            @foreach($project->inspections as $inspection)
+                        @if(count($inspections))
+                            @foreach($inspections as $inspection)
                                 @php
                                     $status = array_search($inspection->status, config('app.STATUSES'));
                                     $status_color = config("app.STATUSES_COLORS.$status")
                                 @endphp
                                 <tr>
-                                    <th scope="row">{{ $loop->iteration }}</th>
+                                    <th scope="row">{{ (($inspections->currentpage()-1) * $inspections->perpage()) + $loop->index + 1 }}</th>
                                     <td>{{ $inspection->name }}</td>
                                     <td>{{ $inspection->scheduled_date}}</td>
                                     <td>{{ $inspection->date}}</td>
@@ -52,9 +52,12 @@
                         @endif
                     </tbody>
                 </table>
-                <div class="d-flex justify-content-start">
-                    <a class="btn btn-primary" href="{{ route('payment.index', $project->id) }}">Previous</a>
-                </div>
+            </div>
+            <div class="mt-3">
+                {{ $inspections->links() }}
+            </div>
+            <div class="d-flex justify-content-start">
+                <a class="btn btn-primary" href="{{ route('payment.index', $project->id) }}">Previous</a>
             </div>
         </div>
     </div>
