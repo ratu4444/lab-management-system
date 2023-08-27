@@ -15,8 +15,9 @@ class InspectionController extends Controller
     {
         $project = Project::with('tasks', 'inspections')
             ->findOrFail($project_id);
+        $inspections = $project->inspections()->paginate(10);
 
-        return view('inspection.index', compact( 'project'));
+        return view('inspection.index', compact( 'project', 'inspections'));
     }
 
     public function store(Request $request, $project_id)

@@ -13,9 +13,11 @@ class PaymentController extends Controller
 {
     public function index($project_id)
     {
-        $project = Project::with('tasks')->findOrFail($project_id);
+        $project = Project::with('tasks', 'payments')
+            ->findOrFail($project_id);
+        $payments = $project->payments()->paginate(10);
 
-        return view('payment.index', compact(  'project'));
+        return view('payment.index', compact(  'project', 'payments'));
     }
 
     public function store(Request $request, $project_id)

@@ -27,8 +27,8 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @if(count($project->payments))
-                        @foreach($project->payments as $payment)
+                    @if(count($payments))
+                        @foreach($payments as $payment)
                             @php
                                 $status = array_search($payment->status, config('app.STATUSES'));
                                 $status_color = config("app.STATUSES_COLORS.$status");
@@ -36,7 +36,7 @@
                             @endphp
 
                             <tr>
-                                <td>{{ $loop->iteration }}</td>
+                                <th scope="row">{{ (($payments->currentpage()-1) * $payments->perpage()) + $loop->index + 1 }}</th>
                                 <td>{{ $payment->name }}</td>
                                 <td>{{ '$'.number_format($payment->amount) }}</td>
                                 <td>{{ $payment->date}}</td>
@@ -56,10 +56,13 @@
                     @endif
                     </tbody>
                 </table>
-                <div class="d-flex justify-content-between">
-                    <a class="btn btn-primary" href="{{ route('task.index', $project->id) }}">Previous</a>
-                    <a class="btn btn-primary" href="{{ route('inspection.index', $project->id) }}">Next</a>
-                </div>
+            </div>
+            <div class="mt-3">
+                {{ $payments->links() }}
+            </div>
+            <div class="d-flex justify-content-between">
+                <a class="btn btn-primary" href="{{ route('task.index', $project->id) }}">Previous</a>
+                <a class="btn btn-primary" href="{{ route('inspection.index', $project->id) }}">Next</a>
             </div>
         </div>
     </div>
