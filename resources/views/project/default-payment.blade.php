@@ -67,8 +67,11 @@
                             </div>
 
                             <div class="d-flex justify-content-between">
-                                <a href="void(0)" class="btn btn-primary" id="addMoreButton">Add New Payments</a>
-                                <button type="submit" class="btn btn-success">Next</button>
+                                <a href="javascript:void(0)" class="btn btn-primary" id="addMoreButton">Add New Payments</a>
+                                <div>
+                                    <a href="{{ route('project.default-inspection', $project->id) }}" class="btn btn-secondary mr-3">Skip</a>
+                                    <button type="submit" class="btn btn-success">Submit And Go Next</button>
+                                </div>
                             </div>
                         </form>
                     </div>

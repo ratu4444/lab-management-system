@@ -50,8 +50,11 @@
                             </div>
 
                             <div class="d-flex justify-content-between">
-                                <a href="void(0)" class="btn btn-primary" id="addMoreButton">Add New Inspections</a>
-                                <button type="submit" class="btn btn-success">Finish</button>
+                                <a href="javascript:void(0)" class="btn btn-primary" id="addMoreButton">Add New Inspections</a>
+                                <div>
+                                    <a href="{{ route('task.index', $project->id) }}" class="btn btn-secondary mr-3">Skip</a>
+                                    <button type="submit" class="btn btn-success">Finish</button>
+                                </div>
                             </div>
                         </form>
                     </div>

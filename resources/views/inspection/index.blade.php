@@ -52,7 +52,7 @@
                         @endif
                     </tbody>
                 </table>
-                <div class="d-flex justify-content-between">
+                <div class="d-flex justify-content-start">
                     <a class="btn btn-primary" href="{{ route('payment.index', $project->id) }}">Previous</a>
                 </div>
             </div>
