@@ -49,15 +49,15 @@
                                                 <div class="badge {{ 'badge-'.$status_color}} {{ $show_incomplete_badge ? 'badge-dot' : ''}}">{{ $status }}</div>
                                             </td>
                                             <td class="text-nowrap">
-                                                <a href="{{ route('task.create', $project->id) }}" class="btn btn-primary btn-sm" target="_blank">See Tasks</a>
-                                                <a href="{{ route('payment.create', $project->id) }}" class="btn btn-success btn-sm" target="_blank">See Payments</a>
-                                                <a href="{{ route('inspection.create', $project->id) }}" class="btn btn-warning btn-sm" target="_blank">See Inspections</a>
+                                                <a href="{{ route('task.index', $project->id) }}" class="btn btn-primary btn-sm" target="_blank">Tasks</a>
+                                                <a href="{{ route('payment.index', $project->id) }}" class="btn btn-success btn-sm" target="_blank">Payments</a>
+                                                <a href="{{ route('inspection.index', $project->id) }}" class="btn btn-info btn-sm" target="_blank">Inspections</a>
                                             </td>
 
                                             <td class="text-nowrap">
-                                                <a href="{{ route('dashboard.client-index', ['project' => $project->id]) }}" class="btn btn-primary btn-sm">Project Dashboard</a>
-                                                <a href="{{ route('project.edit', $project->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                                                <a href="{{ route('settings.element', ['project' => $project->id]) }}" class="btn btn-warning btn-sm">Edit Dashboard Settings</a>
+                                                <a href="{{ route('project.edit', $project->id) }}" class="btn btn-warning btn-sm">Edit Project</a>
+                                                <a href="{{ route('dashboard.client-index', ['project' => $project->id]) }}" class="btn btn-primary btn-sm">Dashboard</a>
+                                                <a href="{{ route('settings.element', ['project' => $project->id]) }}" class="btn btn-warning btn-sm">Dashboard Settings</a>
                                             </td>
                                         </tr>
                                     @endforeach

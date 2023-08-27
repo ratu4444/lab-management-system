@@ -17,7 +17,9 @@ class DashboardController extends Controller
         $projects = Project::withCount(['tasks' => function($tasks) use ($statuses) {
             return $tasks->where('status', '!=', $statuses['Canceled']);
         }, 'inspections'])
-            ->withSum('payments', 'amount')
+            ->withSum(['payments' => function($paymentQuery) use ($statuses) {
+                $paymentQuery->where('status', $statuses['Completed']);
+            }], 'amount')
             ->with('client')
             ->get();
 
@@ -97,6 +99,8 @@ class DashboardController extends Controller
             'client' => 'nullable|exists:users,id',
         ]);
 
+        $statuses = config('app.STATUSES');
+
         if (auth()->user()->is_client) $all_projects = Project::where('client_id', auth()->id());
         elseif($request->client) $all_projects = Project::where('client_id', $request->client);
         else $all_projects = Project::query();
@@ -108,7 +112,9 @@ class DashboardController extends Controller
         $project = $project->load([
             'client',
             'tasks',
-            'payments.tasks',
+            'payments' => function ($paymentQuery) use ($statuses) {
+                $paymentQuery->where('status', $statuses['Completed'])->with('tasks');
+            },
             'inspections',
             'elementSettings'
         ]);

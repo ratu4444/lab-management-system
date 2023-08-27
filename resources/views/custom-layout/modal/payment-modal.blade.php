@@ -50,6 +50,22 @@
                             @endforeach
                         </select>
                     </div>
+                    <div class="form-group">
+                        <label class="form-label">Status</label>
+                        <div class="selectgroup w-100">
+                            @foreach(config('app.STATUSES') as $label => $status_id)
+                                @php
+                                    if ($label == 'In Progress') continue;
+                                    $status_color = config("app.STATUSES_COLORS.$label");
+                                    $label = $label == 'Completed' ? 'Paid' : $label;
+                                @endphp
+                                <label class="selectgroup-item">
+                                    <input type="radio" name="status" value="{{ $status_id }}" class="selectgroup-input-radio" {{ $status_id == 1 ? 'checked' : ''}}>
+                                    <span class="selectgroup-button" data-class="{{ "bg-$status_color" }}">{{ $label }}</span>
+                                </label>
+                            @endforeach
+                        </div>
+                    </div>
 
                     <button type="submit" class="btn btn-primary">Create Payment</button>
                 </form>

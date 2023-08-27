@@ -11,12 +11,12 @@ use Illuminate\Support\Facades\DB;
 
 class InspectionController extends Controller
 {
-    public function create($project_id)
+    public function index($project_id)
     {
         $project = Project::with('tasks', 'inspections')
             ->findOrFail($project_id);
 
-        return view('inspection.create', compact( 'project'));
+        return view('inspection.index', compact( 'project'));
     }
 
     public function store(Request $request, $project_id)
@@ -132,7 +132,7 @@ class InspectionController extends Controller
 
             DB::commit();
             return redirect()
-                ->route('inspection.create', $project_id)
+                ->route('inspection.index', $project_id)
                 ->with('success', 'Inspection updated successfully');
         } catch (\Exception $exception) {
             DB::rollBack();

@@ -11,12 +11,11 @@ use Illuminate\Support\Facades\DB;
 
 class TaskController extends Controller
 {
-    public function create($project_id)
+    public function index($project_id)
     {
         $project = Project::with('tasks')->findOrFail($project_id);
-//        $project_name = $project->name;
 
-        return view('task.create', compact('project', 'project_id'));
+        return view('task.index', compact('project'));
     }
 
     public function store(Request $request , $project_id)
@@ -155,7 +154,7 @@ class TaskController extends Controller
 
             DB::commit();
             return redirect()
-                ->route('task.create', $project_id)
+                ->route('task.index', $project_id)
                 ->with('success', 'Task updated successfully');
         } catch (\Exception $exception) {
             DB::rollBack();

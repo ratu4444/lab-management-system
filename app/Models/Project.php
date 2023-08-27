@@ -29,7 +29,7 @@ class Project extends Model
                 return 100;
             default:
             $completion_percentage = $this->tasks->where('status', '!=', $statuses['Canceled'])->pluck('completion_percentage')->avg() ?? 0;
-            return sprintf("%.2f", $completion_percentage);
+            return number_format($completion_percentage, is_int($completion_percentage) ? 0 : 2);
         }
     }
 
@@ -42,7 +42,7 @@ class Project extends Model
         elseif (!$estimated_budget && !$total_budget) return 0;
 
         $increment_percentage = (($total_budget - $estimated_budget) / $estimated_budget) * 100;
-        return sprintf("%.2f", $increment_percentage);
+        return number_format($increment_percentage, is_int($increment_percentage) ? 0 : 2);
     }
 
     public function getPaidAmountAttribute()
@@ -58,7 +58,7 @@ class Project extends Model
         $paid_amount = $this->paid_amount;
 
         $paid_amount_percentage = ($paid_amount / $total_budget) * 100;
-        return sprintf("%.2f", $paid_amount_percentage);
+        return number_format($paid_amount_percentage, is_int($paid_amount_percentage) ? 0 : 2);
     }
 
     public function getHasRunningTaskAttribute()

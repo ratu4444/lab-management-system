@@ -66,6 +66,22 @@
                                     @endforeach
                                 </select>
                             </div>
+                            <div class="form-group form-float">
+                                <label class="form-label">Status</label>
+                                <div class="selectgroup w-100">
+                                    @foreach(config('app.STATUSES') as $label => $status_id)
+                                        @php
+                                            if ($label == 'In Progress') continue;
+                                            $status_color = config("app.STATUSES_COLORS.$label");
+                                            $label = $label == 'Completed' ? 'Paid' : $label;
+                                        @endphp
+                                        <label class="selectgroup-item">
+                                            <input type="radio" name="status" value="{{ $status_id }}" class="selectgroup-input-radio" {{ $status_id == $payment->status ? 'checked' : ''}} >
+                                            <span class="selectgroup-button" data-class="{{ "bg-$status_color" }}">{{ $label }}</span>
+                                        </label>
+                                    @endforeach
+                                </div>
+                            </div>
 
 {{--                            <div class="form-group form-float">--}}
 {{--                                <div class="form-line">--}}
@@ -84,6 +100,13 @@
 @push('js')
     <script src="{{ asset('assets/bundles/jquery-selectric/jquery.selectric.min.js') }}"></script>
     <script src="{{ asset('assets/bundles/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
+    <script src="{{ asset('js/select-button-bg-changer.js') }}"></script>
+
+    <script>
+        $(document).ready(function() {
+            selectButtonBgChange('.selectgroup-input-radio');
+        });
+    </script>
 @endpush
 
 
