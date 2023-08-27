@@ -210,11 +210,11 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Name</th>
-                                            <th>Paid For</th>
-                                            <th>Date</th>
-                                            <th>Amount</th>
-                                            <th>Method</th>
+                                            <th class="text-nowrap">Name</th>
+                                            <th class="text-nowrap">Paid For</th>
+                                            <th class="text-nowrap">Date</th>
+                                            <th class="text-nowrap">Amount</th>
+                                            <th class="text-nowrap">Method</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -257,11 +257,11 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Name</th>
-                                            <th>Status</th>
-                                            <th>Estimated Start Date</th>
-                                            <th>Estimated Completion Date</th>
-                                            <th>Dependencies</th>
+                                            <th class="text-nowrap">Name</th>
+                                            <th class="text-nowrap">Status</th>
+                                            <th class="text-nowrap">Estimated Start Date</th>
+                                            <th class="text-nowrap">Estimated Completion Date</th>
+                                            <th class="text-nowrap">Dependencies</th>
     {{--                                        <th>Action</th>--}}
                                         </tr>
                                     </thead>
@@ -311,11 +311,11 @@
                                     <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Name</th>
-                                        <th>Scheduled Date</th>
-                                        <th>Inspected Date</th>
-                                        <th>Status</th>
-                                        <th>Dependencies</th>
+                                        <th class="text-nowrap">Name</th>
+                                        <th class="text-nowrap">Scheduled Date</th>
+                                        <th class="text-nowrap">Inspected Date</th>
+                                        <th class="text-nowrap">Status</th>
+                                        <th class="text-nowrap">Dependencies</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -333,7 +333,7 @@
                                                 <td>
                                                     <div class="badge {{ 'badge-'.$status_color }}">{{ $status }}</div>
                                                 </td>
-                                                <td class="text-nowrap">{{ $inspection->dependentTasks->pluck('name')->implode(', ') ?: '-' }}</td>
+                                                <td>{{ $inspection->dependentTasks->pluck('name')->implode(', ') ?: '-' }}</td>
                                             </tr>
                                         @endforeach
                                     @else
