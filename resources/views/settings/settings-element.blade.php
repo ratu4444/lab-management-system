@@ -347,7 +347,7 @@
                                             <td>-</td>
                                         </tr>
                                         <tr>
-                                            <th scope="row">1</th>
+                                            <th scope="row">2</th>
                                             <td>task 2</td>
                                             <td class="align-middle">
                                                 <div class="progress" data-height="6">
@@ -366,6 +366,71 @@
                 </div>
             </div>
 
+            <!--          INSPECTION DETAILS-->
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header d-block">
+                            <div class="form-row">
+                                <div class="col-8">
+                                    <input type="text" name="elements[7][element_name]" class="border-0 form-control p-0 font-20" value="{{ $elements[7]['element_name'] ?? 'Inspections' }}" required>
+                                </div>
+                                <div class="col-4 text-right">
+                                    <div class="selectgroup">
+                                        <label class="selectgroup-item">
+                                            <input type="radio" name="elements[6][is_enabled]" value="1" class="enabled-select-6 selectgroup-input-radio" {{ !isset($elements[7]['is_enabled']) || $elements[7]['is_enabled'] ? 'checked' : '' }}>
+                                            <span class="selectgroup-button" data-class="bg-success">Show</span>
+                                        </label>
+                                        <label class="selectgroup-item">
+                                            <input type="radio" name="elements[6][is_enabled]" value="0" class="enabled-select-6 selectgroup-input-radio" {{ !isset($elements[7]['is_enabled']) || $elements[7]['is_enabled'] ? '' : 'checked' }}>
+                                            <span class="selectgroup-button" data-class="bg-danger">Hide</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Name</th>
+                                        <th>Scheduled Date</th>
+                                        <th>Inspected Date</th>
+                                        <th>Status</th>
+                                        <th>Dependencies</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td class="text-nowrap">Inspection One</td>
+                                        <td class="text-nowrap">2023-08-28</td>
+                                        <td class="text-nowrap">-</td>
+                                        <td>
+                                            <div class="badge badge-secondary">Pending</div>
+                                        </td>
+                                        <td class="text-nowrap">Task One, Task Four</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">2</th>
+                                        <td class="text-nowrap">Inspection Two</td>
+                                        <td class="text-nowrap">2023-08-26</td>
+                                        <td class="text-nowrap">2023-08-26</td>
+                                        <td>
+                                            <div class="badge badge-success">Completed</div>
+                                        </td>
+                                        <td class="text-nowrap">Task One, Task Four</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!--          PIE CHART-->
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12">
@@ -373,17 +438,17 @@
                         <div class="card-header d-block">
                             <div class="form-row">
                                 <div class="col-8">
-                                    <input type="text" name="elements[7][element_name]" class="border-0 form-control p-0 font-20" value="{{ $elements[7]['element_name'] ?? 'Pie Chart' }}" required>
+                                    <input type="text" name="elements[8][element_name]" class="border-0 form-control p-0 font-20" value="{{ $elements[8]['element_name'] ?? 'Pie Chart' }}" required>
                                 </div>
                                 <div class="col-4 text-right">
                                     <div class="form-group">
                                         <div class="selectgroup">
                                             <label class="selectgroup-item">
-                                                <input type="radio" name="elements[7][is_enabled]" value="1" class="enabled-select-7 selectgroup-input-radio" {{ !isset($elements[7]['is_enabled']) || $elements[7]['is_enabled'] ? 'checked' : '' }}>
+                                                <input type="radio" name="elements[8][is_enabled]" value="1" class="enabled-select-7 selectgroup-input-radio" {{ !isset($elements[8]['is_enabled']) || $elements[8]['is_enabled'] ? 'checked' : '' }}>
                                                 <span class="selectgroup-button" data-class="bg-success">Show</span>
                                             </label>
                                             <label class="selectgroup-item">
-                                                <input type="radio" name="elements[7][is_enabled]" value="0" class="enabled-select-7 selectgroup-input-radio" {{ !isset($elements[7]['is_enabled']) || $elements[7]['is_enabled'] ? '' : 'checked' }}>
+                                                <input type="radio" name="elements[8][is_enabled]" value="0" class="enabled-select-7 selectgroup-input-radio" {{ !isset($elements[8]['is_enabled']) || $elements[8]['is_enabled'] ? '' : 'checked' }}>
                                                 <span class="selectgroup-button" data-class="bg-danger">Hide</span>
                                             </label>
                                         </div>

@@ -223,7 +223,7 @@
                                                 <tr>
                                                     <th scope="row">{{ $loop->iteration }}</th>
                                                     <td>{{ $payment->name }}</td>
-                                                    <td>{{ $payment->tasks->pluck('name')->implode(', ') }}</td>
+                                                    <td>{{ $payment->tasks->pluck('name')->implode(', ') ?: '-' }}</td>
                                                     <td>{{ $payment->date }}</td>
                                                     <td>{{ '$'.number_format($payment->amount) }}</td>
                                                     <td>{{ $payment->payment_method }}</td>
@@ -279,7 +279,7 @@
                                                     </td>
                                                     <td>{{ $task->estimated_start_date }}</td>
                                                     <td>{{ $task->estimated_completion_date }}</td>
-                                                    <td>{{ $task->dependentTasks->pluck('name')->implode(', ') }}</td>
+                                                    <td>{{ $task->dependentTasks->pluck('name')->implode(', ') ?: '-' }}</td>
     {{--                                                <td><a href="#" class="btn btn-outline-primary">Detail</a></td>--}}
                                                 </tr>
                                             @endforeach
@@ -297,13 +297,66 @@
             </div>
        @endif
 
-        <!--          PIE CHART-->
+        <!--          INSPECTION DETAILS-->
         @if(!isset($elements[7]['is_enabled']) || $elements[7]['is_enabled'])
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>{{ $elements[7]['element_name'] ?? 'Inspections' }} </h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Name</th>
+                                        <th>Scheduled Date</th>
+                                        <th>Inspected Date</th>
+                                        <th>Status</th>
+                                        <th>Dependencies</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @if($project->inspections->where('status', '!=', config('app.STATUSES.Canceled'))->count())
+                                        @foreach($project->inspections->where('status', '!=', config('app.STATUSES.Canceled')) as $inspection)
+                                            @php
+                                                $status = array_search($inspection->status, config('app.STATUSES'));
+                                                $status_color = config("app.STATUSES_COLORS.$status")
+                                            @endphp
+                                            <tr>
+                                                <th scope="row">{{ $loop->iteration }}</th>
+                                                <td class="text-nowrap">{{ $inspection->name }}</td>
+                                                <td class="text-nowrap">{{ $inspection->scheduled_date }}</td>
+                                                <td class="text-nowrap">{{ $inspection->date ?: '-' }}</td>
+                                                <td>
+                                                    <div class="badge {{ 'badge-'.$status_color }}">{{ $status }}</div>
+                                                </td>
+                                                <td class="text-nowrap">{{ $inspection->dependentTasks->pluck('name')->implode(', ') ?: '-' }}</td>
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                        <tr>
+                                            <td colspan="100%" class="text-center text-muted font-weight-bold">No Inspections Found</td>
+                                        </tr>
+                                    @endif
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
+
+        <!--          PIE CHART-->
+        @if(!isset($elements[8]['is_enabled']) || $elements[8]['is_enabled'])
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>{{ $elements[7]['element_name'] ?? 'Pie Chart' }}</h4>
+                            <h4>{{ $elements[8]['element_name'] ?? 'Pie Chart' }}</h4>
                         </div>
                         <div class="card-body">
                             <div class="recent-report__chart">
