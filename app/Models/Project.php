@@ -94,4 +94,9 @@ class Project extends Model
     {
         return $this->hasMany(ElementSetting::class);
     }
+
+    public function reports()
+    {
+        return $this->hasMany(Report::class);
+    }
 }

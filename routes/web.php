@@ -9,6 +9,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\InspectionController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\OauthController;
+use App\Http\Controllers\ReportController;
 
 Route::middleware('auth')->group(function () {
 //  CLIENT DASHBOARD
@@ -37,31 +38,33 @@ Route::middleware('auth')->group(function () {
             Route::resource('inspection', InspectionController::class);
             Route::get('default-inspection', [ProjectController::class, 'defaultInspection'])->name('project.default-inspection');
             Route::post('default-inspection', [ProjectController::class, 'defaultInspectionStore'])->name('project.default-inspection.store');
+
+            Route::resource('report', ReportController::class);
         });
 
 //      SETTINGS
-        Route::prefix('settings')->group(function () {
+        Route::prefix('settings')->name('settings.')->group(function () {
 //          SETTINGS TASK
-            Route::post('task/store', [SettingsController::class, 'taskStore'])->name('settings.task.store');
-            Route::get('task/show', [SettingsController::class, 'taskShow'])->name('settings.task.show');
-            Route::get('task/{default_task_id}/edit', [SettingsController::class, 'taskEdit'])->name('settings.task.edit');
-            Route::put('task/{default_task_id}/update', [SettingsController::class, 'taskUpdate'])->name('settings.task.update');
+            Route::post('task/store', [SettingsController::class, 'taskStore'])->name('task.store');
+            Route::get('task/show', [SettingsController::class, 'taskShow'])->name('task.show');
+            Route::get('task/{default_task_id}/edit', [SettingsController::class, 'taskEdit'])->name('task.edit');
+            Route::put('task/{default_task_id}/update', [SettingsController::class, 'taskUpdate'])->name('task.update');
 //          SETTINGS PAYMENTS
-            Route::post('payment/store', [SettingsController::class, 'paymentStore'])->name('settings.payment.store');
-            Route::get('payment/show', [SettingsController::class, 'paymentShow'])->name('settings.payment.show');
-            Route::get('payment/{default_payment_id}/edit', [SettingsController::class, 'paymentEdit'])->name('settings.payment.edit');
-            Route::put('payment/{default_payment_id}/update', [SettingsController::class, 'paymentUpdate'])->name('settings.payment.update');
+            Route::post('payment/store', [SettingsController::class, 'paymentStore'])->name('payment.store');
+            Route::get('payment/show', [SettingsController::class, 'paymentShow'])->name('payment.show');
+            Route::get('payment/{default_payment_id}/edit', [SettingsController::class, 'paymentEdit'])->name('payment.edit');
+            Route::put('payment/{default_payment_id}/update', [SettingsController::class, 'paymentUpdate'])->name('payment.update');
 //          SETTINGS INSPECTION
-            Route::post('inspection/store', [SettingsController::class, 'inspectionStore'])->name('settings.inspection.store');
-            Route::get('inspection/show', [SettingsController::class, 'inspectionShow'])->name('settings.inspection.show');
-            Route::get('inspection/{default_inspection_id}/edit', [SettingsController::class, 'inspectionEdit'])->name('settings.inspection.edit');
-            Route::put('inspection/{default_inspection_id}/update', [SettingsController::class, 'inspectionUpdate'])->name('settings.inspection.update');
+            Route::post('inspection/store', [SettingsController::class, 'inspectionStore'])->name('inspection.store');
+            Route::get('inspection/show', [SettingsController::class, 'inspectionShow'])->name('inspection.show');
+            Route::get('inspection/{default_inspection_id}/edit', [SettingsController::class, 'inspectionEdit'])->name('inspection.edit');
+            Route::put('inspection/{default_inspection_id}/update', [SettingsController::class, 'inspectionUpdate'])->name('inspection.update');
 //          SETTINGS ELEMENT
-            Route::get('element/show',[SettingsController::class, 'elementShow'])->name('settings.element');
-            Route::post('project/{project_id}/element/store',[SettingsController::class, 'elementStore'])->name('settings.element.store');
+            Route::get('element/show',[SettingsController::class, 'elementShow'])->name('element');
+            Route::post('project/{project_id}/element/store',[SettingsController::class, 'elementStore'])->name('element.store');
 //          OUTLOOK CONFIGURATION
-            Route::get('outlook-configuration',[SettingsController::class, 'outlookConfiguration'])->name('settings.outlook-configuration');
-            Route::post('mail-configuration',[SettingsController::class, 'mailConfiguration'])->name('settings.mail-configuration');
+            Route::get('outlook-configuration',[SettingsController::class, 'outlookConfiguration'])->name('outlook-configuration');
+            Route::post('mail-configuration',[SettingsController::class, 'mailConfiguration'])->name('mail-configuration');
         });
 
 //      CLIENT

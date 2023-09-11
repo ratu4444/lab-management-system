@@ -52,6 +52,7 @@
                                                 <a href="{{ route('task.index', $project->id) }}" class="btn btn-primary btn-sm" target="_blank">Tasks</a>
                                                 <a href="{{ route('payment.index', $project->id) }}" class="btn btn-success btn-sm" target="_blank">Payments</a>
                                                 <a href="{{ route('inspection.index', $project->id) }}" class="btn btn-info btn-sm" target="_blank">Inspections</a>
+                                                <a href="{{ route('report.index', $project->id) }}" class="btn btn-warning btn-sm" target="_blank">Reports</a>
                                             </td>
 
                                             <td class="text-nowrap">
