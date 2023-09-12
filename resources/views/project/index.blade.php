@@ -15,22 +15,20 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <div class="col-12 col-md-6 col-lg-4">
-                            @if($all_clients->count() > 1)
-                                <div class="dropdown mb-4">
-                                    <button class="btn btn-primary dropdown-toggle btn-lg" type="button" data-toggle="dropdown">
-                                        {{ $client ? 'Client : '.$client->name : 'Select Another Client' }}
-                                    </button>
-                                    <div class="dropdown-menu" style="max-height: 500px; min-width: fit-content; overflow-y: auto">
-                                        @foreach($all_clients as $single_client)
-                                            <a class="dropdown-item {{ $single_client->id == $client?->id ? 'active' : '' }}" href="{{ route('project.index', array_merge(request()->query(), ['client' => $single_client->id])) }}">
-                                                {{ $single_client->name }}
-                                            </a>
-                                        @endforeach
-                                    </div>
+                        @if($all_clients->count() > 1)
+                            <div class="dropdown mb-4">
+                                <button class="btn btn-primary dropdown-toggle btn-lg" type="button" data-toggle="dropdown">
+                                    {{ $client ? 'Client : '.$client->name : 'Select Another Client' }}
+                                </button>
+                                <div class="dropdown-menu" style="max-height: 500px; min-width: fit-content; overflow-y: auto">
+                                    @foreach($all_clients as $single_client)
+                                        <a class="dropdown-item {{ $single_client->id == $client?->id ? 'active' : '' }}" href="{{ route('project.index', array_merge(request()->query(), ['client' => $single_client->id])) }}">
+                                            {{ $single_client->name }}
+                                        </a>
+                                    @endforeach
                                 </div>
-                            @endif
-                        </div>
+                            </div>
+                        @endif
                         <div class="table-responsive">
                             <table class="table table-bordered table-striped">
                                 <thead>
