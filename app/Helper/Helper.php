@@ -74,3 +74,18 @@ if (!function_exists('getOutlookUserData')) {
         return $response->successful() ? $response->json() : null;
     }
 }
+
+if (!function_exists('uploadFile')) {
+    function uploadFile($file, $folder = null): ?string
+    {
+        $tmp_name = str_replace(' ', '_', $file->getClientOriginalName());
+        $file_name = time().'_'.$tmp_name;
+
+        $upload_folder = 'storage/admin/' . trim($folder, '/') . '/';
+        $upload_folder = str_replace('//', '/', $upload_folder);
+
+        $file->move(public_path($upload_folder), $file_name);
+
+        return $upload_folder.$file_name;
+    }
+}

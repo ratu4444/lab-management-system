@@ -11,10 +11,26 @@
                     <div class="card-header d-flex justify-content-between">
                         <h4>All Projects</h4>
                         <div>
-                            <a class="btn btn-primary" href="{{ route('project.create', ['client' => $client_id]) }}">Add New Project</a>
+                            <a class="btn btn-primary" href="{{ route('project.create', ['client' => $client?->id]) }}">Add New Project</a>
                         </div>
                     </div>
                     <div class="card-body">
+                        <div class="col-12 col-md-6 col-lg-4">
+                            @if($all_clients->count() > 1)
+                                <div class="dropdown mb-4">
+                                    <button class="btn btn-primary dropdown-toggle btn-lg" type="button" data-toggle="dropdown">
+                                        {{ $client ? 'Client : '.$client->name : 'Select Another Client' }}
+                                    </button>
+                                    <div class="dropdown-menu" style="max-height: 500px; min-width: fit-content; overflow-y: auto">
+                                        @foreach($all_clients as $single_client)
+                                            <a class="dropdown-item {{ $single_client->id == $client?->id ? 'active' : '' }}" href="{{ route('project.index', array_merge(request()->query(), ['client' => $single_client->id])) }}">
+                                                {{ $single_client->name }}
+                                            </a>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            @endif
+                        </div>
                         <div class="table-responsive">
                             <table class="table table-bordered table-striped">
                                 <thead>

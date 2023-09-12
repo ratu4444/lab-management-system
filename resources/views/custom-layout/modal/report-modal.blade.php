@@ -26,10 +26,10 @@
                             File is required
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="form-label">Description</label>
-                        <textarea name="file" class="form-control"></textarea>
-                    </div>
+{{--                    <div class="form-group">--}}
+{{--                        <label class="form-label">Description</label>--}}
+{{--                        <textarea name="description" class="form-control"></textarea>--}}
+{{--                    </div>--}}
 
                     <button type="submit" class="btn btn-primary">Create Report</button>
                 </form>

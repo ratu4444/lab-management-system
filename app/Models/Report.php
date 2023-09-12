@@ -10,4 +10,9 @@ class Report extends Model
 {
     use HasFactory, SoftDeletes;
     protected $guarded = ['id'];
+
+    public function getFilePathAttribute()
+    {
+        return url($this->file);
+    }
 }

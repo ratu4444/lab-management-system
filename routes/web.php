@@ -40,6 +40,7 @@ Route::middleware('auth')->group(function () {
             Route::post('default-inspection', [ProjectController::class, 'defaultInspectionStore'])->name('project.default-inspection.store');
 
             Route::resource('report', ReportController::class);
+            Route::post('report/{report_id}/toggle-visibility', [ReportController::class, 'toggleVisibility'])->name('report.toggle-visibility');
         });
 
 //      SETTINGS

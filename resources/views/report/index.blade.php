@@ -21,6 +21,7 @@
                                 <tr>
                                     <th>#</th>
                                     <th class="text-nowrap">Name</th>
+                                    <th class="text-nowrap">Status</th>
                                     <th class="text-nowrap">Created Time</th>
                                     <th class="text-nowrap">Action</th>
                                 </tr>
@@ -31,10 +32,22 @@
                                         <tr>
                                             <th scope="row">{{ (($reports->currentpage()-1) * $reports->perpage()) + $loop->index + 1 }}</th>
                                             <td class="text-nowrap">{{ $report->name }}</td>
-
-                                            <td class="text-nowrap">
-                                                <a href="" class="btn btn-warning btn-sm">View</a>
-                                                <a href="{{ route('report.edit', [$project->id, $report->id]) }}" class="btn btn-warning btn-sm">Edit</a>
+                                            <td>
+                                                <div class="badge {{ $report->is_active ? 'badge-success' : 'badge-danger' }}">{{ $report->is_active ? 'Visible' : 'Hidden' }}</div>
+                                            </td>
+                                            <td class="text-nowrap">{{ $report->created_at }}</td>
+                                            <td class="text-nowrap d-flex align-items-center">
+                                                <button type="button" class="btn btn-primary btn-sm mx-1 pdfViewerBtn" data-title="{{ $report->name }}" data-file-path="{{ $report->file_path }}" data-file-type="{{ $report->file_type }}">View Report</button>
+                                                <a href="{{ route('report.edit', [$project->id, $report->id]) }}" class="btn btn-warning btn-sm mx-1">Edit Report</a>
+                                                <form action="{{ route('report.toggle-visibility', [$project->id, $report->id]) }}" method="post">
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-sm mx-1 {{ $report->is_active ? 'btn-info' : 'btn-success' }}">{{ $report->is_active ? 'Hide from Client' : 'Visible to Client' }}</button>
+                                                </form>
+                                                <form action="{{ route('report.destroy', [$project->id, $report->id]) }}" method="post">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <button type="submit" class="btn btn-sm btn-danger }}">Delete</button>
+                                                </form>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -58,4 +71,23 @@
 
 @section('modal')
     @include('custom-layout.modal.report-modal')
+    @include('custom-layout.modal.pdf-modal')
 @endsection
+
+@push('js')
+    <script>
+        $('.pdfViewerBtn').click(function () {
+            var title = $(this).data('title');
+            var path = $(this).data('file-path');
+            var type = $(this).data('file-type');
+
+            var pdfContainer = "<object data='"+path+"' type='"+type+"' class='rounded border-0 w-100' style='height:80vh'>";
+
+            var pdfViewModal = $('#pdfViewModal');
+            pdfViewModal.find('.modal-title').text(title);
+            pdfViewModal.find('.modal-body').html(pdfContainer);
+
+            pdfViewModal.modal('show');
+        });
+    </script>
+@endpush
