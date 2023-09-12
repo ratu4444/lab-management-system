@@ -10,7 +10,7 @@
     <div class="card">
         <div class="card-header d-flex justify-content-between">
             <h4 class="card-title text-muted">{{ $project->name }} : Tasks</h4>
-            <div class="">
+            <div>
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#taskCreateModal">Add New Task</button>
             </div>
         </div>

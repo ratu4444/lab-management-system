@@ -20,15 +20,16 @@ class ProjectController extends Controller
         $projects = Project::with('client')
             ->latest();
 
-        $client_id = $request->client;
-        if ($client_id) $projects->where('client_id', $request->client);
+        $all_clients = User::where('is_client', true)->select('id', 'name')->get();
+        $client = $request->client ? $all_clients->where('id', $request->client)->first() : null;
+        if ($client) $projects->where('client_id', $client->id);
 
         $projects = $projects->paginate(10);
 
         $filter_data = $request->all();
         $projects->appends(array_filter($filter_data));
 
-        return view('project.index', compact('projects', 'client_id'));
+        return view('project.index', compact('projects', 'all_clients', 'client'));
     }
 
     public function create(Request $request)

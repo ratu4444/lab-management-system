@@ -116,6 +116,9 @@ class DashboardController extends Controller
                 $paymentQuery->where('status', $statuses['Completed'])->with('tasks');
             },
             'inspections',
+            'reports' => function($reportQuery) {
+                $reportQuery->where('is_active', true);
+            },
             'elementSettings'
         ]);
 
