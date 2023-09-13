@@ -5,6 +5,7 @@ use App\Models\OauthToken;
 use Illuminate\Support\Facades\Http;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\URL;
+use Aws\S3\S3Client;
 
 if (!function_exists('sendMailFromOutlook')) {
     function sendMailFromOutlook(array $recipients_emails, string $outlook_base_url = 'https://graph.microsoft.com/v1.0')
@@ -78,61 +79,58 @@ if (!function_exists('getOutlookUserData')) {
 }
 
 if (!function_exists('uploadFile')) {
-    function uploadFile($file, $folder = null): ?string
+    function uploadFile($file, $folder = null): string
     {
+        $file_storage = strtolower(env('FILE_STORAGE'));
         $tmp_name = str_replace(' ', '_', $file->getClientOriginalName());
         $file_name = time().'_'.$tmp_name;
 
         $upload_folder = 'storage/admin/' . trim($folder, '/') . '/';
         $upload_folder = str_replace('//', '/', $upload_folder);
 
-        $file->move(public_path($upload_folder), $file_name);
+        switch ($file_storage) {
+            case 's3':
+                $file->storeAs(env('DJL_S3_FOLDER').$upload_folder, $file_name, 's3');
+                break;
+            default:
+                $file->move(public_path($upload_folder), $file_name);
+        }
 
         return $upload_folder.$file_name;
     }
 }
 
-if (!function_exists('uploadFileToS3')) {
-    function uploadFileToS3($file)
+if (!function_exists('getFileUrl')) {
+    function getFileUrl($file_path)
     {
-        $file_name = $file->getClientOriginalName();
-        $pdf_file = str_replace($file_name, $file_name, 'pdf_' . rand(1000, 10000)) . "." . $file->getClientOriginalExtension();
-        $file_name = Carbon::now()->format('Y_m_d_H_i_s') . '_' . $pdf_file;
-        $file_path = $file->storeAs(env('DJL_S3_URL'), $file_name, 's3');
+        if (URL::isValidUrl($file_path)) return $file_path;
 
-        if ($file_path) return $file_name;
-        else return null;
-    }
-}
+        $file_storage = strtolower(env('FILE_STORAGE'));
+        switch ($file_storage) {
+            case 's3':
+                $alive_time = Carbon::now()->addMinutes(60)->toDateTimeString();
+                $client = new S3Client([
+                    'region'        => env('AWS_DEFAULT_REGION'),
+                    'version'       => 'latest',
+                    'credentials'   => [
+                        'key'       => env('AWS_ACCESS_KEY_ID'),
+                        'secret'    => env('AWS_SECRET_ACCESS_KEY')
+                    ]
+                ]);
+                $bucket = config("filesystems.disks.s3.bucket");
+                $command = $client->getCommand('GetObject', [
+                    'Bucket'    => $bucket,
+                    'Key'       => env('DJL_S3_FOLDER').$file_path
+                ]);
 
-if (!function_exists('getS3FileUrl')) {
-    function getS3FileUrl($file_name, $default_path = null)
-    {
-        if (URL::isValidUrl($file_name)) return $file_name;
+                $request = $client->createPresignedRequest($command, $alive_time);
+                $file_url = (string)$request->getUri();
+                break;
+            default:
+                $file_url = url($file_path);
+                break;
+        }
 
-        $base_url = url('');
-        $default_path = $default_path ? $base_url.'/'.$default_path : null;
-        if (!$file_name) return $default_path;
-
-        $alive_time = Carbon::now()->addMinutes(60)->toDateTimeString();
-        $client = new S3Client([
-            'region'        => env('AWS_DEFAULT_REGION'),
-            'version'       => 'latest',
-            'credentials'   => [
-                'key'       => env('AWS_ACCESS_KEY_ID'),
-                'secret'    => env('AWS_SECRET_ACCESS_KEY')
-            ]
-        ]);
-        $bucket = config("filesystems.disks.s3.bucket");
-        $command = $client->getCommand('GetObject', [
-            'Bucket'    => $bucket,
-            'Key'       => env('DJL_S3_URL').$file_name
-        ]);
-        $request = $client->createPresignedRequest($command, $alive_time);
-        $fileUri = (string)$request->getUri();
-
-        if (!$fileUri) $fileUri = $default_path;
-
-        return $fileUri;
+        return $file_url;
     }
 }

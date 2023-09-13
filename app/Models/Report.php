@@ -13,6 +13,6 @@ class Report extends Model
 
     public function getFilePathAttribute()
     {
-        return url($this->file);
+        return getFileUrl($this->file);
     }
 }
