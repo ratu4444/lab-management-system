@@ -18,7 +18,7 @@
                         <form action="{{ route('project.default-payment.store', $project->id) }}" method="post" class="needs-validation" novalidate>
                             @csrf
                             <div id="paymentContainer">
-                                @foreach($default_payments as $index => $default_payment)
+                                @forelse($default_payments as $index => $default_payment)
                                     <div class="d-flex align-items-center payment-element">
                                         <div class="pretty p-icon p-smooth">
                                             <input type="checkbox" name="payments[{{ $index }}][checked]" class="payment-checkbox" checked/>
@@ -63,7 +63,52 @@
                                             </div>
                                         </div>
                                     </div>
-                                @endforeach
+                                @empty
+                                    <div class="d-flex align-items-center payment-element">
+                                        <div class="pretty p-icon p-smooth">
+                                            <input type="checkbox" name="payments[0][checked]" class="payment-checkbox" checked/>
+                                            <div class="state p-success">
+                                                <i class="icon material-icons">done</i>
+                                                <label></label>
+                                            </div>
+                                        </div>
+                                        <div class="form-row w-100 payment-input">
+                                            <div class="form-group col-3">
+                                                <label class="form-label">Name <span class="text-danger">*</span></label>
+                                                <input type="text" name="payments[0][name]" class="form-control" value="" data-required="true" required>
+
+                                                <div class="invalid-feedback">
+                                                    Payment name is required
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-3">
+                                                <label class="form-label">Date <span class="text-danger">*</span></label>
+                                                <input type="text" name="payments[0][date]" class="form-control datepicker" data-required="true" required>
+
+                                                <div class="invalid-feedback">
+                                                    Date is required
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-3">
+                                                <label class="form-label">Amount <span class="text-danger">*</span></label>
+                                                <input name="payments[0][amount]" type="number" class="form-control" value="" min="1" data-required="true" required>
+
+                                                <div class="invalid-feedback">
+                                                    Amount is required
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group col-3">
+                                                <label class="form-label">Payment Method <span class="text-danger">*</span></label>
+                                                <input name="payments[0][payment_method]" type="text" class="form-control" value="" data-required="true" required>
+
+                                                <div class="invalid-feedback">
+                                                    Payment Method is required
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforelse
                             </div>
 
                             <div class="d-flex justify-content-between">

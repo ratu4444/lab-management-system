@@ -18,7 +18,7 @@
                         <form action="{{ route('project.default-inspection.store', $project->id) }}" method="post" class="needs-validation" novalidate>
                             @csrf
                             <div id="inspectionContainer">
-                                @foreach($default_inspections as $index => $default_inspection)
+                                @forelse($default_inspections as $index => $default_inspection)
                                     <div class="d-flex align-items-center inspection-element">
                                         <div class="pretty p-icon p-smooth">
                                             <input type="checkbox" name="inspections[{{ $index }}][checked]" class="inspection-checkbox" checked/>
@@ -46,7 +46,35 @@
                                             </div>
                                         </div>
                                     </div>
-                                @endforeach
+                                @empty
+                                    <div class="d-flex align-items-center inspection-element">
+                                        <div class="pretty p-icon p-smooth">
+                                            <input type="checkbox" name="inspections[0][checked]" class="inspection-checkbox" checked/>
+                                            <div class="state p-success">
+                                                <i class="icon material-icons">done</i>
+                                                <label></label>
+                                            </div>
+                                        </div>
+                                        <div class="form-row w-100 inspection-input">
+                                            <div class="form-group col-6">
+                                                <label class="form-label">Name <span class="text-danger">*</span></label>
+                                                <input type="text" name="inspections[0][name]" class="form-control" value="" data-required="true" required>
+
+                                                <div class="invalid-feedback">
+                                                    Inspection name is required
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-6">
+                                                <label class="form-label">Scheduled Date <span class="text-danger">*</span></label>
+                                                <input type="text" name="inspections[0][scheduled_date]" class="form-control datepicker" data-required="true" required>
+
+                                                <div class="invalid-feedback">
+                                                    Scheduled Date is required
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforelse
                             </div>
 
                             <div class="d-flex justify-content-between">
