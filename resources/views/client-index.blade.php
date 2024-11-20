@@ -44,13 +44,33 @@
                         @endforeach
                     </div>
                 </div>
-          @endif
+            @endif
         </div>
-        @if(!auth()->user()->is_client)
             <div class="col-12 col-md-6 text-right">
-                <h4>{{ $project->client->name }}</h4>
+                @if(auth()->user()->is_client)
+                    @php
+                        $statuses = config('app.STATUSES');
+                        $status_color = config('app.STATUSES_COLORS')[array_search($project->status, $statuses)]
+                    @endphp
+                    <div class="dropdown mb-4">
+                        <button class="btn btn-{{ $status_color }} dropdown-toggle btn-lg" type="button" data-toggle="dropdown">Update Project Status</button>
+                        <div class="dropdown-menu" style="max-height: 500px; min-width: fit-content; overflow-y: auto">
+                            @foreach($statuses as $label => $value)
+                                <form action="{{ route('client-project.update-status', $project->id) }}" method="POST">
+                                    @csrf
+                                    @method('PUT')
+
+                                    <input type="hidden" name="status" value="{{ $value }}">
+
+                                    <button class="dropdown-item {{ $project->status == $value ? 'active' : '' }}" type="submit">{{ $label }}</button>
+                                </form>
+                            @endforeach
+                        </div>
+                    </div>
+                @else
+                    <h4>{{ $project->client->name }}</h4>
+                @endif
             </div>
-        @endif
     </div>
 
     @if($project)
@@ -127,6 +147,54 @@
                 </div>
             @endif
         </div>
+
+        <!--          REPORTS CHART-->
+        @if(!isset($elements[9]['is_enabled']) || $elements[9]['is_enabled'])
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between">
+                            <h4>{{ $elements[9]['element_name'] ?? 'Reports' }}</h4>
+                            <div>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#reportCreateModal">Add New Report</button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th class="text-nowrap">Name</th>
+                                        <th class="text-nowrap">Created Time</th>
+                                        <th class="text-nowrap">Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @if(count($project->reports))
+                                        @foreach($project->reports as $report)
+                                            <tr>
+                                                <th scope="row">{{ $loop->iteration }}</th>
+                                                <td class="text-nowrap">{{ $report->name }}</td>
+                                                <td class="text-nowrap">{{ $report->created_at }}</td>
+                                                <td class="text-nowrap">
+                                                    <button type="button" class="btn btn-primary btn-sm mx-1 pdfViewerBtn" data-title="{{ $report->name }}" data-file-path="{{ $report->file_path }}" data-file-type="{{ $report->file_type }}">View Report</button>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                        <tr>
+                                            <td colspan="100%" class="text-center text-muted font-weight-bold">No Report Found</td>
+                                        </tr>
+                                    @endif
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
 
         <!--         PROJECT TIMELINE-->
         @if(!isset($elements[3]['is_enabled']) || $elements[3]['is_enabled'])
@@ -372,49 +440,6 @@
             </div>
         @endif
 
-        <!--          REPORTS CHART-->
-        @if(!isset($elements[9]['is_enabled']) || $elements[9]['is_enabled'])
-            <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>{{ $elements[9]['element_name'] ?? 'Reports' }}</h4>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered table-striped">
-                                    <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th class="text-nowrap">Name</th>
-                                        <th class="text-nowrap">Action</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    @if(count($project->reports))
-                                        @foreach($project->reports as $report)
-                                            <tr>
-                                                <th scope="row">{{ $loop->iteration }}</th>
-                                                <td class="text-nowrap">{{ $report->name }}</td>
-                                                <td class="text-nowrap">
-                                                    <button type="button" class="btn btn-primary btn-sm mx-1 pdfViewerBtn" data-title="{{ $report->name }}" data-file-path="{{ $report->file_path }}" data-file-type="{{ $report->file_type }}">View Report</button>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    @else
-                                        <tr>
-                                            <td colspan="100%" class="text-center text-muted font-weight-bold">No Report Found</td>
-                                        </tr>
-                                    @endif
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        @endif
-
         @if(!auth()->user()->is_client)
             <div class="floating-button">
                 <a href="{{ route('settings.element', ['project' => $project->id]) }}" class="btn btn-lg btn-warning shadow-lg">Dashboard Settings</a>
@@ -429,6 +454,7 @@
 
 @section('modal')
     @include('custom-layout.modal.pdf-modal')
+    @include('custom-layout.modal.report-modal')
 @endsection
 
 @push('js')

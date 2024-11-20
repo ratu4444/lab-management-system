@@ -158,6 +158,64 @@
                 </div>
             </div>
 
+            <!--          REPORT CHART-->
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12">
+                    <div class="card">
+                        <div class="card-header d-block">
+                            <div class="form-row">
+                                <div class="col-8">
+                                    <input type="text" name="elements[9][element_name]" class="border-0 form-control p-0 font-20" value="{{ $elements[9]['element_name'] ?? 'Reports' }}" required>
+                                </div>
+                                <div class="col-4 text-right">
+                                    <div class="form-group">
+                                        <div class="selectgroup">
+                                            <label class="selectgroup-item">
+                                                <input type="radio" name="elements[9][is_enabled]" value="1" class="enabled-select-7 selectgroup-input-radio" {{ !isset($elements[9]['is_enabled']) || $elements[9]['is_enabled'] ? 'checked' : '' }}>
+                                                <span class="selectgroup-button" data-class="bg-success">Show</span>
+                                            </label>
+                                            <label class="selectgroup-item">
+                                                <input type="radio" name="elements[9][is_enabled]" value="0" class="enabled-select-7 selectgroup-input-radio" {{ !isset($elements[9]['is_enabled']) || $elements[9]['is_enabled'] ? '' : 'checked' }}>
+                                                <span class="selectgroup-button" data-class="bg-danger">Hide</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th class="text-nowrap">Name</th>
+                                        <th class="text-nowrap">Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td class="text-nowrap">Report One</td>
+                                        <td class="text-nowrap">
+                                            <button type="button" class="btn btn-primary btn-sm mx-1 pdfViewerBtn" data-title="Report One" data-file-path="" data-file-type="">View Report</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">2</th>
+                                        <td class="text-nowrap">Report Two</td>
+                                        <td class="text-nowrap">
+                                            <button type="button" class="btn btn-primary btn-sm mx-1 pdfViewerBtn" data-title="Report Two" data-file-path="" data-file-type="">View Report</button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!--         PROJECT TIMELINE-->
             <div class="row">
                 <div class="col-12">
@@ -459,64 +517,6 @@
                         <div class="card-body">
                             <div class="recent-report__chart">
                                 <div id="pieChart"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!--          REPORT CHART-->
-            <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12">
-                    <div class="card">
-                        <div class="card-header d-block">
-                            <div class="form-row">
-                                <div class="col-8">
-                                    <input type="text" name="elements[9][element_name]" class="border-0 form-control p-0 font-20" value="{{ $elements[9]['element_name'] ?? 'Reports' }}" required>
-                                </div>
-                                <div class="col-4 text-right">
-                                    <div class="form-group">
-                                        <div class="selectgroup">
-                                            <label class="selectgroup-item">
-                                                <input type="radio" name="elements[9][is_enabled]" value="1" class="enabled-select-7 selectgroup-input-radio" {{ !isset($elements[9]['is_enabled']) || $elements[9]['is_enabled'] ? 'checked' : '' }}>
-                                                <span class="selectgroup-button" data-class="bg-success">Show</span>
-                                            </label>
-                                            <label class="selectgroup-item">
-                                                <input type="radio" name="elements[9][is_enabled]" value="0" class="enabled-select-7 selectgroup-input-radio" {{ !isset($elements[9]['is_enabled']) || $elements[9]['is_enabled'] ? '' : 'checked' }}>
-                                                <span class="selectgroup-button" data-class="bg-danger">Hide</span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered table-striped">
-                                    <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th class="text-nowrap">Name</th>
-                                        <th class="text-nowrap">Action</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td class="text-nowrap">Report One</td>
-                                        <td class="text-nowrap">
-                                            <button type="button" class="btn btn-primary btn-sm mx-1 pdfViewerBtn" data-title="Report One" data-file-path="" data-file-type="">View Report</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td class="text-nowrap">Report Two</td>
-                                        <td class="text-nowrap">
-                                            <button type="button" class="btn btn-primary btn-sm mx-1 pdfViewerBtn" data-title="Report Two" data-file-path="" data-file-type="">View Report</button>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
                             </div>
                         </div>
                     </div>

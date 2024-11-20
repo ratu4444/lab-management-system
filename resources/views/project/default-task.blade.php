@@ -18,7 +18,7 @@
                         <form action="{{ route('project.default-task.store', $project->id) }}" method="post" class="needs-validation" novalidate>
                             @csrf
                             <div id="taskContainer">
-                                @foreach($default_tasks as $index => $default_task)
+                                @forelse($default_tasks as $index => $default_task)
                                     <div class="d-flex align-items-center task-element">
                                         <div class="pretty p-icon p-smooth">
                                             <input type="checkbox" name="tasks[{{ $index }}][checked]" class="task-checkbox" checked/>
@@ -62,7 +62,51 @@
                                             </div>
                                         </div>
                                     </div>
-                                @endforeach
+                                @empty
+                                    <div class="d-flex align-items-center task-element">
+                                        <div class="pretty p-icon p-smooth">
+                                            <input type="checkbox" name="tasks[0][checked]" class="task-checkbox" checked/>
+                                            <div class="state p-success">
+                                                <i class="icon material-icons">done</i>
+                                                <label></label>
+                                            </div>
+                                        </div>
+                                        <div class="form-row w-100 task-input">
+                                            <div class="form-group col-3">
+                                                <label class="form-label">Name <span class="text-danger">*</span></label>
+                                                <input type="text" name="tasks[0][name]" class="form-control" value="" data-required="true" required>
+
+                                                <div class="invalid-feedback">
+                                                    Task name is required
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-3">
+                                                <label class="form-label">Estimated Start Date <span class="text-danger">*</span></label>
+                                                <input type="text" name="tasks[0][estimated_start_date]" class="form-control datepicker" data-required="true" required>
+
+                                                <div class="invalid-feedback">
+                                                    Estimated start date is required
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-3">
+                                                <label class="form-label">Estimated Completion Date <span class="text-danger">*</span></label>
+                                                <input type="text" name="tasks[0][estimated_completion_date]" class="form-control datepicker" data-required="true" required>
+
+                                                <div class="invalid-feedback">
+                                                    Estimated completion date must be after estimated start date
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-3">
+                                                <label class="form-label">Budget <span class="text-danger">*</span></label>
+                                                <input name="tasks[0][total_budget]" type="number" class="form-control" value="" min="0" data-required="true" required>
+
+                                                <div class="invalid-feedback">
+                                                    Budget is required
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforelse
                             </div>
                             <div class="d-flex justify-content-between">
                                 <a href="javascript:void(0)" class="btn btn-primary" id="addMoreButton">Add New Tasks</a>

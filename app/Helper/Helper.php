@@ -85,7 +85,9 @@ if (!function_exists('uploadFile')) {
         $tmp_name = str_replace(' ', '_', $file->getClientOriginalName());
         $file_name = time().'_'.$tmp_name;
 
-        $upload_folder = 'storage/admin/' . trim($folder, '/') . '/';
+        $user_type = auth()->user()->is_client ? 'client' : 'admin';
+
+        $upload_folder = "storage/$user_type/" . trim($folder, '/') . '/';
         $upload_folder = str_replace('//', '/', $upload_folder);
 
         switch ($file_storage) {

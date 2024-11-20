@@ -8,7 +8,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('report.store', $project->id) }}" method="post" class="needs-validation" novalidate enctype="multipart/form-data">
+                <form action="{{ route(auth()->user()->is_client ? 'client-project.report.store' : 'report.store', $project->id) }}" method="post" class="needs-validation" novalidate enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
                         <label class="form-label">Title <span class="text-danger">*</span></label>

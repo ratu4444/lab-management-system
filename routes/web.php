@@ -77,6 +77,11 @@ Route::middleware('auth')->group(function () {
         Route::any('oauth/{app_name}/redirect', [OauthController::class, 'oauthRedirect'])->name('oauth.redirect');
         Route::get('oauth/{app_name}/refresh', [OauthController::class, 'oauthRefresh'])->name('oauth.refresh');
     });
+
+    Route::prefix('client-project/{project_id}')->middleware('auth.client')->name('client-project.')->group(function () {
+        Route::put('update-status', [ProjectController::class, 'clientUpdateStatus'])->name('update-status');
+        Route::post('store-report', [ReportController::class, 'clientStore'])->name('report.store');
+    });
 });
 
 require __DIR__.'/auth.php';
