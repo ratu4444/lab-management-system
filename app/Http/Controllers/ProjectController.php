@@ -113,6 +113,32 @@ class ProjectController extends Controller
         }
     }
 
+    public function clientUpdateStatus(Request $request, $project_id)
+    {
+        $request->validate([
+            'status'    => 'required',
+        ]);
+
+        $project = auth()->user()
+            ->projects()
+            ->findOrFail($project_id);
+
+        $project_data = [
+            'status'    => $request->status,
+        ];
+
+        try {
+            $project->update($project_data);
+
+            return back()->with('success', 'Project updated successfully');
+        } catch (\Exception $exception) {
+            return redirect()
+                ->back()
+                ->with('error', $exception->getMessage())
+                ->withInput();
+        }
+    }
+
     public function defaultTask($project_id)
     {
         $project = Project::withCount('tasks')->findOrFail($project_id);

@@ -53,6 +53,41 @@ class ReportController extends Controller
         }
     }
 
+    public function clientStore(Request $request, $project_id)
+    {
+        $request->validate([
+            'name'  => 'required|string',
+            'file'  => 'required|file',
+        ]);
+
+        $project = auth()->user()
+            ->projects()
+            ->findOrFail($project_id);
+
+        $file_type = $request->file->getMimeType();
+        $file_path = uploadFile($request->file);
+
+        $report_data = [
+            'name'          => $request->name,
+            'file'          => $file_path,
+            'file_type'     => $file_type,
+            'description'   => $request->description,
+            'created_by'    => auth()->id()
+        ];
+
+        try {
+            $project->reports()->create($report_data);
+
+            return redirect()
+                ->back()
+                ->with('success', 'Report created successfully');
+        } catch (\Exception $exception) {
+            return redirect()
+                ->back()
+                ->with('error', $exception->getMessage());
+        }
+    }
+
     public function edit($project_id, $report_id)
     {
         $report = Report::where('project_id', $project_id)->findOrFail($report_id);
