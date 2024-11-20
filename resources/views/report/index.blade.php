@@ -38,16 +38,18 @@
                                             <td class="text-nowrap">{{ $report->created_at }}</td>
                                             <td class="text-nowrap d-flex align-items-center">
                                                 <button type="button" class="btn btn-primary btn-sm mx-1 pdfViewerBtn" data-title="{{ $report->name }}" data-file-path="{{ $report->file_path }}" data-file-type="{{ $report->file_type }}">View Report</button>
-                                                <a href="{{ route('report.edit', [$project->id, $report->id]) }}" class="btn btn-warning btn-sm mx-1">Edit Report</a>
-                                                <form action="{{ route('report.toggle-visibility', [$project->id, $report->id]) }}" method="post">
-                                                    @csrf
-                                                    <button type="submit" class="btn btn-sm mx-1 {{ $report->is_active ? 'btn-info' : 'btn-success' }}">{{ $report->is_active ? 'Hide from Client' : 'Visible to Client' }}</button>
-                                                </form>
-                                                <form action="{{ route('report.destroy', [$project->id, $report->id]) }}" method="post">
-                                                    @csrf
-                                                    @method('delete')
-                                                    <button type="submit" class="btn btn-sm btn-danger }}">Delete</button>
-                                                </form>
+                                                @if ($report->created_by == auth()->id())
+                                                    <a href="{{ route('report.edit', [$project->id, $report->id]) }}" class="btn btn-warning btn-sm mx-1">Edit Report</a>
+                                                    <form action="{{ route('report.toggle-visibility', [$project->id, $report->id]) }}" method="post">
+                                                        @csrf
+                                                        <button type="submit" class="btn btn-sm mx-1 {{ $report->is_active ? 'btn-info' : 'btn-success' }}">{{ $report->is_active ? 'Hide from Client' : 'Visible to Client' }}</button>
+                                                    </form>
+                                                    <form action="{{ route('report.destroy', [$project->id, $report->id]) }}" method="post">
+                                                        @csrf
+                                                        @method('delete')
+                                                        <button type="submit" class="btn btn-sm btn-danger }}">Delete</button>
+                                                    </form>
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
