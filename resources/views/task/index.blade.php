@@ -23,7 +23,8 @@
                         <th class="text-nowrap">Name</th>
                         <th class="text-nowrap">Estimated Start Date</th>
                         <th class="text-nowrap">Estimated Completion Date</th>
-                        <th class="text-nowrap">Budget</th>
+{{--                        Changes--}}
+{{--                        <th class="text-nowrap">Budget</th>--}}
                         <th class="text-nowrap">Status</th>
                         <th class="text-nowrap">Action</th>
                     </tr>
@@ -41,7 +42,8 @@
                                 <td>{{ $task->name }}</td>
                                 <td>{{ $task->estimated_start_date }}</td>
                                 <td>{{ $task->estimated_completion_date }}</td>
-                                <td>{{ '$'.number_format($task->total_budget) }}</td>
+{{--                                Changes--}}
+{{--                                <td>{{ '$'.number_format($task->total_budget) }}</td>--}}
                                 <td>
                                     <div class="badge {{ 'badge-'.$status_color }}">{{ $status }}</div>
                                 </td>

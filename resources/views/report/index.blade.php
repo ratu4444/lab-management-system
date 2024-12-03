@@ -10,9 +10,10 @@
                 <div class="card card-primary">
                     <div class="card-header d-flex justify-content-between">
                         <h4 class="card-title text-muted">{{ $project->name }} : Reports</h4>
-                        <div>
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#reportCreateModal">Add New Report</button>
-                        </div>
+{{--                        Changes--}}
+{{--                        <div>--}}
+{{--                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#reportCreateModal">Add New Report</button>--}}
+{{--                        </div>--}}
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">

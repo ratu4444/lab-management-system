@@ -20,7 +20,8 @@
                             <div class="form-row">
                                 <div class="form-group col-12">
                                     <div>
-                                        <label for="clientDropdown">Client <span class="text-danger">*</span></label>
+                                        {{--            Changes in name. Researchers instead of Client--}}
+                                        <label for="clientDropdown">Researchers <span class="text-danger">*</span></label>
                                         <div class="row">
                                             @if($client_id)
                                                 <div class="col-12">
@@ -38,8 +39,9 @@
                                                         @endforeach
                                                     </select>
                                                 </div>
+                                                {{--            Changes in name. Researchers instead of Client--}}
                                                 <div class="col-12 col-sm-4 col-xl-2 mt-1 mt-sm-0">
-                                                    <button class="btn btn-primary text-nowrap w-100 h-100" type="button" data-toggle="modal" data-target="#clientCreateModal">Add New Client</button>
+                                                    <button class="btn btn-primary text-nowrap w-100 h-100" type="button" data-toggle="modal" data-target="#clientCreateModal">Add New Researchers</button>
                                                 </div>
                                             @endif
                                         </div>
@@ -61,28 +63,29 @@
                                         Estimated completion date is required
                                     </div>
                                 </div>
-                                <div class="form-group col-12 col-md-6">
-                                    <label class="form-label" for="estimated_budget">Estimated Budget <span class="text-danger">*</span></label>
-                                    <input type="number" name="estimated_budget" class="form-control" id="estimated_budget" min="0" value="{{ old('estimated_budget') }}" required>
+{{--                                Changes--}}
+{{--                                <div class="form-group col-12 col-md-6">--}}
+{{--                                    <label class="form-label" for="estimated_budget">Estimated Budget <span class="text-danger">*</span></label>--}}
+{{--                                    <input type="number" name="estimated_budget" class="form-control" id="estimated_budget" min="0" value="{{ old('estimated_budget') }}" required>--}}
 
-                                    <div class="invalid-feedback">
-                                        Estimated budget is required
-                                    </div>
-                                </div>
-                                <div class="form-group col-12">
-                                    <label class="form-label">Status</label>
-                                    <div class="selectgroup w-100 flex-wrap">
-                                        @foreach(config('app.STATUSES') as $label => $status_id)
-                                            @php
-                                                $status_color = config("app.STATUSES_COLORS.$label");
-                                            @endphp
-                                            <label class="selectgroup-item">
-                                                <input type="radio" name="status" value="{{ $status_id }}" class="selectgroup-input-radio" {{ old('status') ? (old('status') == $status_id ? 'checked' : '') : ($status_id == 1 ? 'checked' : '')}} >
-                                                <span class="selectgroup-button" data-class="{{ "bg-$status_color" }}">{{ $label }}</span>
-                                            </label>
-                                        @endforeach
-                                    </div>
-                                </div>
+{{--                                    <div class="invalid-feedback">--}}
+{{--                                        Estimated budget is required--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                                <div class="form-group col-12">--}}
+{{--                                    <label class="form-label">Status</label>--}}
+{{--                                    <div class="selectgroup w-100 flex-wrap">--}}
+{{--                                        @foreach(config('app.STATUSES') as $label => $status_id)--}}
+{{--                                            @php--}}
+{{--                                                $status_color = config("app.STATUSES_COLORS.$label");--}}
+{{--                                            @endphp--}}
+{{--                                            <label class="selectgroup-item">--}}
+{{--                                                <input type="radio" name="status" value="{{ $status_id }}" class="selectgroup-input-radio" {{ old('status') ? (old('status') == $status_id ? 'checked' : '') : ($status_id == 1 ? 'checked' : '')}} >--}}
+{{--                                                <span class="selectgroup-button" data-class="{{ "bg-$status_color" }}">{{ $label }}</span>--}}
+{{--                                            </label>--}}
+{{--                                        @endforeach--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
 {{--                                <div class="form-group col-12">--}}
 {{--                                    <label class="form-label" for="comment">Comment</label>--}}
 {{--                                    <textarea name="comment" class="form-control" id="comment">{{ old('comment') }}</textarea>--}}

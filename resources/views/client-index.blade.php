@@ -29,6 +29,7 @@
 @endpush
 
 @section('content')
+{{--    Choose Project Dropdown--}}
     <div class="row justify-content-between align-items-center">
         <div class="col-12 col-md-6 col-lg-4">
             @if($all_projects->count() > 1)
@@ -46,38 +47,44 @@
                 </div>
             @endif
         </div>
-            <div class="col-12 col-md-6 text-right">
-                @if(auth()->user()->is_client)
-                    @php
-                        $statuses = config('app.STATUSES');
-                        $status_color = config('app.STATUSES_COLORS')[array_search($project->status, $statuses)]
-                    @endphp
-                    <div class="dropdown mb-4">
-                        <button class="btn btn-{{ $status_color }} dropdown-toggle btn-lg" type="button" data-toggle="dropdown">Update Project Status</button>
-                        <div class="dropdown-menu" style="max-height: 500px; min-width: fit-content; overflow-y: auto">
-                            @foreach($statuses as $label => $value)
-                                <form action="{{ route('client-project.update-status', $project->id) }}" method="POST">
-                                    @csrf
-                                    @method('PUT')
 
-                                    <input type="hidden" name="status" value="{{ $value }}">
+{{--        Project Status Update Dropdown For Client Only--}}
+        <div class="col-12 col-md-6 text-right">
+            @if(auth()->user()->is_client)
+                @php
+                    $statuses = config('app.STATUSES');
+                    $status_color = config('app.STATUSES_COLORS')[array_search($project->status, $statuses)]
+                @endphp
+                <div class="dropdown mb-4">
+                    <button class="btn btn-{{ $status_color }} dropdown-toggle btn-lg" type="button" data-toggle="dropdown">Update Project Status</button>
+                    <div class="dropdown-menu" style="max-height: 500px; min-width: fit-content; overflow-y: auto">
+                        @foreach($statuses as $label => $value)
+                            <form action="{{ route('client-project.update-status', $project->id) }}" method="POST">
+                                @csrf
+                                @method('PUT')
 
-                                    <button class="dropdown-item {{ $project->status == $value ? 'active' : '' }}" type="submit">{{ $label }}</button>
-                                </form>
-                            @endforeach
-                        </div>
+                                <input type="hidden" name="status" value="{{ $value }}">
+
+                                <button class="dropdown-item {{ $project->status == $value ? 'active' : '' }}" type="submit">{{ $label }}</button>
+                            </form>
+                        @endforeach
                     </div>
-                @else
-                    <h4>{{ $project->client->name }}</h4>
-                @endif
-            </div>
+                </div>
+            @else
+                <h4>{{ $project->client->name }}</h4>
+            @endif
+        </div>
     </div>
 
     @if($project)
         <!-- Main Content -->
         <div class="row">
             @if(!isset($elements[0]['is_enabled']) || $elements[0]['is_enabled'])
-                <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                {{--            Changes in row. Just use col-12 instead of many--}}
+                {{--                <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-xs-12">--}}
+
+{{--            Project Completion Card--}}
+                <div class="col-12">
                     <div class="card card-primary h-90">
                         <div class="card-statistic-4">
                             <div class="align-items-center justify-content-between">
@@ -100,55 +107,56 @@
                     </div>
                 </div>
             @endif
+                {{--        Changes--}}
             <!--            FINAL BUDGET-->
-            @if(!isset($elements[1]['is_enabled']) || $elements[1]['is_enabled'])
-                <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <div class="card card-primary h-90">
-                        <div class="card-statistic-4">
-                            <div class="align-items-center justify-content-between">
-                                <div class="row">
-                                    <div class="col-12 pt-3">
-                                        <div class="card-content">
-                                            <h5 class="matrix-title"> {{ $elements[1]['element_name'] ?? 'Project Budget' }} </h5>
-                                            <div>
-                                                <h2 class="font-18">{{ '$'.(number_format($project->total_budget)) }}</h2>
-                                                <p class="col-orange mb-0"><span class="col-orange font-20">{{ abs($project->budget_increament_percentage).'%' }}</span>
-                                                    {{ $project->budget_increament_percentage < 0 ? 'Decrease' : 'Increase'}}
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            @endif
+{{--            @if(!isset($elements[1]['is_enabled']) || $elements[1]['is_enabled'])--}}
+{{--                <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-xs-12">--}}
+{{--                    <div class="card card-primary h-90">--}}
+{{--                        <div class="card-statistic-4">--}}
+{{--                            <div class="align-items-center justify-content-between">--}}
+{{--                                <div class="row">--}}
+{{--                                    <div class="col-12 pt-3">--}}
+{{--                                        <div class="card-content">--}}
+{{--                                            <h5 class="matrix-title"> {{ $elements[1]['element_name'] ?? 'Project Budget' }} </h5>--}}
+{{--                                            <div>--}}
+{{--                                                <h2 class="font-18">{{ '$'.(number_format($project->total_budget)) }}</h2>--}}
+{{--                                                <p class="col-orange mb-0"><span class="col-orange font-20">{{ abs($project->budget_increament_percentage).'%' }}</span>--}}
+{{--                                                    {{ $project->budget_increament_percentage < 0 ? 'Decrease' : 'Increase'}}--}}
+{{--                                                </p>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            @endif--}}
             <!--            PAYMENT COMPLETION-->
-            @if(!isset($elements[2]['is_enabled']) || $elements[2]['is_enabled'])
-                <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <div class="card card-primary h-90">
-                        <div class="card-statistic-4">
-                            <div class="align-items-center justify-content-between">
-                                <div class="row ">
-                                    <div class="col-12 pt-3">
-                                        <div class="card-content">
-                                            <h5 class="matrix-title"> {{ $elements[2]['element_name'] ?? 'Payments' }} </h5>
-                                        </div>
-                                        <div>
-                                            <h2 class="font-18">{{ '$'.number_format($project->paid_amount) }}</h2>
-                                            <p class="mb-0"><span class="col-green font-20">{{ $project->paid_amount_percentage.'%' }}</span></p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            @endif
+{{--            @if(!isset($elements[2]['is_enabled']) || $elements[2]['is_enabled'])--}}
+{{--                <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-xs-12">--}}
+{{--                    <div class="card card-primary h-90">--}}
+{{--                        <div class="card-statistic-4">--}}
+{{--                            <div class="align-items-center justify-content-between">--}}
+{{--                                <div class="row ">--}}
+{{--                                    <div class="col-12 pt-3">--}}
+{{--                                        <div class="card-content">--}}
+{{--                                            <h5 class="matrix-title"> {{ $elements[2]['element_name'] ?? 'Payments' }} </h5>--}}
+{{--                                        </div>--}}
+{{--                                        <div>--}}
+{{--                                            <h2 class="font-18">{{ '$'.number_format($project->paid_amount) }}</h2>--}}
+{{--                                            <p class="mb-0"><span class="col-green font-20">{{ $project->paid_amount_percentage.'%' }}</span></p>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            @endif--}}
         </div>
 
-        <!--          REPORTS CHART-->
+        <!--          Reports Table -->
         @if(!isset($elements[9]['is_enabled']) || $elements[9]['is_enabled'])
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12">
@@ -156,9 +164,12 @@
                         <div class="card-header d-flex justify-content-between">
                             <h4>{{ $elements[9]['element_name'] ?? 'Reports' }}</h4>
                             <div>
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#reportCreateModal">Add New Report</button>
+                                @if(auth()->user()->is_client)
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#reportCreateModal">Add New Report</button>
+                                @endif
                             </div>
-                        </div>
+                        </div> <!-- card-header ends -->
+
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered table-striped">
@@ -171,32 +182,38 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @if(count($project->reports))
-                                        @foreach($project->reports as $report)
-                                            <tr>
-                                                <th scope="row">{{ $loop->iteration }}</th>
-                                                <td class="text-nowrap">{{ $report->name }}</td>
-                                                <td class="text-nowrap">{{ $report->created_at }}</td>
-                                                <td class="text-nowrap">
-                                                    <button type="button" class="btn btn-primary btn-sm mx-1 pdfViewerBtn" data-title="{{ $report->name }}" data-file-path="{{ $report->file_path }}" data-file-type="{{ $report->file_type }}">View Report</button>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    @else
+                                    @forelse($project->reports as $report)
                                         <tr>
-                                            <td colspan="100%" class="text-center text-muted font-weight-bold">No Report Found</td>
+                                            <th scope="row">{{ $loop->iteration }}</th>
+                                            <td class="text-nowrap">{{ $report->name }}</td>
+                                            <td class="text-nowrap">{{ $report->created_at }}</td>
+                                            <td class="text-nowrap">
+                                                <button
+                                                    type="button"
+                                                    class="btn btn-primary btn-sm mx-1 pdfViewerBtn"
+                                                    data-title="{{ $report->name }}"
+                                                    data-file-path="{{ $report->file_path }}"
+                                                    data-file-type="{{ $report->file_type }}">
+                                                    View Report
+                                                </button>
+                                            </td>
                                         </tr>
-                                    @endif
+                                    @empty
+                                        <tr>
+                                            <td colspan="4" class="text-center text-muted font-weight-bold">No Report Found</td>
+                                        </tr>
+                                    @endforelse
                                     </tbody>
                                 </table>
                             </div>
-                        </div>
+                        </div> <!-- card-body ends -->
                     </div>
+
                 </div>
             </div>
         @endif
 
-        <!--         PROJECT TIMELINE-->
+                            <!--         PROJECT TIMELINE-->
         @if(!isset($elements[3]['is_enabled']) || $elements[3]['is_enabled'])
             <div class="row">
                 <div class="col-12">
@@ -264,52 +281,53 @@
             </div>
         @endif
 
+        {{--        Changes--}}
         <!--          PAYMENT HISTORY-->
-        @if(!isset($elements[5]['is_enabled']) || $elements[5]['is_enabled'])
-            <div class="row">
-                <div class="col-md-12 col-lg-12 col-xl-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>{{ $elements[5]['element_name'] ?? 'Payment History' }}</h4>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-striped mb-0">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th class="text-nowrap">Name</th>
-                                            <th class="text-nowrap">Paid For</th>
-                                            <th class="text-nowrap">Date</th>
-                                            <th class="text-nowrap">Amount</th>
-                                            <th class="text-nowrap">Method</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @if($project->payments->count())
-                                            @foreach($project->payments as $payment)
-                                                <tr>
-                                                    <th scope="row">{{ $loop->iteration }}</th>
-                                                    <td>{{ $payment->name }}</td>
-                                                    <td>{{ $payment->tasks->pluck('name')->implode(', ') ?: '-' }}</td>
-                                                    <td>{{ $payment->date }}</td>
-                                                    <td>{{ '$'.number_format($payment->amount) }}</td>
-                                                    <td>{{ $payment->payment_method }}</td>
-                                                </tr>
-                                            @endforeach
-                                        @else
-                                            <tr>
-                                                <td colspan="100%" class="text-center text-muted font-weight-bold">No Payment Data Found</td>
-                                            </tr>
-                                        @endif
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-       @endif
+{{--        @if(!isset($elements[5]['is_enabled']) || $elements[5]['is_enabled'])--}}
+{{--            <div class="row">--}}
+{{--                <div class="col-md-12 col-lg-12 col-xl-12">--}}
+{{--                    <div class="card">--}}
+{{--                        <div class="card-header">--}}
+{{--                            <h4>{{ $elements[5]['element_name'] ?? 'Payment History' }}</h4>--}}
+{{--                        </div>--}}
+{{--                        <div class="card-body">--}}
+{{--                            <div class="table-responsive">--}}
+{{--                                <table class="table table-striped mb-0">--}}
+{{--                                    <thead>--}}
+{{--                                        <tr>--}}
+{{--                                            <th>#</th>--}}
+{{--                                            <th class="text-nowrap">Name</th>--}}
+{{--                                            <th class="text-nowrap">Paid For</th>--}}
+{{--                                            <th class="text-nowrap">Date</th>--}}
+{{--                                            <th class="text-nowrap">Amount</th>--}}
+{{--                                            <th class="text-nowrap">Method</th>--}}
+{{--                                        </tr>--}}
+{{--                                    </thead>--}}
+{{--                                    <tbody>--}}
+{{--                                        @if($project->payments->count())--}}
+{{--                                            @foreach($project->payments as $payment)--}}
+{{--                                                <tr>--}}
+{{--                                                    <th scope="row">{{ $loop->iteration }}</th>--}}
+{{--                                                    <td>{{ $payment->name }}</td>--}}
+{{--                                                    <td>{{ $payment->tasks->pluck('name')->implode(', ') ?: '-' }}</td>--}}
+{{--                                                    <td>{{ $payment->date }}</td>--}}
+{{--                                                    <td>{{ '$'.number_format($payment->amount) }}</td>--}}
+{{--                                                    <td>{{ $payment->payment_method }}</td>--}}
+{{--                                                </tr>--}}
+{{--                                            @endforeach--}}
+{{--                                        @else--}}
+{{--                                            <tr>--}}
+{{--                                                <td colspan="100%" class="text-center text-muted font-weight-bold">No Payment Data Found</td>--}}
+{{--                                            </tr>--}}
+{{--                                        @endif--}}
+{{--                                    </tbody>--}}
+{{--                                </table>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--       @endif--}}
 
         <!--          TASK DETAILS-->
         @if(!isset($elements[6]['is_enabled']) || $elements[6]['is_enabled'])
@@ -365,86 +383,82 @@
             </div>
        @endif
 
+{{--        Changes--}}
         <!--          INSPECTION DETAILS-->
-        @if(!isset($elements[7]['is_enabled']) || $elements[7]['is_enabled'])
-            <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>{{ $elements[7]['element_name'] ?? 'Inspections' }} </h4>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-striped">
-                                    <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th class="text-nowrap">Name</th>
-                                        <th class="text-nowrap">Scheduled Date</th>
-                                        <th class="text-nowrap">Inspected Date</th>
-                                        <th class="text-nowrap">Status</th>
-                                        <th class="text-nowrap">Dependencies</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    @if($project->inspections->where('status', '!=', config('app.STATUSES.Canceled'))->count())
-                                        @foreach($project->inspections->where('status', '!=', config('app.STATUSES.Canceled')) as $inspection)
-                                            @php
-                                                $status = array_search($inspection->status, config('app.STATUSES'));
-                                                $status_color = config("app.STATUSES_COLORS.$status")
-                                            @endphp
-                                            <tr>
-                                                <th scope="row">{{ $loop->iteration }}</th>
-                                                <td class="text-nowrap">{{ $inspection->name }}</td>
-                                                <td class="text-nowrap">{{ $inspection->scheduled_date }}</td>
-                                                <td class="text-nowrap">{{ $inspection->date ?: '-' }}</td>
-                                                <td>
-                                                    <div class="badge {{ 'badge-'.$status_color }}">{{ $status }}</div>
-                                                </td>
-                                                <td>{{ $inspection->dependentTasks->pluck('name')->implode(', ') ?: '-' }}</td>
-                                            </tr>
-                                        @endforeach
-                                    @else
-                                        <tr>
-                                            <td colspan="100%" class="text-center text-muted font-weight-bold">No Inspections Found</td>
-                                        </tr>
-                                    @endif
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        @endif
+{{--        @if(!isset($elements[7]['is_enabled']) || $elements[7]['is_enabled'])--}}
+{{--            <div class="row">--}}
+{{--                <div class="col-12">--}}
+{{--                    <div class="card">--}}
+{{--                        <div class="card-header">--}}
+{{--                            <h4>{{ $elements[7]['element_name'] ?? 'Inspections' }} </h4>--}}
+{{--                        </div>--}}
+{{--                        <div class="card-body">--}}
+{{--                            <div class="table-responsive">--}}
+{{--                                <table class="table table-striped">--}}
+{{--                                    <thead>--}}
+{{--                                    <tr>--}}
+{{--                                        <th>#</th>--}}
+{{--                                        <th class="text-nowrap">Name</th>--}}
+{{--                                        <th class="text-nowrap">Scheduled Date</th>--}}
+{{--                                        <th class="text-nowrap">Inspected Date</th>--}}
+{{--                                        <th class="text-nowrap">Status</th>--}}
+{{--                                        <th class="text-nowrap">Dependencies</th>--}}
+{{--                                    </tr>--}}
+{{--                                    </thead>--}}
+{{--                                    <tbody>--}}
+{{--                                    @if($project->inspections->where('status', '!=', config('app.STATUSES.Canceled'))->count())--}}
+{{--                                        @foreach($project->inspections->where('status', '!=', config('app.STATUSES.Canceled')) as $inspection)--}}
+{{--                                            @php--}}
+{{--                                                $status = array_search($inspection->status, config('app.STATUSES'));--}}
+{{--                                                $status_color = config("app.STATUSES_COLORS.$status")--}}
+{{--                                            @endphp--}}
+{{--                                            <tr>--}}
+{{--                                                <th scope="row">{{ $loop->iteration }}</th>--}}
+{{--                                                <td class="text-nowrap">{{ $inspection->name }}</td>--}}
+{{--                                                <td class="text-nowrap">{{ $inspection->scheduled_date }}</td>--}}
+{{--                                                <td class="text-nowrap">{{ $inspection->date ?: '-' }}</td>--}}
+{{--                                                <td>--}}
+{{--                                                    <div class="badge {{ 'badge-'.$status_color }}">{{ $status }}</div>--}}
+{{--                                                </td>--}}
+{{--                                                <td>{{ $inspection->dependentTasks->pluck('name')->implode(', ') ?: '-' }}</td>--}}
+{{--                                            </tr>--}}
+{{--                                        @endforeach--}}
+{{--                                    @else--}}
+{{--                                        <tr>--}}
+{{--                                            <td colspan="100%" class="text-center text-muted font-weight-bold">No Inspections Found</td>--}}
+{{--                                        </tr>--}}
+{{--                                    @endif--}}
+{{--                                    </tbody>--}}
+{{--                                </table>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        @endif--}}
 
         <!--          PIE CHART-->
-        @if(!isset($elements[8]['is_enabled']) || $elements[8]['is_enabled'])
-            <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>{{ $elements[8]['element_name'] ?? 'Pie Chart' }}</h4>
-                        </div>
-                        <div class="card-body">
-                            <div class="recent-report__chart">
-                                @if($project->payments->count())
-                                    <div id="pieChart"></div>
-                                @else
-                                    <div class="font-weight-bold text-center text-muted">No Data Found</div>
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        @endif
+{{--        @if(!isset($elements[8]['is_enabled']) || $elements[8]['is_enabled'])--}}
+{{--            <div class="row">--}}
+{{--                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12">--}}
+{{--                    <div class="card">--}}
+{{--                        <div class="card-header">--}}
+{{--                            <h4>{{ $elements[8]['element_name'] ?? 'Pie Chart' }}</h4>--}}
+{{--                        </div>--}}
+{{--                        <div class="card-body">--}}
+{{--                            <div class="recent-report__chart">--}}
+{{--                                @if($project->payments->count())--}}
+{{--                                    <div id="pieChart"></div>--}}
+{{--                                @else--}}
+{{--                                    <div class="font-weight-bold text-center text-muted">No Data Found</div>--}}
+{{--                                @endif--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        @endif--}}
 
-        @if(!auth()->user()->is_client)
-            <div class="floating-button">
-                <a href="{{ route('settings.element', ['project' => $project->id]) }}" class="btn btn-lg btn-warning shadow-lg">Dashboard Settings</a>
-            </div>
-        @endif
     @else
         <div class="text-center">
             <span class="text-muted font-weight-bold">Project Not Found</span>

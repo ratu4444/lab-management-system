@@ -10,7 +10,8 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title text-muted">Create New Client</h4>
+                        {{--            Changes in name. Researchers instead of Client--}}
+                        <h4 class="card-title text-muted">Create New Researchers</h4>
                     </div>
                     <div class="card-body">
                         <form action="{{ route('client.store') }}" method="post" class="needs-validation" novalidate>
@@ -20,9 +21,15 @@
                                     <label class="form-label" for="name">Name <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" name="name" id="name" value="{{ old('name') }}" required>
 
+                                    {{--            Changes in name. Researchers instead of Client--}}
+
                                     <div class="invalid-feedback">
-                                        Client name is required
+                                        Researchers name is required
                                     </div>
+                                </div>
+                                <div class="form-group col-12 col-md-6">
+                                    <label class="form-label" for="mobile">Mobile</label>
+                                    <input type="tel" class="form-control" name="mobile" id="mobile" value="{{ old('mobile') }}">
                                 </div>
                                 <div class="form-group col-12 col-md-6">
                                     <label class="form-label" for="email">Email <span class="text-danger">*</span></label>
@@ -40,17 +47,13 @@
                                         Password is required
                                     </div>
                                 </div>
-                                <div class="form-group col-12 col-md-6">
-                                    <label class="form-label" for="mobile">Mobile</label>
-                                    <input type="tel" class="form-control" name="mobile" id="mobile" value="{{ old('mobile') }}">
-                                </div>
-                                <div class="form-group col-12 col-md-6">
-                                    <label class="form-label" for="company_name">Company Name</label>
-                                    <input type="text" class="form-control" name="company_name" id="company_name" value="{{ old('company_name') }}">
-                                </div>
+{{--                                <div class="form-group col-12 col-md-6">--}}
+{{--                                    <label class="form-label" for="company_name">Company Name</label>--}}
+{{--                                    <input type="text" class="form-control" name="company_name" id="company_name" value="{{ old('company_name') }}">--}}
+{{--                                </div>--}}
                             </div>
-
-                            <button type="submit" class="btn btn-primary">Create Client</button>
+                            {{--            Changes in name. Researchers instead of Client--}}
+                            <button type="submit" class="btn btn-primary">Create Researchers</button>
                         </form>
                     </div>
                 </div>

@@ -46,7 +46,7 @@ class DashboardController extends Controller
 
         $client_reports = [
             'type'              => 'clients',
-            'heading'           => 'Total Clients',
+            'heading'           => 'Total Researchers',
             'card_icon'         => 'fa fa-users',
             'card_background'   => 'l-bg-orange',
             'count'             => User::where('is_client', true)->count(),
@@ -62,31 +62,34 @@ class DashboardController extends Controller
             'url'               => null,
         ];
 
-        $payment_reports = [
-            'type'              => 'payments',
-            'heading'           => 'Total Payments',
-            'card_icon'         => 'fa fa-dollar-sign',
-            'card_background'   => 'l-bg-cyan',
-            'count'             => '$'.number_format($projects->sum('payments_sum_amount')),
-            'url'               => null,
-        ];
-
-        $inspection_reports = [
-            'type'              => 'inspections',
-            'heading'           => 'Total Inspections',
-            'card_icon'         => null,
-            'card_background'   => 'l-bg-purple-dark',
-            'count'             => $projects->sum('inspections_count'),
-            'url'               => null,
-        ];
+        //changes
+//        $payment_reports = [
+//            'type'              => 'payments',
+//            'heading'           => 'Total Payments',
+//            'card_icon'         => 'fa fa-dollar-sign',
+//            'card_background'   => 'l-bg-cyan',
+//            'count'             => '$'.number_format($projects->sum('payments_sum_amount')),
+//            'url'               => null,
+//        ];
+//
+//        $inspection_reports = [
+//            'type'              => 'inspections',
+//            'heading'           => 'Total Inspections',
+//            'card_icon'         => null,
+//            'card_background'   => 'l-bg-purple-dark',
+//            'count'             => $projects->sum('inspections_count'),
+//            'url'               => null,
+//        ];
 
 
         $reports = [
             $project_reports,
             $client_reports,
             $task_reports,
-            $payment_reports,
-            $inspection_reports
+
+            //changes
+//            $payment_reports,
+//            $inspection_reports
         ];
 
         return view('index', compact('reports', 'running_projects', 'upcoming_inspections'));
@@ -94,6 +97,7 @@ class DashboardController extends Controller
 
     public function clientIndex(Request $request)
     {
+//        todo: when client has no project.
         $request->validate([
             'project' => 'nullable|exists:projects,id',
             'client' => 'nullable|exists:users,id',

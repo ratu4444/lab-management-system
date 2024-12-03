@@ -18,7 +18,7 @@
                         @if($all_clients->count() > 1)
                             <div class="dropdown mb-4">
                                 <button class="btn btn-primary dropdown-toggle btn-lg" type="button" data-toggle="dropdown">
-                                    {{ $client ? 'Client : '.$client->name : 'Select Another Client' }}
+                                    {{ $client ? 'Researchers : '.$client->name : 'Select Another Researchers' }}
                                 </button>
                                 <div class="dropdown-menu" style="max-height: 500px; min-width: fit-content; overflow-y: auto">
                                     @foreach($all_clients as $single_client)
@@ -35,10 +35,10 @@
                                 <tr>
                                     <th>#</th>
                                     <th class="text-nowrap">Name</th>
-                                    <th class="text-nowrap">Client Name</th>
+                                    <th class="text-nowrap">Researchers Name</th>
                                     <th class="text-nowrap">Estimated Completion Date</th>
-                                    <th class="text-nowrap">Estimated Budget</th>
-                                    <th class="text-nowrap">Total Budget</th>
+{{--                                    <th class="text-nowrap">Estimated Budget</th>--}}
+{{--                                    <th class="text-nowrap">Total Budget</th>--}}
                                     <th class="text-nowrap">Status</th>
                                     <th class="text-nowrap">View</th>
                                     <th class="text-nowrap">Action</th>
@@ -57,22 +57,22 @@
                                             <td class="text-nowrap">{{ $project->name }}</td>
                                             <td class="text-nowrap">{{ $project->client->name }}</td>
                                             <td class="text-nowrap">{{ $project->estimated_completion_date }}</td>
-                                            <td class="text-nowrap">{{ '$'.number_format($project->estimated_budget) }}</td>
-                                            <td class="text-nowrap">{{ '$'.number_format($project->total_budget) }}</td>
+{{--                                            <td class="text-nowrap">{{ '$'.number_format($project->estimated_budget) }}</td>--}}
+{{--                                            <td class="text-nowrap">{{ '$'.number_format($project->total_budget) }}</td>--}}
                                             <td class="text-nowrap">
                                                 <div class="badge {{ 'badge-'.$status_color}} {{ $show_incomplete_badge ? 'badge-dot' : ''}}">{{ $status }}</div>
                                             </td>
                                             <td class="text-nowrap">
                                                 <a href="{{ route('task.index', $project->id) }}" class="btn btn-primary btn-sm" target="_blank">Tasks</a>
-                                                <a href="{{ route('payment.index', $project->id) }}" class="btn btn-success btn-sm" target="_blank">Payments</a>
-                                                <a href="{{ route('inspection.index', $project->id) }}" class="btn btn-info btn-sm" target="_blank">Inspections</a>
+{{--                                                <a href="{{ route('payment.index', $project->id) }}" class="btn btn-success btn-sm" target="_blank">Payments</a>--}}
+{{--                                                <a href="{{ route('inspection.index', $project->id) }}" class="btn btn-info btn-sm" target="_blank">Inspections</a>--}}
                                                 <a href="{{ route('report.index', $project->id) }}" class="btn btn-warning btn-sm" target="_blank">Reports</a>
                                             </td>
 
                                             <td class="text-nowrap">
                                                 <a href="{{ route('project.edit', $project->id) }}" class="btn btn-warning btn-sm">Edit Project</a>
                                                 <a href="{{ route('dashboard.client-index', ['project' => $project->id]) }}" class="btn btn-primary btn-sm">Dashboard</a>
-                                                <a href="{{ route('settings.element', ['project' => $project->id]) }}" class="btn btn-warning btn-sm">Dashboard Settings</a>
+{{--                                                <a href="{{ route('settings.element', ['project' => $project->id]) }}" class="btn btn-warning btn-sm">Dashboard Settings</a>--}}
                                             </td>
                                         </tr>
                                     @endforeach

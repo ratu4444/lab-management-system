@@ -24,14 +24,15 @@
                     </a>
                 </li>
 
+{{--            Changes in name. Researchers instead of Client--}}
                 <li class="dropdown {{ Route::is('client*') ? 'active' : '' }}">
                     <a href="" class="menu-toggle nav-link has-dropdown">
                         <i data-feather="briefcase"></i>
-                        <span>Client</span>
+                        <span>Researchers</span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li class="{{ Route::is('client.index') ? 'active' : '' }}"><a class="nav-link" href="{{ route('client.index') }}">Clients List</a></li>
-                        <li class="{{ Route::is('client.create') ? 'active' : '' }}"><a class="nav-link" href="{{ route('client.create') }}">Create Client</a></li>
+                        <li class="{{ Route::is('client.index') ? 'active' : '' }}"><a class="nav-link" href="{{ route('client.index') }}">Researchers List</a></li>
+                        <li class="{{ Route::is('client.create') ? 'active' : '' }}"><a class="nav-link" href="{{ route('client.create') }}">Create Researchers</a></li>
                     </ul>
                 </li>
 
@@ -62,19 +63,19 @@
                         <li class="{{ Route::is('settings.task.show') ? 'active' : '' }}">
                             <a class="nav-link" href="{{ route('settings.task.show') }}">Default Tasks</a>
                         </li>
-                        <li class="{{ Route::is('settings.payment.show') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('settings.payment.show') }}">Default Payments</a>
-                        </li>
-                        <li class="{{ Route::is('settings.inspection.show') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('settings.inspection.show') }}">Default Inspections</a>
-                        </li>
-                        <li class="{{ Route::is('settings.element') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('settings.element') }}">Client Dashboard Settings</a>
-                        </li>
-                        <li>
-                        <li class="{{ Route::is('settings.outlook-configuration') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('settings.outlook-configuration') }}">Outlook Configuration</a>
-                        </li>
+{{--                        Changes--}}
+    {{--                        <li class="{{ Route::is('settings.payment.show') ? 'active' : '' }}">--}}
+    {{--                            <a class="nav-link" href="{{ route('settings.payment.show') }}">Default Payments</a>--}}
+    {{--                        </li>--}}
+    {{--                        <li class="{{ Route::is('settings.inspection.show') ? 'active' : '' }}">--}}
+    {{--                            <a class="nav-link" href="{{ route('settings.inspection.show') }}">Default Inspections</a>--}}
+    {{--                        </li>--}}
+{{--                        <li class="{{ Route::is('settings.element') ? 'active' : '' }}">--}}
+{{--                            <a class="nav-link" href="{{ route('settings.element') }}">Client Dashboard Settings</a>--}}
+{{--                        </li>--}}
+{{--                        <li class="{{ Route::is('settings.outlook-configuration') ? 'active' : '' }}">--}}
+{{--                            <a class="nav-link" href="{{ route('settings.outlook-configuration') }}">Outlook Configuration</a>--}}
+{{--                        </li>--}}
                     </ul>
                 </li>
             @endif

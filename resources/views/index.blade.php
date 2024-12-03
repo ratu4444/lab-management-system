@@ -7,7 +7,7 @@
     <div class="container">
         <div class="row">
             @foreach($reports as $report)
-                <div class="col-xl-3 col-lg-6">
+                <div class="col-xl-4 col-lg-6">
                     <div class="card {{ $report['card_background'] ?? 'l-bg-cyan' }}">
                         <div class="card-statistic-3">
                             <div class="card-icon card-icon-large">
@@ -42,10 +42,11 @@
                                 <thead>
                                     <tr>
                                         <th>Project Name</th>
-                                        <th>Client Name</th>
+                                        <th>Researchers Name</th>
                                         <th>Progress</th>
                                         <th>Estimated Completion Date</th>
-                                        <th>Estimated Budget</th>
+{{--                                        Changes--}}
+{{--                                        <th>Estimated Budget</th>--}}
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -60,7 +61,8 @@
                                                     </div>
                                                 </td>
                                                 <td>{{ $project->estimated_completion_date }}</td>
-                                                <td>{{ '$'.number_format($project->estimated_budget) }}</td>
+{{--                                                Changes--}}
+{{--                                                <td>{{ '$'.number_format($project->estimated_budget) }}</td>--}}
                                             </tr>
                                         @endforeach
                                     @else
@@ -75,44 +77,45 @@
                 </div>
             </div>
 
-            <div class="col-12">
-                <div class="card card-primary">
-                    <div class="card-header">
-                        <h4>
-                            Upcoming Inspections
-                            <sup class="text-success">({{ $upcoming_inspections->count() }})</sup>
-                        </h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-striped">
-                                <thead>
-                                <tr>
-                                    <th>Inspection Name</th>
-                                    <th>Project Name</th>
-                                    <th>Scheduled Date</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @if($upcoming_inspections->count())
-                                    @foreach($upcoming_inspections as $inspection)
-                                        <tr>
-                                            <td>{{ $inspection->name }}</td>
-                                            <td>{{ $inspection->project?->name }}</td>
-                                            <td>{{ $inspection->scheduled_date }}</td>
-                                        </tr>
-                                    @endforeach
-                                @else
-                                    <tr>
-                                        <td colspan="100%" class="text-center text-muted font-weight-bold">No Upcoming Inspections Found</td>
-                                    </tr>
-                                @endif
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
+{{--Changes--}}
+{{--            <div class="col-12">--}}
+{{--                <div class="card card-primary">--}}
+{{--                    <div class="card-header">--}}
+{{--                        <h4>--}}
+{{--                            Upcoming Inspections--}}
+{{--                            <sup class="text-success">({{ $upcoming_inspections->count() }})</sup>--}}
+{{--                        </h4>--}}
+{{--                    </div>--}}
+{{--                    <div class="card-body">--}}
+{{--                        <div class="table-responsive">--}}
+{{--                            <table class="table table-striped">--}}
+{{--                                <thead>--}}
+{{--                                <tr>--}}
+{{--                                    <th>Inspection Name</th>--}}
+{{--                                    <th>Project Name</th>--}}
+{{--                                    <th>Scheduled Date</th>--}}
+{{--                                </tr>--}}
+{{--                                </thead>--}}
+{{--                                <tbody>--}}
+{{--                                @if($upcoming_inspections->count())--}}
+{{--                                    @foreach($upcoming_inspections as $inspection)--}}
+{{--                                        <tr>--}}
+{{--                                            <td>{{ $inspection->name }}</td>--}}
+{{--                                            <td>{{ $inspection->project?->name }}</td>--}}
+{{--                                            <td>{{ $inspection->scheduled_date }}</td>--}}
+{{--                                        </tr>--}}
+{{--                                    @endforeach--}}
+{{--                                @else--}}
+{{--                                    <tr>--}}
+{{--                                        <td colspan="100%" class="text-center text-muted font-weight-bold">No Upcoming Inspections Found</td>--}}
+{{--                                    </tr>--}}
+{{--                                @endif--}}
+{{--                                </tbody>--}}
+{{--                            </table>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
 
 {{--            <div class="col-12">--}}
 {{--                <div class="card card-primary">--}}
