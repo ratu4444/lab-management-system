@@ -106,7 +106,7 @@ class ClientController extends Controller
             'name'          => $request->name,
             'email'         => $request->email,
             'mobile'        => $request->mobile,
-            'company_name'  => $request->company_name,
+//            'company_name'  => $request->company_name,
         ];
 
         if ($request->password) $client_data['password'] = bcrypt($request->password);

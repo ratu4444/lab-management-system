@@ -27,14 +27,14 @@
                                     Task name is required
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="form-label">Budget <span class="text-danger">*</span></label>
-                                <input name="total_budget" type="number" class="form-control" value="{{ $settings_task->budget }}" min="0" required>
+{{--                            <div class="form-group">--}}
+{{--                                <label class="form-label">Budget <span class="text-danger">*</span></label>--}}
+{{--                                <input name="total_budget" type="number" class="form-control" value="{{ $settings_task->budget }}" min="0" required>--}}
 
-                                <div class="invalid-feedback">
-                                    Budget is required
-                                </div>
-                            </div>
+{{--                                <div class="invalid-feedback">--}}
+{{--                                    Budget is required--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
                             {{--                        <div class="form-group">--}}
                             {{--                            <label class="form-label">Status</label>--}}
                             {{--                            <div class="selectgroup w-100">--}}

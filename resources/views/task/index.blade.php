@@ -48,7 +48,7 @@
                                     <div class="badge {{ 'badge-'.$status_color }}">{{ $status }}</div>
                                 </td>
                                 <td class="text-nowrap">
-                                    <a href="{{ route('task.edit', [$project->id, $task->id]) }}" class="btn btn-primary btn-sm">Edit</a>
+                                        <a href="{{ route('task.edit', [$project->id, $task->id]) }}" class="btn btn-primary btn-sm">Edit</a>
                                 </td>
                             </tr>
                         @endforeach
@@ -63,9 +63,10 @@
             <div class="mt-3">
                 {{ $tasks->links() }}
             </div>
-            <div class="d-flex justify-content-end">
-                <a class="btn btn-primary" href="{{ route('payment.index', $project->id) }}">Next</a>
-            </div>
+{{--            Changes--}}
+{{--            <div class="d-flex justify-content-end">--}}
+{{--                <a class="btn btn-primary" href="{{ route('payment.index', $project->id) }}">Next</a>--}}
+{{--            </div>--}}
         </div>
     </div>
 

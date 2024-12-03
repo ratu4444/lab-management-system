@@ -25,12 +25,12 @@ class SettingsController extends Controller
     {
         $request->validate([
             'name'              => 'required|string',
-            'total_budget'      => 'required'
+//            'total_budget'      => 'required'
         ]);
 
         $task_data = [
             'name'          => $request->name,
-            'budget'        => $request->total_budget,
+//            'budget'        => $request->total_budget,
             'is_enabled'    => $request->is_enabled,
         ];
 
@@ -58,12 +58,12 @@ class SettingsController extends Controller
     {
         $request->validate([
             'name'              => 'required|string',
-            'total_budget'      => 'required'
+//            'total_budget'      => 'required'
         ]);
 
         $settings_task_update_data = [
             'name'          => $request->name,
-            'budget'        => $request->total_budget,
+//            'budget'        => $request->total_budget,
             'is_enabled'    => $request->is_enabled,
         ];
 

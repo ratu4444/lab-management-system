@@ -107,7 +107,7 @@ class TaskController extends Controller
             'estimated_completion_date' => 'required|date_format:Y-m-d|after_or_equal:estimated_start_date',
             'start_date'                => 'nullable|date_format:Y-m-d',
             'completion_date'           => 'nullable|date_format:Y-m-d|after_or_equal:start_date',
-            'total_budget'              => 'required',
+//            'total_budget'              => 'required',
             'completion_percentage'     => 'nullable|between:0,100'
         ]);
 
@@ -130,8 +130,8 @@ class TaskController extends Controller
             'estimated_completion_date' => $request->estimated_completion_date,
             'start_date'                => $request->start_date,
             'completion_date'           => $request->completion_date,
-            'total_budget'              => $request->total_budget,
-            'status'                    => $request->status,
+//            'total_budget'              => $request->total_budget,
+//            'status'                    => $request->status,
             'completion_percentage'     => $completion_percentage,
             'comment'                   => $request->comment,
         ];

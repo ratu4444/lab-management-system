@@ -352,7 +352,8 @@
                                             <th class="text-nowrap">Status</th>
                                             <th class="text-nowrap">Estimated Start Date</th>
                                             <th class="text-nowrap">Estimated Completion Date</th>
-                                            <th class="text-nowrap">Dependencies</th>
+{{--                                            Changes--}}
+{{--                                            <th class="text-nowrap">Dependencies</th>--}}
                                             <th class="text-nowrap">Action</th>
     {{--                                        <th>Action</th>--}}
                                         </tr>
@@ -371,12 +372,16 @@
                                                     </td>
                                                     <td>{{ $task->estimated_start_date }}</td>
                                                     <td>{{ $task->estimated_completion_date }}</td>
-                                                    <td>{{ $task->dependentTasks->pluck('name')->implode(', ') ?: '-' }}</td>
+{{--                                                    <td>{{ $task->dependentTasks->pluck('name')->implode(', ') ?: '-' }}</td>--}}
     {{--                                                <td><a href="#" class="btn btn-outline-primary">Detail</a></td>--}}
                                                     <td>
                                                         @if(auth()->user()->is_client)
                                                             <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#reportCreateModal" data-task-id="{{ $task->id }}">Add Task Report</button>
                                                         @endif
+
+                                                        <a href="{{ route('task.edit', [$project->id, $task->id]) }}" class="btn btn-primary btn-sm">Edit</a>
+
+
                                                     </td>
                                                 </tr>
                                             @endforeach

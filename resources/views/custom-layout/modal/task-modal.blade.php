@@ -21,7 +21,7 @@
                     </div>
                     <div class="form-group">
                         <label class="form-label">Estimated Start Date <span class="text-danger">*</span></label>
-                        <input type="text" name="estimated_start_date" class="form-control datepicker" id="estimated_start_date" required>
+                        <input type="date" name="estimated_start_date" class="form-control" id="estimated_start_date" min="{{ \Carbon\Carbon::tomorrow()->toDateString() }}"  required>
 
                         <div class="invalid-feedback">
                             Estimated start date is required
@@ -29,7 +29,7 @@
                     </div>
                     <div class="form-group">
                         <label class="form-label">Estimated Completion Date <span class="text-danger">*</span></label>
-                        <input type="text" name="estimated_completion_date" class="form-control datepicker" id="estimated_completion_date" required>
+                        <input type="date" name="estimated_completion_date" class="form-control" id="estimated_completion_date"  min="{{ \Carbon\Carbon::now()->addDays(2)->toDateString() }}" required>
 
                         <div class="invalid-feedback">
                             Estimated completion date must be after estimated start date

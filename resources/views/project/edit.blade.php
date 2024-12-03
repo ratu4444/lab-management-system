@@ -23,31 +23,31 @@
                                     <input type="text" name="name" class="form-control" value="{{ $project->name }}" id="name" required>
                                 </div>
 
-                                <div class="form-group col-12 col-12 col-md-6">
-                                    <label class="form-label" for="estimated_budget"> Estimated Budget
-                                        <span class="text-danger">*</span></label>
-                                    <input type="number" name="estimated_budget" class="form-control" value="{{ $project->estimated_budget }}" id="estimated_budget" min="0" required>
-                                </div>
+{{--                                <div class="form-group col-12 col-12 col-md-6">--}}
+{{--                                    <label class="form-label" for="estimated_budget"> Estimated Budget--}}
+{{--                                        <span class="text-danger">*</span></label>--}}
+{{--                                    <input type="number" name="estimated_budget" class="form-control" value="{{ $project->estimated_budget }}" id="estimated_budget" min="0" required>--}}
+{{--                                </div>--}}
 
 
-                                <div class="form-group col-12 col-12 col-md-6">
+                                <div class="form-group col-12 col-12 col-md-12">
                                     <label class="form-label" for="estimated_completion_date">Estimated Completion Date
                                         <span class="text-danger">*</span></label>
-                                    <input type="text" name="estimated_completion_date" value="{{ $project->estimated_completion_date }}" class="form-control datepicker"
-                                           id="estimated_completion_date" required>
+                                    <input type="date" name="estimated_completion_date" value="{{ $project->estimated_completion_date }}" class="form-control"
+                                           id="estimated_completion_date"  min="{{ \Carbon\Carbon::now()->addDays(2)->toDateString() }}" required>
                                 </div>
 
-                                <div class="selectgroup w-100 flex-wrap col-12">
-                                    @foreach(config('app.STATUSES') as $label => $status_id)
-                                        @php
-                                            $status_color = config("app.STATUSES_COLORS.$label");
-                                        @endphp
-                                        <label class="selectgroup-item">
-                                            <input type="radio" name="status" value="{{ $status_id }}" class="selectgroup-input-radio"  {{ $status_id == $project->status ? 'checked' : '' }}>
-                                            <span class="selectgroup-button" data-class="{{ "bg-$status_color" }}">{{ $label }}</span>
-                                        </label>
-                                    @endforeach
-                                </div>
+{{--                                <div class="selectgroup w-100 flex-wrap col-12">--}}
+{{--                                    @foreach(config('app.STATUSES') as $label => $status_id)--}}
+{{--                                        @php--}}
+{{--                                            $status_color = config("app.STATUSES_COLORS.$label");--}}
+{{--                                        @endphp--}}
+{{--                                        <label class="selectgroup-item">--}}
+{{--                                            <input type="radio" name="status" value="{{ $status_id }}" class="selectgroup-input-radio"  {{ $status_id == $project->status ? 'checked' : '' }}>--}}
+{{--                                            <span class="selectgroup-button" data-class="{{ "bg-$status_color" }}">{{ $label }}</span>--}}
+{{--                                        </label>--}}
+{{--                                    @endforeach--}}
+{{--                                </div>--}}
                                 <code class="mx-2 font-weight-bold" id="statusAlert"></code>
                             </div>
                             <button type="submit" class="btn btn-primary mt-3">Update Project</button>
