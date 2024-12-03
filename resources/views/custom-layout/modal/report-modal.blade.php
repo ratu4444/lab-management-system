@@ -11,6 +11,16 @@
                 <form action="{{ route(auth()->user()->is_client ? 'client-project.report.store' : 'report.store', $project->id) }}" method="post" class="needs-validation" novalidate enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
+                        <label>Task <span class="text-danger">*</span></label>
+                        <select class="form-control selectric" name="task_id" required>
+                            @if(count($project->tasks))
+                                @foreach($project->tasks as $task)
+                                    <option value="{{ $task->id }}">{{ $task->name }}</option>
+                                @endforeach
+                            @endif
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label class="form-label">Title <span class="text-danger">*</span></label>
                         <input type="text" name="name" class="form-control" required>
 

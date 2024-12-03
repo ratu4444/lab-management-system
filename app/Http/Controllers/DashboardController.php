@@ -117,7 +117,8 @@ class DashboardController extends Controller
             },
             'inspections',
             'reports' => function($reportQuery) {
-                $reportQuery->where('is_active', true);
+                $reportQuery->where('is_active', true)
+                    ->with('task:id,name');
             },
             'elementSettings'
         ]);

@@ -4,6 +4,7 @@
     <link rel="stylesheet" href="{{ asset('assets/bundles/ionicons/css/ionicons.min.css') }}">
     <script src="{{ asset('js/frappe-gantt.js') }}"></script>
     <link rel="stylesheet" href="{{ asset('css/frappe-gantt.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/bundles/jquery-selectric/selectric.css') }}">
 
     <style>
         .matrix-title {
@@ -155,9 +156,9 @@
                     <div class="card">
                         <div class="card-header d-flex justify-content-between">
                             <h4>{{ $elements[9]['element_name'] ?? 'Reports' }}</h4>
-                            <div>
+                            @if(auth()->user()->is_client)
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#reportCreateModal">Add New Report</button>
-                            </div>
+                            @endif
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -165,7 +166,8 @@
                                     <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th class="text-nowrap">Name</th>
+                                        <th class="text-nowrap">Title</th>
+                                        <th class="text-nowrap">Task Name</th>
                                         <th class="text-nowrap">Created Time</th>
                                         <th class="text-nowrap">Action</th>
                                     </tr>
@@ -176,6 +178,7 @@
                                             <tr>
                                                 <th scope="row">{{ $loop->iteration }}</th>
                                                 <td class="text-nowrap">{{ $report->name }}</td>
+                                                <td class="text-nowrap font-weight-bold">{{ $report->task?->name ?? 'N/A' }}</td>
                                                 <td class="text-nowrap">{{ $report->created_at }}</td>
                                                 <td class="text-nowrap">
                                                     <button type="button" class="btn btn-primary btn-sm mx-1 pdfViewerBtn" data-title="{{ $report->name }}" data-file-path="{{ $report->file_path }}" data-file-type="{{ $report->file_type }}">View Report</button>
@@ -220,7 +223,12 @@
                                                         {!! $status_icon !!}
                                                     </div>
                                                     <div class="activity-detail width-per-50">
-                                                        <div><p class="{{ 'text-'.$status_color }}">{{ $status }}</p></div>
+                                                        <div class="d-flex justify-content-between">
+                                                            <p class="{{ 'text-'.$status_color }}">{{ $status }}</p>
+                                                            @if(auth()->user()->is_client)
+                                                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#reportCreateModal" data-task-id="{{ $task->id }}">Add Task Report</button>
+                                                            @endif
+                                                        </div>
                                                         <div class="mb-2">
                                                             <span class="text-job">Deadline : {{ $task->estimated_completion_date }} </span>
                                                             {{--                                                <span class="bullet"></span>--}}
@@ -316,8 +324,11 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-header">
+                        <div class="card-header d-flex justify-content-between">
                             <h4>{{ $elements[6]['element_name'] ?? 'Tasks' }} </h4>
+                            @if(!auth()->user()->is_client)
+                                <a href="{{ route('task.index', $project->id) }}" class="btn btn-primary btn-sm" target="_blank">Open in a new tab</a>
+                            @endif
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -330,6 +341,7 @@
                                             <th class="text-nowrap">Estimated Start Date</th>
                                             <th class="text-nowrap">Estimated Completion Date</th>
                                             <th class="text-nowrap">Dependencies</th>
+                                            <th class="text-nowrap">Action</th>
     {{--                                        <th>Action</th>--}}
                                         </tr>
                                     </thead>
@@ -349,6 +361,11 @@
                                                     <td>{{ $task->estimated_completion_date }}</td>
                                                     <td>{{ $task->dependentTasks->pluck('name')->implode(', ') ?: '-' }}</td>
     {{--                                                <td><a href="#" class="btn btn-outline-primary">Detail</a></td>--}}
+                                                    <td>
+                                                        @if(auth()->user()->is_client)
+                                                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#reportCreateModal" data-task-id="{{ $task->id }}">Add Task Report</button>
+                                                        @endif
+                                                    </td>
                                                 </tr>
                                             @endforeach
                                         @else
@@ -458,6 +475,7 @@
 @endsection
 
 @push('js')
+    <script src="{{ asset('assets/bundles/jquery-selectric/jquery.selectric.min.js') }}"></script>
     <!--  FOR PIE CHART-->
     <script src="{{ asset('assets/bundles/amcharts4/core.js') }}"></script>
     <script src="{{ asset('assets/bundles/amcharts4/charts.js') }}"></script>
@@ -544,6 +562,13 @@
             pdfViewModal.find('.modal-body').html(pdfContainer);
 
             pdfViewModal.modal('show');
+        });
+
+        $(document).on('click', '[data-target="#reportCreateModal"]', function () {
+            const taskId = $(this).data('task-id') || '';
+            if (taskId) {
+                $('#reportCreateModal [name="task_id"]').val(taskId).selectric('refresh');
+            }
         });
     </script>
 @endpush
