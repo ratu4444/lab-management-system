@@ -73,7 +73,7 @@
 @endsection
 
 @section('modal')
-    @include('custom-layout.modal.report-modal')
+{{--    @include('custom-layout.modal.report-modal')--}}
     @include('custom-layout.modal.pdf-modal')
 @endsection
 

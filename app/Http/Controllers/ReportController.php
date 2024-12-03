@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Project;
 use App\Models\Report;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ReportController extends Controller
 {
@@ -56,8 +58,9 @@ class ReportController extends Controller
     public function clientStore(Request $request, $project_id)
     {
         $request->validate([
-            'name'  => 'required|string',
-            'file'  => 'required|file',
+            'task_id'   => 'required|exists:tasks,id',
+            'name'      => 'required|string',
+            'file'      => 'required|file',
         ]);
 
         $project = auth()->user()
@@ -68,6 +71,7 @@ class ReportController extends Controller
         $file_path = uploadFile($request->file);
 
         $report_data = [
+            'task_id'       => $request->task_id,
             'name'          => $request->name,
             'file'          => $file_path,
             'file_type'     => $file_type,
@@ -75,13 +79,25 @@ class ReportController extends Controller
             'created_by'    => auth()->id()
         ];
 
+        DB::beginTransaction();
         try {
-            $project->reports()->create($report_data);
+            $project->reports()
+                ->create($report_data);
 
+            $project->tasks()
+                ->whereId($request->task_id)
+                ->update([
+                    'status'                => config('app.STATUSES')['Completed'],
+                    'completion_percentage' => 100,
+                    'completion_date'       => Carbon::now()
+                ]);
+
+            DB::commit();
             return redirect()
                 ->back()
                 ->with('success', 'Report created successfully');
         } catch (\Exception $exception) {
+            DB::rollBack();
             return redirect()
                 ->back()
                 ->with('error', $exception->getMessage());

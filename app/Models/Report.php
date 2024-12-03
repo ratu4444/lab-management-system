@@ -15,4 +15,9 @@ class Report extends Model
     {
         return getFileUrl($this->file);
     }
+
+    public function task()
+    {
+        return $this->belongsTo(Task::class);
+    }
 }
