@@ -57,7 +57,7 @@
                     $status_color = config('app.STATUSES_COLORS')[array_search($project->status, $statuses)]
                 @endphp
                 <div class="dropdown mb-4">
-                    <button class="btn btn-{{ $status_color }} dropdown-toggle btn-lg" type="button" data-toggle="dropdown">Update Project Status</button>
+{{--                    <button class="btn btn-{{ $status_color }} dropdown-toggle btn-lg" type="button" data-toggle="dropdown">Update Project Status</button>--}}
                     <div class="dropdown-menu" style="max-height: 500px; min-width: fit-content; overflow-y: auto">
                         @foreach($statuses as $label => $value)
                             <form action="{{ route('client-project.update-status', $project->id) }}" method="POST">
@@ -378,10 +378,6 @@
                                                         @if(auth()->user()->is_client)
                                                             <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#reportCreateModal" data-task-id="{{ $task->id }}">Add Task Report</button>
                                                         @endif
-
-                                                        <a href="{{ route('task.edit', [$project->id, $task->id]) }}" class="btn btn-primary btn-sm">Edit</a>
-
-
                                                     </td>
                                                 </tr>
                                             @endforeach

@@ -54,7 +54,7 @@
                                         @foreach($running_projects as $project)
                                             <tr>
                                                 <td>{{ $project->name }}</td>
-                                                <td>{{ $project->client?->name }}</td>
+                                                <td>{{ $project->client?->name }}</td> {{-- todo: if not client.--}}
                                                 <td class="align-middle" style="min-width: 200px">
                                                     <div class="progress" data-height="6" data-toggle="tooltip" title="{{ $project->completion_percentage.'% Completed' }}">
                                                         <div class="progress-bar {{ $project->completion_percentage < 50 ? 'bg-danger' : 'bg-success' }}" data-width="{{ $project->completion_percentage.'%' }}"></div>

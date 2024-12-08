@@ -24,7 +24,7 @@ class DashboardController extends Controller
             ->get();
 
         $running_projects = $projects->filter(function ($project) use ($statuses) {
-                return $project->status ==  $statuses['In Progress'] ||
+                return $project->status ==  $statuses['Pending'] ||
                     ($project->completion_percentage > 0
                     && $project->completion_percentage < 100);
             });
@@ -82,6 +82,7 @@ class DashboardController extends Controller
 //        ];
 
 
+
         $reports = [
             $project_reports,
             $client_reports,
@@ -91,6 +92,7 @@ class DashboardController extends Controller
 //            $payment_reports,
 //            $inspection_reports
         ];
+
 
         return view('index', compact('reports', 'running_projects', 'upcoming_inspections'));
     }
