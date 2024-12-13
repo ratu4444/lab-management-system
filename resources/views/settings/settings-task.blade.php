@@ -44,6 +44,7 @@
                                         <div class="badge {{ $task->is_enabled ? 'badge-success' : 'badge-danger' }}">{{ $task->is_enabled ? 'Yes' : 'No' }}</div>
                                     </td>
                                     <td><a class="btn btn-primary" href="{{ route('settings.task.edit', $task->id) }}">Edit</a></td>
+{{--                                    <td><a class="btn btn-primary" href="{{ route('settings.task.edit', $task->id) }}">Delete</a></td>--}}
                                 </tr>
                             @endforeach
                         @else
@@ -63,7 +64,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Create Task</h5>
+                    <h5 class="modal-title">Create Default Task</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>

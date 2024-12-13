@@ -12,9 +12,9 @@
 
 @section('content')
     <div class="container">
-        <div class="col-12 mb-5 text-center">
+        <div class="col-12 mb-5 mt-5 text-center">
             <a href="{{ route('dashboard.index') }}">
-                <img src="{{ asset('assets/default/DJL-Construction_Dark.png') }}" class="img-fluid" style="max-height: 100px" alt="{{ config('app.name') }}">
+                <img src="{{ asset('assets/default/final_project.png') }}" class="img-fluid" style="max-height: 100px" alt="{{ config('app.name') }}">
             </a>
         </div>
         <div class="card card-primary col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3 py-3">

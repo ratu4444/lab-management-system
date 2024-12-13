@@ -55,7 +55,7 @@
                                         Project name is required
                                     </div>
                                 </div>
-                                <div class="form-group col-12 col-md-6">
+                                <div class="form-group col-12 col-md-12">
                                     <label class="form-label" for="estimated_completion_date">Estimated Completion Date<span class="text-danger">*</span></label>
                                     <input type="date" name="estimated_completion_date" class="form-control" id="estimated_completion_date" value="{{ old('estimated_completion_date') }}"  min="{{ \Carbon\Carbon::now()->addDays(2)->toDateString() }}" required>
 

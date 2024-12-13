@@ -155,7 +155,7 @@ class ProjectController extends Controller
         $request->validate([
             'tasks'                                 => 'required|array',
             'tasks.*.name'                          => 'required',
-            'tasks.*.estimated_start_date'          => 'required|date_format:Y-m-d',
+//            'tasks.*.estimated_start_date'          => 'required|date_format:Y-m-d',
             'tasks.*.estimated_completion_date'     => 'required|date_format:Y-m-d|after_or_equal:tasks.*.estimated_start_date|after:today',
 //          Changes
 //            'tasks.*.total_budget'                  => 'required',
@@ -170,7 +170,7 @@ class ProjectController extends Controller
             $task_data[] = [
                 'project_id'                => $project->id,
                 'name'                      => $task['name'],
-                'estimated_start_date'      => $task['estimated_start_date'],
+                'estimated_start_date'      => Carbon::today(),
                 'estimated_completion_date' => $task['estimated_completion_date'],
                 'status'                    => config('app.STATUSES.Pending'),
 //                Changes
