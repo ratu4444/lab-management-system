@@ -19,7 +19,8 @@
                             <th>#</th>
                             <th class="text-nowrap">Name</th>
 {{--                            <th class="text-nowrap">Status</th>--}}
-                            <th class="text-nowrap">Budget</th>
+{{--                            Changes--}}
+{{--                            <th class="text-nowrap">Budget</th>--}}
                             <th class="text-nowrap">Is Enabled?</th>
                             <th class="text-nowrap">Action</th>
                         </tr>
@@ -38,7 +39,7 @@
 {{--                                    <td>--}}
 {{--                                        <div class="badge {{ 'badge-'.$status_color }}">{{ $status }}</div>--}}
 {{--                                    </td>--}}
-                                    <td>{{ '$'.number_format($task->budget) }}</td>
+{{--                                    <td>{{ '$'.number_format($task->budget) }}</td>--}}
                                     <td>
                                         <div class="badge {{ $task->is_enabled ? 'badge-success' : 'badge-danger' }}">{{ $task->is_enabled ? 'Yes' : 'No' }}</div>
                                     </td>
@@ -78,14 +79,15 @@
                                 Task name is required
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="form-label">Budget <span class="text-danger">*</span></label>
-                            <input name="total_budget" type="number" class="form-control" min="0" required>
+{{--                        Changes--}}
+{{--                        <div class="form-group">--}}
+{{--                            <label class="form-label">Budget <span class="text-danger">*</span></label>--}}
+{{--                            <input name="total_budget" type="number" class="form-control" min="0" required>--}}
 
-                            <div class="invalid-feedback">
-                                Budget is required
-                            </div>
-                        </div>
+{{--                            <div class="invalid-feedback">--}}
+{{--                                Budget is required--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
 {{--                        <div class="form-group">--}}
 {{--                            <label class="form-label">Status</label>--}}
 {{--                            <div class="selectgroup w-100">--}}

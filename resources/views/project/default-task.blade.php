@@ -28,7 +28,7 @@
                                             </div>
                                         </div>
                                         <div class="form-row w-100 task-input">
-                                            <div class="form-group col-3">
+                                            <div class="form-group col-4">
                                                 <label class="form-label">Name <span class="text-danger">*</span></label>
                                                 <input type="text" name="tasks[{{ $index }}][name]" class="form-control" value="{{ $default_task->name }}" data-required="true" required>
 
@@ -36,30 +36,31 @@
                                                     Task name is required
                                                 </div>
                                             </div>
-                                            <div class="form-group col-3">
+                                            <div class="form-group col-4">
                                                 <label class="form-label">Estimated Start Date <span class="text-danger">*</span></label>
-                                                <input type="text" name="tasks[{{ $index }}][estimated_start_date]" class="form-control datepicker" data-required="true" required>
+                                                <input type="date" name="tasks[{{ $index }}][estimated_start_date]" class="form-control" data-required="true"  min="{{ \Carbon\Carbon::tomorrow()->toDateString() }}" required>
 
                                                 <div class="invalid-feedback">
                                                     Estimated start date is required
                                                 </div>
                                             </div>
-                                            <div class="form-group col-3">
+                                            <div class="form-group col-4">
                                                 <label class="form-label">Estimated Completion Date <span class="text-danger">*</span></label>
-                                                <input type="text" name="tasks[{{ $index }}][estimated_completion_date]" class="form-control datepicker" data-required="true" required>
+                                                <input type="date" name="tasks[{{ $index }}][estimated_completion_date]" class="form-control" data-required="true"  min="{{ \Carbon\Carbon::now()->addDays(2)->toDateString() }}" required>
 
                                                 <div class="invalid-feedback">
                                                     Estimated completion date must be after estimated start date
                                                 </div>
                                             </div>
-                                            <div class="form-group col-3">
-                                                <label class="form-label">Budget <span class="text-danger">*</span></label>
-                                                <input name="tasks[{{ $index }}][total_budget]" type="number" class="form-control" value="{{ $default_task->budget ?? 1 }}" min="0" data-required="true" required>
+{{--                                            Changes--}}
+{{--                                            <div class="form-group col-3">--}}
+{{--                                                <label class="form-label">Budget <span class="text-danger">*</span></label>--}}
+{{--                                                <input name="tasks[{{ $index }}][total_budget]" type="number" class="form-control" value="{{ $default_task->budget ?? 1 }}" min="0" data-required="true" required>--}}
 
-                                                <div class="invalid-feedback">
-                                                    Budget is required
-                                                </div>
-                                            </div>
+{{--                                                <div class="invalid-feedback">--}}
+{{--                                                    Budget is required--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
                                         </div>
                                     </div>
                                 @empty
@@ -108,10 +109,13 @@
                                     </div>
                                 @endforelse
                             </div>
-                            <div class="d-flex justify-content-between">
-                                <a href="javascript:void(0)" class="btn btn-primary" id="addMoreButton">Add New Tasks</a>
+
+{{--                                Changes--}}
+                            <div class="d-flex justify-content-end">
+{{--                                <a href="javascript:void(0)" class="btn btn-primary" id="addMoreButton">Add New Tasks</a>--}}
                                 <div>
-                                    <a href="{{ route('project.default-payment', $project->id) }}" class="btn btn-secondary mr-3">Skip</a>
+{{--                                    Changes--}}
+{{--                                    <a href="{{ route('project.default-payment', $project->id) }}" class="btn btn-secondary mr-3">Skip</a>--}}
                                     <button type="submit" class="btn btn-success">Submit And Go Next</button>
                                 </div>
                             </div>

@@ -18,7 +18,7 @@ class CreateProjectsTable extends Migration
             $table->unsignedBigInteger('client_id');
             $table->string('name')->nullable();
             $table->date('estimated_completion_date');
-            $table->bigInteger('estimated_budget');
+            $table->bigInteger('estimated_budget')->nullable();
             $table->integer('status')->default(1)->comment('1 = Pending, 2 = In Progress, 3 = Completed, 4 = Canceled');
             $table->longText('comment')->nullable();
             $table->timestamps();

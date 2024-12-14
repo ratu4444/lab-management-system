@@ -10,7 +10,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title text-muted">Edit Client Data</h4>
+                        <h4 class="card-title text-muted">Edit Researchers Data</h4>
                     </div>
                     <div class="card-body">
                         <form action="{{ route('client.update', $client->id) }}" method="post" class="needs-validation" novalidate>
@@ -46,13 +46,13 @@
                                     <label class="form-label" for="mobile">Mobile</label>
                                     <input type="tel" class="form-control" name="mobile" id="mobile" value="{{ old('mobile') ?? $client->mobile }}">
                                 </div>
-                                <div class="form-group col-12 col-md-6">
-                                    <label class="form-label" for="company_name">Company Name</label>
-                                    <input type="text" class="form-control" name="company_name" id="company_name" value="{{ old('company_name') ?? $client->company_name }}">
-                                </div>
+{{--                                <div class="form-group col-12 col-md-6">--}}
+{{--                                    <label class="form-label" for="company_name">Company Name</label>--}}
+{{--                                    <input type="text" class="form-control" name="company_name" id="company_name" value="{{ old('company_name') ?? $client->company_name }}">--}}
+{{--                                </div>--}}
                             </div>
 
-                            <button type="submit" class="btn btn-primary">Update Client</button>
+                            <button type="submit" class="btn btn-primary">Update Researchers</button>
                         </form>
                     </div>
                 </div>
