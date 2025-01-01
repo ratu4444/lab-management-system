@@ -2,7 +2,7 @@
     <aside id="sidebar-wrapper">
         <div class="sidebar-brand">
             <a href="{{ route('dashboard.index') }}">
-                <img alt="image" src="{{ asset('assets/default/final_project.png') }}" class="header-logo" style="height: 50px"/>
+                <img alt="image" src="{{ asset('assets/default/logo.png') }}" class="header-logo" style="height: 50px"/>
 {{--                <span class="logo-name">{{ config('app.name') }}</span>--}}
             </a>
         </div>

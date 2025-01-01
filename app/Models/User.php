@@ -24,10 +24,24 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    const TYPE_SUPERADMMIN = 'superadmin';
+    const TYPE_ADMIN = 'admin';
+    const TYPE_CLIENT = 'client';
+
+    public function getIsClientAttribute()
+    {
+        return $this->type === self::TYPE_CLIENT;
+    }
+
     public function getInitialAttribute()
     {
         $name = $this->name;
         return strtoupper(preg_replace('/\B\w| /u', '', $name));
+    }
+
+    public function scopeWhereClient($query)
+    {
+        return $query->where('type', self::TYPE_CLIENT);
     }
 
     public function projects()

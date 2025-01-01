@@ -49,7 +49,7 @@ class DashboardController extends Controller
             'heading'           => 'Total Researchers',
             'card_icon'         => 'fa fa-users',
             'card_background'   => 'l-bg-orange',
-            'count'             => User::where('is_client', true)->count(),
+            'count'             => User::whereClient()->count(),
             'url'               => route('client.index')
         ];
 

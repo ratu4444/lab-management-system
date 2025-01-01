@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="{{ asset('assets/css/components.css') }}">
 <!-- Custom style CSS -->
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
-<link rel='shortcut icon' type='image/x-icon' href="{{ asset('assets/default/DJL-Favicon.png') }}" />
+<link rel='shortcut icon' type='image/x-icon' href="{{ asset('assets/default/logo.png') }}" />
 
 {{-- Page Custom CSS --}}
 @stack('css')

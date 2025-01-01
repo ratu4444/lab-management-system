@@ -20,7 +20,7 @@ class ProjectController extends Controller
         $projects = Project::with('client')
             ->latest();
 
-        $all_clients = User::where('is_client', true)->select('id', 'name')->get();
+        $all_clients = User::whereClient()->select('id', 'name', 'type')->get();
         $client = $request->client ? $all_clients->where('id', $request->client)->first() : null;
         if ($client) $projects->where('client_id', $client->id);
 
@@ -34,7 +34,7 @@ class ProjectController extends Controller
 
     public function create(Request $request)
     {
-        $clients = User::where('is_client', true);
+        $clients = User::whereClient();
         $client_id = $request->client;
         if ($client_id) $clients->where('id', $client_id);
         $clients = $clients->get();
