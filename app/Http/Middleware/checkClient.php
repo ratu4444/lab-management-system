@@ -20,7 +20,7 @@ class checkClient
         $type = $request->user()->type;
 
         return match ($type) {
-            User::TYPE_SUPERADMIN  => redirect()->route('dashboard.index'),
+            User::TYPE_SUPERADMIN  => redirect()->route('control.index'),
             User::TYPE_ADMIN       => redirect()->route('dashboard.admin-index'),
             User::TYPE_CLIENT      => $next($request),
             default                => null,

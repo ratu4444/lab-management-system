@@ -16,6 +16,10 @@ Route::middleware('auth')->group(function () {
         return redirect()->route('dashboard.admin-index');
     });
 
+    Route::middleware('auth.superadmin')->prefix('control')->name('control.')->group(function () {
+
+    });
+
     Route::middleware('auth.admin')->group(function () {
 //      ADMIN DASHBOARD
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard.admin-index');
@@ -75,7 +79,7 @@ Route::middleware('auth')->group(function () {
 //        Route::get('oauth/{app_name}/refresh', [OauthController::class, 'oauthRefresh'])->name('oauth.refresh');
     });
 
-    Route::prefix('client-project/{project_id}')->middleware('auth.client')->name('client-project.')->group(function () {
+    Route::middleware('auth.client')->prefix('client-project/{project_id}')->name('client-project.')->group(function () {
         Route::put('update-status', [ProjectController::class, 'clientUpdateStatus'])->name('update-status');
         Route::post('store-report', [ReportController::class, 'clientStore'])->name('report.store');
     });
