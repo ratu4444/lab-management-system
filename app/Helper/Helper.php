@@ -92,7 +92,7 @@ if (!function_exists('uploadFile')) {
 
         switch ($file_storage) {
             case 's3':
-                $file->storeAs(env('DJL_S3_FOLDER').$upload_folder, $file_name, 's3');
+                $file->storeAs(env('S3_FOLDER').$upload_folder, $file_name, 's3');
                 break;
             default:
                 $file->move(public_path($upload_folder), $file_name);
@@ -122,7 +122,7 @@ if (!function_exists('getFileUrl')) {
                 $bucket = config("filesystems.disks.s3.bucket");
                 $command = $client->getCommand('GetObject', [
                     'Bucket'    => $bucket,
-                    'Key'       => env('DJL_S3_FOLDER').$file_path
+                    'Key'       => env('S3_FOLDER').$file_path
                 ]);
 
                 $request = $client->createPresignedRequest($command, $alive_time);

@@ -44,8 +44,18 @@ class User extends Authenticatable
         return $query->where('type', self::TYPE_CLIENT);
     }
 
+    public function scopeWhereAdmin($query)
+    {
+        return $query->where('type', self::TYPE_ADMIN);
+    }
+
     public function projects()
     {
         return $this->hasMany(Project::class, 'client_id');
+    }
+
+    public function clients()
+    {
+        return $this->hasMany(User::class, 'parent_id');
     }
 }
