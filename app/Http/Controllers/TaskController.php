@@ -25,62 +25,21 @@ class TaskController extends Controller
             'name'                      => 'required',
             'estimated_start_date'      => 'required|date_format:Y-m-d',
             'estimated_completion_date' => 'required|date_format:Y-m-d|after_or_equal:estimated_start_date',
-//Changes
-//            'total_budget'              => 'required',
-//            'completion_percentage'     => 'nullable|between:0,100'
         ]);
-
-        $project = Project::findOrFail($project_id);
-
-//        $statuses = config('app.STATUSES');
-//        switch ($request->completion_percentage) {
-//            case $statuses['Pending']:
-//                $completion_percentage = 0;
-//            break;
-//            case $statuses['Completed']:
-//                $completion_percentage = 100;
-//            break;
-//            default:
-//                $completion_percentage = $request->completion_percentage ?? 0;
-//        }
 
         $task_data = [
             'project_id'                => $project_id,
             'name'                      => $request->name,
             'estimated_start_date'      => $request->estimated_start_date,
             'estimated_completion_date' => $request->estimated_completion_date,
-//            Changes
-//            'total_budget'              => $request->total_budget,
-//            'status'                    => $request->status,
-//            'completion_percentage'     => $completion_percentage,
-//            'comment'                   => $request->comment,
         ];
 
-        DB::beginTransaction();
         try {
-            $task = Task::create($task_data);
-
-//            Changes
-//            $task_dependencies_data = [];
-//            if ($request->dependencies) {
-//                foreach ($request->dependencies as $dependency) {
-//                    $task_dependencies_data[] = [
-//                        'task_id'           => $task->id,
-//                        'dependent_task_id' => $dependency,
-//                        'created_at'        => Carbon::now(),
-//                        'updated_at'        => Carbon::now(),
-//                    ];
-//                }
-//            }
-
-//            if (count($task_dependencies_data)) TaskDependency::insert($task_dependencies_data);
-
-            DB::commit();
+            Task::create($task_data);
 
             return back()
                 ->with('success', 'Task created successfully');
         } catch (\Exception $exception) {
-            DB::rollBack();
             return redirect()
                 ->back()
                 ->with('error', $exception->getMessage());
@@ -93,7 +52,7 @@ class TaskController extends Controller
             ->findOrFail($project_id);
 
         $task = $project->tasks->where('id', $task_id)->first();
-        if (!$task) return abort(404);
+        if (!$task) abort(404);
         $task->dependent_task_ids = $task->dependentTasks->pluck('id')->toArray();
 
         return view('task.edit', compact('task', 'project'));
@@ -107,7 +66,6 @@ class TaskController extends Controller
             'estimated_completion_date' => 'required|date_format:Y-m-d|after_or_equal:estimated_start_date',
             'start_date'                => 'nullable|date_format:Y-m-d',
             'completion_date'           => 'nullable|date_format:Y-m-d|after_or_equal:start_date',
-//            'total_budget'              => 'required',
             'completion_percentage'     => 'nullable|between:0,100'
         ]);
 
@@ -130,8 +88,6 @@ class TaskController extends Controller
             'estimated_completion_date' => $request->estimated_completion_date,
             'start_date'                => $request->start_date,
             'completion_date'           => $request->completion_date,
-//            'total_budget'              => $request->total_budget,
-//            'status'                    => $request->status,
             'completion_percentage'     => $completion_percentage,
             'comment'                   => $request->comment,
         ];

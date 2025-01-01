@@ -73,21 +73,19 @@ class DashboardController extends Controller
             'client'    => 'nullable|exists:users,id',
         ]);
 
-        $user = auth()->user();
-        $all_projects = $user->is_client
-            ? Project::where('client_id', auth()->id())
-                ->latest()
-                ->get()
-            : $user->load([
-                'clients.projects' => fn ($projectQuery) => $projectQuery->with([
-                    'tasks',
-                    'reports' => fn ($reportQuery) => $reportQuery->where('is_active', true)->with('task:id,name'),
-                    'client'
-                ])
-            ])->clients
-                ->pluck('projects')
-                ->flatten()
-                ->when($request->client, fn ($projects) => $projects->where('client_id', $request->client));
+        $all_projects = Project::with([
+            'tasks',
+            'reports' => fn ($reportQuery) => $reportQuery->where('is_active', true)->with('task:id,name'),
+            'client'
+        ])
+            ->when(auth()->user()->is_client,
+                fn ($query) => $query->where('client_id', auth()->id()),
+                fn ($query) => $query
+                    ->whereIn('client_id', auth()->user()->clients->pluck('id')->toArray())
+                    ->when($request->client, fn ($query) => $query->where('client_id', $request->client))
+            )
+            ->latest()
+            ->get();
 
         $project = $request->project ? $all_projects->where('id', $request->project)->first() : $all_projects->first();
         abort_unless($project, 404);

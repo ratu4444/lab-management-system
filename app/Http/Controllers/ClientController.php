@@ -10,7 +10,7 @@ class ClientController extends Controller
 {
     public function index()
     {
-        $clients = User::whereClient()
+        $clients = auth()->user()->clients()
             ->withCount('projects')
             ->latest()
             ->paginate(10);
@@ -38,6 +38,7 @@ class ClientController extends Controller
             'mobile'        => $request->mobile,
             'company_name'  => $request->company_name,
             'type'          => User::TYPE_CLIENT,
+            'parent_id'     => auth()->id(),
         ];
 
         try {
@@ -68,6 +69,7 @@ class ClientController extends Controller
             'mobile'        => $request->mobile,
             'company_name'  => $request->company_name,
             'type'          => User::TYPE_CLIENT,
+            'parent_id'     => auth()->id(),
         ];
 
         try {
@@ -82,7 +84,7 @@ class ClientController extends Controller
 
     public function edit($client_id)
     {
-        $client = User::whereClient()
+        $client = auth()->user()->clients()
             ->findOrFail($client_id);
 
         return view('client.edit', compact('client'));
@@ -99,7 +101,7 @@ class ClientController extends Controller
             ],
         ]);
 
-        $client = User::whereClient()
+        $client = auth()->user()->clients()
             ->findOrFail($client_id);
 
         $client_data = [
