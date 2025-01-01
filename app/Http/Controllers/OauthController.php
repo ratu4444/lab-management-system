@@ -18,7 +18,7 @@ class OauthController extends Controller
                 return $this->oauthAuthorizeOutlook();
             default :
                 return redirect()
-                    ->route('dashboard.index')
+                    ->route('dashboard.admin-index')
                     ->with('error', "$app_name Oauth Not Supported yet");
         }
     }
@@ -55,7 +55,7 @@ class OauthController extends Controller
                 return $this->oauthRedirectOutlook($request);
             default :
                 return redirect()
-                    ->route('dashboard.index')
+                    ->route('dashboard.admin-index')
                     ->with('error', "$app_name Oauth Not Supported yet");
         }
     }
@@ -159,7 +159,7 @@ class OauthController extends Controller
                 return $this->oauthRefreshOutlook();
             default :
                 return redirect()
-                    ->route('dashboard.index')
+                    ->route('dashboard.admin-index')
                     ->with('error', "$app_name Oauth Not Supported yet");
         }
     }

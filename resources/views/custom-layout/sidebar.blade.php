@@ -1,7 +1,7 @@
 <div class="main-sidebar sidebar-style-2">
     <aside id="sidebar-wrapper">
         <div class="sidebar-brand">
-            <a href="{{ route('dashboard.index') }}">
+            <a href="{{ route('dashboard.admin-index') }}">
                 <img alt="image" src="{{ asset('assets/default/logo.png') }}" class="header-logo" style="height: 50px"/>
 {{--                <span class="logo-name">{{ config('app.name') }}</span>--}}
             </a>
@@ -11,14 +11,14 @@
             <li class="menu-header">Main</li>
             @if(auth()->user()->is_client)
                 <li class="dropdown {{ Route::is('dashboard*') ? 'active' : '' }}">
-                    <a href="{{ route('dashboard.index') }}" class="nav-link">
+                    <a href="{{ route('dashboard.admin-index') }}" class="nav-link">
                         <i data-feather="monitor"></i>
                         <span>Dashboard</span>
                     </a>
                 </li>
             @else
                 <li class="dropdown {{ Route::is('dashboard*') && !Route::is('dashboard.client-index') ? 'active' : '' }}">
-                    <a href="{{ route('dashboard.index') }}" class="nav-link">
+                    <a href="{{ route('dashboard.admin-index') }}" class="nav-link">
                         <i data-feather="monitor"></i>
                         <span>Dashboard</span>
                     </a>

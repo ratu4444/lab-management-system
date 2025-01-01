@@ -147,7 +147,7 @@ class ClientController extends Controller
             auth()->user()->update($profile_data);
 
             return redirect()
-                ->route('dashboard.index')
+                ->route('dashboard.admin-index')
                 ->with('success', 'Profile updated successfully');
         } catch (\Exception $exception) {
             return redirect()

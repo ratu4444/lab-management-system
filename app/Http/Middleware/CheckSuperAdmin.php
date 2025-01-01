@@ -6,7 +6,7 @@ use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
 
-class checkClient
+class CheckSuperAdmin
 {
     /**
      * Handle an incoming request.
@@ -20,9 +20,9 @@ class checkClient
         $type = $request->user()->type;
 
         return match ($type) {
-            User::TYPE_SUPERADMIN  => redirect()->route('dashboard.index'),
+            User::TYPE_SUPERADMIN  => $next($request),
             User::TYPE_ADMIN       => redirect()->route('dashboard.admin-index'),
-            User::TYPE_CLIENT      => $next($request),
+            User::TYPE_CLIENT      => redirect()->route('dashboard.client-index'),
             default                => null,
         } ?? abort(403, 'Unauthorized action.');
     }

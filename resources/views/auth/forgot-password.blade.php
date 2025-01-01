@@ -13,7 +13,7 @@
 @section('content')
     <div class="container">
         <div class="col-12 mb-5 text-center">
-            <a href="{{ route('dashboard.index') }}">
+            <a href="{{ route('dashboard.admin-index') }}">
                 <img src="{{ asset('assets/default/logo.png') }}" class="img-fluid" style="max-height: 100px" alt="{{ config('app.name') }}">
             </a>
         </div>

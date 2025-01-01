@@ -16,12 +16,12 @@ Route::middleware('auth')->group(function () {
     Route::get('project/dashboard', [DashboardController::class, 'clientIndex'])->name('dashboard.client-index'); // client dashboard
 
     Route::get('/dashboard', function () {
-        return redirect()->route('dashboard.index');
+        return redirect()->route('dashboard.admin-index');
     });
 
     Route::middleware('auth.admin')->group(function () {
 //      ADMIN DASHBOARD
-        Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
+        Route::get('/', [DashboardController::class, 'index'])->name('dashboard.admin-index');
 
 //      PROJECT
         Route::resource('project', ProjectController::class);

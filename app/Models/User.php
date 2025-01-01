@@ -24,7 +24,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    const TYPE_SUPERADMMIN = 'superadmin';
+    const TYPE_SUPERADMIN = 'superadmin';
     const TYPE_ADMIN = 'admin';
     const TYPE_CLIENT = 'client';
 

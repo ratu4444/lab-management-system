@@ -20,14 +20,14 @@ class UserSeeder extends Seeder
             'name'      => 'Super Admin',
             'email'     => 'superadmin@djl.com',
             'password'  => bcrypt(12345678),
-            'type'      => User::TYPE_SUPERADMMIN,
+            'type'      => User::TYPE_SUPERADMIN,
         ];
 
         $developer_data = [
             'name'      => 'DJL Developer',
             'email'     => 'developer@djl.com',
             'password'  => bcrypt(12345678),
-            'type'      => User::TYPE_SUPERADMMIN,
+            'type'      => User::TYPE_SUPERADMIN,
         ];
 
         $users_data = [
