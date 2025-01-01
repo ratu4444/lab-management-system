@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ControlCenterController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProjectController;
@@ -17,7 +19,8 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::middleware('auth.superadmin')->prefix('control')->name('control.')->group(function () {
-
+        Route::get('/', [ControlCenterController::class, 'index'])->name('index');
+        Route::resource('admin', AdminController::class);
     });
 
     Route::middleware('auth.admin')->group(function () {
@@ -71,8 +74,6 @@ Route::middleware('auth')->group(function () {
 
 //      CLIENT
         Route::resource('client', ClientController::class);
-        Route::view('profile/edit', 'auth.edit-profile')->name('profile.edit');
-        Route::put('profile/update', [ClientController::class, 'profileUpdate'])->name('profile.update');
 
 //        Route::get('oauth/{app_name}/authorize', [OauthController::class, 'oauthAuthorize'])->name('oauth.authorize');
 //        Route::any('oauth/{app_name}/redirect', [OauthController::class, 'oauthRedirect'])->name('oauth.redirect');
@@ -82,6 +83,11 @@ Route::middleware('auth')->group(function () {
     Route::middleware('auth.client')->prefix('client-project/{project_id}')->name('client-project.')->group(function () {
         Route::put('update-status', [ProjectController::class, 'clientUpdateStatus'])->name('update-status');
         Route::post('store-report', [ReportController::class, 'clientStore'])->name('report.store');
+    });
+
+    Route::prefix('profile')->name('profile.')->group(function () {
+        Route::get('edit', [ControlCenterController::class, 'editProfile'])->name('edit');
+        Route::put('update', [ControlCenterController::class, 'updateProfile'])->name('update');
     });
 });
 

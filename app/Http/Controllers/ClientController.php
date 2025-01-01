@@ -125,36 +125,4 @@ class ClientController extends Controller
                 ->with('error', $exception->getMessage());
         }
     }
-
-    public function profileUpdate(Request $request)
-    {
-        $request->validate([
-            'name'      => 'required|string',
-            'email'     => [
-                'required',
-                'email',
-                Rule::unique('users', 'email')->ignore(auth()->id(), 'id'),
-            ],
-        ]);
-
-        $profile_data = [
-            'name'          => $request->name,
-            'email'         => $request->email,
-            'mobile'        => $request->mobile,
-        ];
-
-        if ($request->password) $profile_data['password'] = bcrypt($request->password);
-
-        try {
-            auth()->user()->update($profile_data);
-
-            return redirect()
-                ->route('dashboard.admin-index')
-                ->with('success', 'Profile updated successfully');
-        } catch (\Exception $exception) {
-            return redirect()
-                ->back()
-                ->with('error', $exception->getMessage());
-        }
-    }
 }
