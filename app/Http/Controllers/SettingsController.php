@@ -49,7 +49,8 @@ class SettingsController extends Controller
 
     public function taskEdit($default_task_id)
     {
-        $settings_task = SettingsTask::findOrFail($default_task_id);
+        $settings_task = SettingsTask::find($default_task_id);
+        if (!$settings_task) return back()->with('error', 'Default Task Not Found');
 
         return view('settings.settings-task-edit', compact('settings_task'));
     }
@@ -67,7 +68,9 @@ class SettingsController extends Controller
             'is_enabled'    => $request->is_enabled,
         ];
 
-        $settings_task = SettingsTask::findOrFail($default_task_id );
+        $settings_task = SettingsTask::find($default_task_id );
+        if (!$settings_task) return back()->with('error', 'Default Task Not Found');
+
         try {
             $settings_task->update($settings_task_update_data);
 

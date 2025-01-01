@@ -85,7 +85,8 @@ class ClientController extends Controller
     public function edit($client_id)
     {
         $client = auth()->user()->clients()
-            ->findOrFail($client_id);
+            ->find($client_id);
+        if (!$client) return back()->with('error', 'Researcher Not Found');
 
         return view('client.edit', compact('client'));
     }
@@ -102,7 +103,8 @@ class ClientController extends Controller
         ]);
 
         $client = auth()->user()->clients()
-            ->findOrFail($client_id);
+            ->find($client_id);
+        if (!$client) return back()->with('error', 'Researcher Not Found');
 
         $client_data = [
             'name'          => $request->name,

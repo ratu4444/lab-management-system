@@ -77,7 +77,8 @@ class ProjectController extends Controller
 
     public function edit($project_id)
     {
-        $project = Project::findOrFail($project_id);
+        $project = Project::find($project_id);
+        if (!$project) return back()->with('error', 'Project Not Found');
 
         return view('project.edit', compact('project'));
     }
@@ -89,7 +90,8 @@ class ProjectController extends Controller
             'estimated_completion_date' => 'required|date_format:Y-m-d',
         ]);
 
-        $project = Project::findOrFail($project_id);
+        $project = Project::find($project_id);
+        if (!$project) return back()->with('error', 'Project Not Found');
 
         $project_data = [
             'name'                      => $request->name,
@@ -118,7 +120,8 @@ class ProjectController extends Controller
 
         $project = auth()->user()
             ->projects()
-            ->findOrFail($project_id);
+            ->find($project_id);
+        if (!$project) return back()->with('error', 'Project Not Found');
 
         $project_data = [
             'status'    => $request->status,
@@ -138,7 +141,9 @@ class ProjectController extends Controller
 
     public function defaultTask($project_id)
     {
-        $project = Project::withCount('tasks')->findOrFail($project_id);
+        $project = Project::withCount('tasks')->find($project_id);
+        if (!$project) return back()->with('error', 'Project Not Found');
+
         if ($project->tasks_count) return redirect()->route('task.index', $project->id);
 
         $default_tasks = SettingsTask::where('is_enabled', true)->get();
@@ -155,7 +160,8 @@ class ProjectController extends Controller
             'tasks.*.estimated_completion_date'     => 'required|date_format:Y-m-d|after_or_equal:tasks.*.estimated_start_date|after:today',
         ]);
 
-        $project = Project::findOrFail($project_id);
+        $project = Project::find($project_id);
+        if (!$project) return back()->with('error', 'Project Not Found');
 
         $task_data = [];
         foreach ($request->tasks as $task) {

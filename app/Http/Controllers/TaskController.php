@@ -13,7 +13,9 @@ class TaskController extends Controller
 {
     public function index($project_id)
     {
-        $project = Project::with('tasks')->findOrFail($project_id);
+        $project = Project::with('tasks')->find($project_id);
+        if (!$project) return back()->with('error', 'Project Not Found');
+
         $tasks = $project->tasks()->paginate(10);
 
         return view('task.index', compact('project', 'tasks'));
@@ -49,10 +51,12 @@ class TaskController extends Controller
     public function edit($project_id, $task_id)
     {
         $project = Project::with('tasks.dependentTasks')
-            ->findOrFail($project_id);
+            ->find($project_id);
+        if (!$project) return back()->with('error', 'Project Not Found');
 
         $task = $project->tasks->where('id', $task_id)->first();
-        if (!$task) abort(404);
+        if (!$task) return back()->with('error', 'Task Not Found');
+
         $task->dependent_task_ids = $task->dependentTasks->pluck('id')->toArray();
 
         return view('task.edit', compact('task', 'project'));
@@ -69,7 +73,9 @@ class TaskController extends Controller
             'completion_percentage'     => 'nullable|between:0,100'
         ]);
 
-        $task = Task::with('taskDependencies')->findOrFail($task_id);
+        $task = Task::with('taskDependencies')->find($task_id);
+        if (!$task) return back()->with('error', 'Task Not Found');
+
         $statuses = config('app.STATUSES');
         switch ($request->completion_percentage) {
             case $statuses['Pending']:

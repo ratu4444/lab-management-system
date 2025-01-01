@@ -88,7 +88,6 @@ class DashboardController extends Controller
             ->get();
 
         $project = $request->project ? $all_projects->where('id', $request->project)->first() : $all_projects->first();
-        abort_unless($project, 404);
 
         return view('client-index', compact('project', 'all_projects'));
     }

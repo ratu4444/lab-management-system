@@ -56,7 +56,8 @@ class AdminController extends Controller
     public function edit($admin_id)
     {
         $admin = User::whereAdmin()
-            ->findOrFail($admin_id);
+            ->find($admin_id);
+        if (!$admin) return back()->with('error', 'Admin Not Found');
 
         return view('control.admin.edit', compact('admin'));
     }
@@ -72,7 +73,8 @@ class AdminController extends Controller
             ],
         ]);
 
-        $admin = User::whereAdmin()->findOrFail($admin_id);
+        $admin = User::whereAdmin()->find($admin_id);
+        if (!$admin) return back()->with('error', 'Admin Not Found');
 
         $admin_data = [
             'name'          => $request->name,
