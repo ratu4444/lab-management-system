@@ -10,7 +10,7 @@ class ClientController extends Controller
 {
     public function index()
     {
-        $clients = User::where('is_client', true)
+        $clients = auth()->user()->clients()
             ->withCount('projects')
             ->latest()
             ->paginate(10);
@@ -37,7 +37,8 @@ class ClientController extends Controller
             'password'      => bcrypt($request->password),
             'mobile'        => $request->mobile,
             'company_name'  => $request->company_name,
-            'is_client'     => true,
+            'type'          => User::TYPE_CLIENT,
+            'parent_id'     => auth()->id(),
         ];
 
         try {
@@ -67,7 +68,8 @@ class ClientController extends Controller
             'password'      => bcrypt($request->password),
             'mobile'        => $request->mobile,
             'company_name'  => $request->company_name,
-            'is_client'     => true,
+            'type'          => User::TYPE_CLIENT,
+            'parent_id'     => auth()->id(),
         ];
 
         try {
@@ -82,8 +84,9 @@ class ClientController extends Controller
 
     public function edit($client_id)
     {
-        $client = User::where('is_client', true)
-            ->findOrFail($client_id);
+        $client = auth()->user()->clients()
+            ->find($client_id);
+        if (!$client) return back()->with('error', 'Researcher Not Found');
 
         return view('client.edit', compact('client'));
     }
@@ -99,8 +102,9 @@ class ClientController extends Controller
             ],
         ]);
 
-        $client = User::where('is_client', true)
-            ->findOrFail($client_id);
+        $client = auth()->user()->clients()
+            ->find($client_id);
+        if (!$client) return back()->with('error', 'Researcher Not Found');
 
         $client_data = [
             'name'          => $request->name,
@@ -117,38 +121,6 @@ class ClientController extends Controller
             return redirect()
                 ->route('client.index')
                 ->with('success', 'Client updated successfully');
-        } catch (\Exception $exception) {
-            return redirect()
-                ->back()
-                ->with('error', $exception->getMessage());
-        }
-    }
-
-    public function profileUpdate(Request $request)
-    {
-        $request->validate([
-            'name'      => 'required|string',
-            'email'     => [
-                'required',
-                'email',
-                Rule::unique('users', 'email')->ignore(auth()->id(), 'id'),
-            ],
-        ]);
-
-        $profile_data = [
-            'name'          => $request->name,
-            'email'         => $request->email,
-            'mobile'        => $request->mobile,
-        ];
-
-        if ($request->password) $profile_data['password'] = bcrypt($request->password);
-
-        try {
-            auth()->user()->update($profile_data);
-
-            return redirect()
-                ->route('dashboard.index')
-                ->with('success', 'Profile updated successfully');
         } catch (\Exception $exception) {
             return redirect()
                 ->back()

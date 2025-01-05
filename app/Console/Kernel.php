@@ -16,10 +16,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->call(function () {
-            $controller = new OauthController();
-            $controller->oauthRefreshOutlook(false);
-        })->hourly();
+//        $schedule->call(function () {
+//            $controller = new OauthController();
+//            $controller->oauthRefreshOutlook(false);
+//        })->hourly();
     }
 
     /**

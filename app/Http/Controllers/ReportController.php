@@ -12,7 +12,9 @@ class ReportController extends Controller
 {
     public function index($project_id)
     {
-        $project = Project::with('reports')->findOrFail($project_id);
+        $project = Project::with('reports')->find($project_id);
+        if (!$project) return back()->with('error', 'Project Not Found');
+
         $reports = $project->reports()->paginate(10);
 
         return view('report.index', compact('project', 'reports'));
@@ -65,7 +67,8 @@ class ReportController extends Controller
 
         $project = auth()->user()
             ->projects()
-            ->findOrFail($project_id);
+            ->find($project_id);
+        if (!$project) return back()->with('error', 'Project Not Found');
 
         $file_type = $request->file->getMimeType();
         $file_path = uploadFile($request->file);
@@ -106,7 +109,9 @@ class ReportController extends Controller
 
     public function edit($project_id, $report_id)
     {
-        $report = Report::where('project_id', $project_id)->findOrFail($report_id);
+        $report = Report::where('project_id', $project_id)->find($report_id);
+        if (!$report) return back()->with('error', 'Report Not Found');
+
         return view('report.edit', compact('report'));
     }
 
@@ -117,7 +122,9 @@ class ReportController extends Controller
             'file'  => 'nullable|file'
         ]);
 
-        $report = Report::where('project_id', $project_id)->findOrFail($report_id);
+        $report = Report::where('project_id', $project_id)->find($report_id);
+        if (!$report) return back()->with('error', 'Report Not Found');
+
         $report_data = [
             'name'  => $request->name,
         ];
@@ -142,7 +149,9 @@ class ReportController extends Controller
 
     public function toggleVisibility($project_id, $report_id)
     {
-        $report = Report::where('project_id', $project_id)->findOrFail($report_id);
+        $report = Report::where('project_id', $project_id)->find($report_id);
+        if (!$report) return back()->with('error', 'Report Not Found');
+
         try {
             $report->update([
                 'is_active' => !$report->is_active,
@@ -160,7 +169,9 @@ class ReportController extends Controller
 
     public function destroy($project_id, $report_id)
     {
-        $report = Report::where('project_id', $project_id)->findOrFail($report_id);
+        $report = Report::where('project_id', $project_id)->find($report_id);
+        if (!$report) return back()->with('error', 'Report Not Found');
+
         try {
             $report->delete();
 

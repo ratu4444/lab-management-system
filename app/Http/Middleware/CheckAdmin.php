@@ -10,8 +10,13 @@ class CheckAdmin
 {
     public function handle(Request $request, Closure $next)
     {
-        if (auth()->user()->is_client) return redirect()->route('dashboard.client-index');
+        $type = $request->user()->type;
 
-        return $next($request);
+        return match ($type) {
+            User::TYPE_SUPERADMIN  => redirect()->route('control.index'),
+            User::TYPE_ADMIN       => $next($request),
+            User::TYPE_CLIENT      => redirect()->route('dashboard.client-index'),
+            default                => null,
+        } ?? abort(403, 'Unauthorized action.');
     }
 }

@@ -50,31 +50,33 @@
         </div>
 
 {{--        Project Status Update Dropdown For Client Only--}}
-        <div class="col-12 col-md-6 text-right">
-            @if(auth()->user()->is_client)
-                @php
-                    $statuses = config('app.STATUSES');
-                    $status_color = config('app.STATUSES_COLORS')[array_search($project->status, $statuses)]
-                @endphp
-                <div class="dropdown mb-4">
-{{--                    <button class="btn btn-{{ $status_color }} dropdown-toggle btn-lg" type="button" data-toggle="dropdown">Update Project Status</button>--}}
-                    <div class="dropdown-menu" style="max-height: 500px; min-width: fit-content; overflow-y: auto">
-                        @foreach($statuses as $label => $value)
-                            <form action="{{ route('client-project.update-status', $project->id) }}" method="POST">
-                                @csrf
-                                @method('PUT')
+        @if($project)
+            <div class="col-12 col-md-6 text-right">
+                @if(auth()->user()->is_client)
+                    @php
+                        $statuses = config('app.STATUSES');
+                        $status_color = config('app.STATUSES_COLORS')[array_search($project->status, $statuses)]
+                    @endphp
+                    <div class="dropdown mb-4">
+    {{--                    <button class="btn btn-{{ $status_color }} dropdown-toggle btn-lg" type="button" data-toggle="dropdown">Update Project Status</button>--}}
+                        <div class="dropdown-menu" style="max-height: 500px; min-width: fit-content; overflow-y: auto">
+                            @foreach($statuses as $label => $value)
+                                <form action="{{ route('client-project.update-status', $project->id) }}" method="POST">
+                                    @csrf
+                                    @method('PUT')
 
-                                <input type="hidden" name="status" value="{{ $value }}">
+                                    <input type="hidden" name="status" value="{{ $value }}">
 
-                                <button class="dropdown-item {{ $project->status == $value ? 'active' : '' }}" type="submit">{{ $label }}</button>
-                            </form>
-                        @endforeach
+                                    <button class="dropdown-item {{ $project->status == $value ? 'active' : '' }}" type="submit">{{ $label }}</button>
+                                </form>
+                            @endforeach
+                        </div>
                     </div>
-                </div>
-            @else
-                <h4>{{ $project->client->name }}</h4>
-            @endif
-        </div>
+                @else
+                    <h4>{{ $project->client->name }}</h4>
+                @endif
+            </div>
+        @endif
     </div>
 
     @if($project)
@@ -473,14 +475,16 @@
 
     @else
         <div class="text-center">
-            <span class="text-muted font-weight-bold">Project Not Found</span>
+            <span class="text-muted font-weight-bold">No Project Found</span>
         </div>
     @endif
 @endsection
 
 @section('modal')
-    @include('custom-layout.modal.pdf-modal')
-    @include('custom-layout.modal.report-modal')
+    @if($project)
+        @include('custom-layout.modal.pdf-modal')
+        @include('custom-layout.modal.report-modal')
+    @endif
 @endsection
 
 @push('js')
