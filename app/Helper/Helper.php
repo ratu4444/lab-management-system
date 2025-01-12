@@ -96,6 +96,7 @@ if (!function_exists('uploadFile')) {
                 break;
             default:
                 $file->move(public_path($upload_folder), $file_name);
+                break;
         }
 
         return $upload_folder.$file_name;

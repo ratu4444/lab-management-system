@@ -16,19 +16,23 @@
     </div>
     <ul class="navbar-nav navbar-right">
         <li class="dropdown">
-            <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-                <div class="bg-primary d-flex justify-content-center align-items-center rounded-circle shadow-lg user-initial">
-                    <span class="font-weight-bolder">{{ auth()->user()->initial }}</span>
-                </div>
-            </a>
+            <button type="button" data-toggle="dropdown" class="btn nav-link dropdown-toggle nav-link-lg nav-link-user">
+                @if(auth()->user()->avatar)
+                    <img alt="{{ auth()->user()->name }}" src="{{ getFileUrl(auth()->user()->avatar) }}">
+                    <span class="d-sm-none d-lg-inline-block"></span>
+                @else
+                    <div class="bg-primary d-flex justify-content-center align-items-center rounded-circle shadow-lg user-initial">
+                        <span class="font-weight-bolder">{{ auth()->user()->initial }}</span>
+                    </div>
+                @endif
+            </button>
+
             <div class="dropdown-menu dropdown-menu-right pullDown">
                 <div class="dropdown-title">{{ auth()->user()->name }}</div>
 
-                @if(auth()->user()->type !== \App\Models\User::TYPE_SUPERADMIN)
-                    <a href="{{ route('profile.edit') }}" class="dropdown-item has-icon d-flex align-items-center {{ Route::is('profile.edit') ? 'active' : '' }}">
-                        <i class="fas fa-cog"></i> Edit Profile
-                    </a>
-                @endif
+                <a href="{{ route('profile.edit') }}" class="dropdown-item has-icon d-flex align-items-center {{ Route::is('profile.edit') ? 'active' : '' }}">
+                    <i class="fas fa-cog"></i> Edit Profile
+                </a>
 
                 <div class="dropdown-divider"></div>
                 <form action="{{route('logout')}}" method="post">
