@@ -24,3 +24,8 @@
     border-radius: 50%;
     border: 1px solid #fff;
 }
+
+.form-control[type="file"]:not(.form-control-sm):not(.form-control-lg) {
+    padding-top: 7px;
+    padding-bottom: 7px;
+}

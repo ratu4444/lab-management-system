@@ -28,17 +28,11 @@ class ControlCenterController extends Controller
 
     public function editProfile ()
     {
-        if (auth()->user()->type === User::TYPE_SUPERADMIN) return back()
-            ->with('error', 'You can\'t edit your profile');
-
         return view('auth.edit-profile');
     }
 
     public function updateProfile(Request $request)
     {
-        if (auth()->user()->type === User::TYPE_SUPERADMIN) return back()
-            ->with('error', 'You can\'t edit your profile');
-
         $request->validate([
             'name'      => 'required|string',
             'email'     => [
@@ -46,6 +40,7 @@ class ControlCenterController extends Controller
                 'email',
                 Rule::unique('users', 'email')->ignore(auth()->id(), 'id'),
             ],
+            'avatar'    => 'nullable|image'
         ]);
 
         $profile_data = [
@@ -55,6 +50,7 @@ class ControlCenterController extends Controller
         ];
 
         if ($request->password) $profile_data['password'] = bcrypt($request->password);
+        if ($request->file('avatar')) $profile_data['avatar'] = uploadFile($request->file('avatar'));
 
         try {
             auth()->user()->update($profile_data);
