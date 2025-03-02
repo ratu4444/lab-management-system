@@ -47,10 +47,11 @@
                                         Password is required
                                     </div>
                                 </div>
-{{--                                <div class="form-group col-12 col-md-6">--}}
-{{--                                    <label class="form-label" for="company_name">Company Name</label>--}}
-{{--                                    <input type="text" class="form-control" name="company_name" id="company_name" value="{{ old('company_name') }}">--}}
-{{--                                </div>--}}
+                                <div class="form-group col-12 col-md-12">
+                                    <label class="form-label" for="skills"> Skills</label>
+                                    <input type="text" class="form-control" name="skills" id="skills"
+                                           value="{{ old('skills') }}">
+                                </div>
                             </div>
                             {{--            Changes in name. Researchers instead of Client--}}
                             <button type="submit" class="btn btn-primary">Create Researchers</button>

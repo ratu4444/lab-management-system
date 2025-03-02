@@ -31,7 +31,8 @@
                 @break
 
                 @case(\App\Models\User::TYPE_ADMIN)
-                    <li class="dropdown {{ Route::is('dashboard*') && !Route::is('dashboard.client-index') ? 'active' : '' }}">
+{{--                @case(\App\Models\User::TYPE_SUPERADMIN)--}}
+                <li class="dropdown {{ Route::is('dashboard*') && !Route::is('dashboard.client-index') ? 'active' : '' }}">
                         <a href="{{ route('dashboard.admin-index') }}" class="nav-link">
                             <i data-feather="monitor"></i>
                             <span>Dashboard</span>

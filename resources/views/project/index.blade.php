@@ -10,9 +10,11 @@
                 <div class="card card-primary">
                     <div class="card-header d-flex justify-content-between">
                         <h4>All Projects</h4>
+                        @if(auth()->user()->type === \App\Models\User::TYPE_ADMIN)
                         <div>
                             <a class="btn btn-primary" href="{{ route('project.create', ['client' => $client?->id]) }}">Add New Project</a>
                         </div>
+                        @endif
                     </div>
                     <div class="card-body">
                         @if($all_clients->count() > 1)
@@ -70,8 +72,10 @@
                                             </td>
 
                                             <td class="text-nowrap">
+                                                @if(auth()->user()->type === \App\Models\User::TYPE_ADMIN)
                                                 <a href="{{ route('project.edit', $project->id) }}" class="btn btn-warning btn-sm">Edit Project</a>
-                                                <a href="{{ route('dashboard.client-index', ['project' => $project->id]) }}" class="btn btn-primary btn-sm">Dashboard</a>
+                                                @endif
+                                                    <a href="{{ route('dashboard.client-index', ['project' => $project->id]) }}" class="btn btn-primary btn-sm">Dashboard</a>
 {{--                                                <a href="{{ route('settings.element', ['project' => $project->id]) }}" class="btn btn-warning btn-sm">Dashboard Settings</a>--}}
                                             </td>
                                         </tr>

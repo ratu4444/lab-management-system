@@ -46,10 +46,10 @@
                                     <label class="form-label" for="mobile">Mobile</label>
                                     <input type="tel" class="form-control" name="mobile" id="mobile" value="{{ old('mobile') ?? $client->mobile }}">
                                 </div>
-{{--                                <div class="form-group col-12 col-md-6">--}}
-{{--                                    <label class="form-label" for="company_name">Company Name</label>--}}
-{{--                                    <input type="text" class="form-control" name="company_name" id="company_name" value="{{ old('company_name') ?? $client->company_name }}">--}}
-{{--                                </div>--}}
+                                <div class="form-group col-12 col-md-12">
+                                    <label class="form-label" for="skills">Skills</label>
+                                    <input type="text" class="form-control" name="skills" id="skills" value="{{ old('skills') ?? $client->skills }}">
+                                </div>
                             </div>
 
                             <button type="submit" class="btn btn-primary">Update Researchers</button>

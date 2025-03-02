@@ -8,6 +8,18 @@ use Illuminate\Validation\Rule;
 
 class ControlCenterController extends Controller
 {
+
+    public function researcherIndex($admin_id)
+    {
+        $clients = User::where('type', User::TYPE_CLIENT)
+            ->where('parent_id', $admin_id)
+            ->withCount('projects')
+            ->latest()
+            ->paginate(10);
+
+        return view('client.index', compact('clients'));
+    }
+
     public function index()
     {
         $admin_reports = [

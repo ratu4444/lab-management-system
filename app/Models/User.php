@@ -24,10 +24,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+
+    //Constant
     const TYPE_SUPERADMIN = 'superadmin';
     const TYPE_ADMIN = 'admin';
     const TYPE_CLIENT = 'client';
 
+
+    //Attributes
     public function getIsClientAttribute()
     {
         return $this->type === self::TYPE_CLIENT;
@@ -39,6 +43,8 @@ class User extends Authenticatable
         return strtoupper(preg_replace('/\B\w| /u', '', $name));
     }
 
+
+    //Scopes
     public function scopeWhereClient($query)
     {
         return $query->where('type', self::TYPE_CLIENT);
@@ -49,11 +55,12 @@ class User extends Authenticatable
         return $query->where('type', self::TYPE_ADMIN);
     }
 
+
+    //Relations
     public function projects()
     {
         return $this->hasMany(Project::class, 'client_id');
     }
-
     public function clients()
     {
         return $this->hasMany(User::class, 'parent_id');

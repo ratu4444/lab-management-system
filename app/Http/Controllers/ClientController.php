@@ -36,7 +36,7 @@ class ClientController extends Controller
             'email'         => $request->email,
             'password'      => bcrypt($request->password),
             'mobile'        => $request->mobile,
-            'company_name'  => $request->company_name,
+            'skills'        => $request->skills,
             'type'          => User::TYPE_CLIENT,
             'parent_id'     => auth()->id(),
         ];
@@ -110,7 +110,7 @@ class ClientController extends Controller
             'name'          => $request->name,
             'email'         => $request->email,
             'mobile'        => $request->mobile,
-//            'company_name'  => $request->company_name,
+            'skills'         => $request->skills,
         ];
 
         if ($request->password) $client_data['password'] = bcrypt($request->password);

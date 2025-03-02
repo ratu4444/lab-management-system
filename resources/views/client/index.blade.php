@@ -8,9 +8,11 @@
                 <div class="card card-primary">
                     <div class="card-header d-flex justify-content-between">
                         <h4>All Researchers</h4>
+                        @if(auth()->user()->type === \App\Models\User::TYPE_ADMIN)
                         <div>
                             <a class="btn btn-primary" href="{{ route('client.create') }}">Add New Researchers</a>
                         </div>
+                        @endif
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -21,7 +23,7 @@
                                     <th class="text-nowrap">Name</th>
                                     <th class="text-nowrap">Email</th>
                                     <th class="text-nowrap">Mobile</th>
-{{--                                    <th class="text-nowrap">Company Name</th>--}}
+                                    <th class="text-nowrap">Skills</th>
                                     <th class="text-nowrap">Total Projects</th>
                                     <th class="text-nowrap">Action</th>
                                 </tr>
@@ -34,13 +36,18 @@
                                             <td class="text-nowrap">{{ $client->name }}</td>
                                             <td class="text-nowrap">{{ $client->email }}</td>
                                             <td class="text-nowrap">{{ $client->mobile ?? '-' }}</td>
-{{--                                            <td class="text-nowrap">{{ $client->company_name ?? '-' }}</td>--}}
+                                            <td class="text-nowrap">
+                                                <span class="badge bg-blue"> {{ $client->skills }} </span>
+                                            </td>
                                             <td>{{ $client->projects_count }}</td>
                                             <td class="text-nowrap">
                                                 <a href="{{ route('project.index', ['client' => $client->id]) }}" class="btn btn-primary btn-sm {{ !$client->projects_count ? 'disabled' : '' }}">See Projects</a>
                                                 <a href="{{ route('dashboard.client-index', ['client' => $client->id]) }}" class="btn btn-primary btn-sm {{ !$client->projects_count ? 'disabled' : '' }}">Project Dashboard</a>
+
+                                                @if(auth()->user()->type === \App\Models\User::TYPE_ADMIN)
                                                 <a href="{{ route('project.create', ['client' => $client->id]) }}" class="btn btn-success btn-sm">Create New Projects</a>
                                                 <a href="{{ route('client.edit', $client->id) }}" class="btn btn-warning btn-sm">Edit Researchers</a>
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach

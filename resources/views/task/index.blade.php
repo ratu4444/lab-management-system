@@ -10,9 +10,11 @@
     <div class="card">
         <div class="card-header d-flex justify-content-between">
             <h4 class="card-title text-muted">{{ $project->name }} : Tasks</h4>
+            @if(auth()->user()->type === \App\Models\User::TYPE_ADMIN)
             <div>
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#taskCreateModal">Add New Task</button>
             </div>
+            @endif
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -26,7 +28,9 @@
 {{--                        Changes--}}
 {{--                        <th class="text-nowrap">Budget</th>--}}
                         <th class="text-nowrap">Status</th>
+                        @if(auth()->user()->type === \App\Models\User::TYPE_ADMIN)
                         <th class="text-nowrap">Action</th>
+                        @endif
                     </tr>
                     </thead>
                     <tbody>
@@ -47,9 +51,11 @@
                                 <td>
                                     <div class="badge {{ 'badge-'.$status_color }}">{{ $status }}</div>
                                 </td>
+                                @if(auth()->user()->type === \App\Models\User::TYPE_ADMIN)
                                 <td class="text-nowrap">
                                         <a href="{{ route('task.edit', [$project->id, $task->id]) }}" class="btn btn-primary btn-sm">Edit</a>
                                 </td>
+                                @endif
                             </tr>
                         @endforeach
                     @else

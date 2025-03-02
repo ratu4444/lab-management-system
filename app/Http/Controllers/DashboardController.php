@@ -77,12 +77,14 @@ class DashboardController extends Controller
             'tasks',
             'reports' => fn ($reportQuery) => $reportQuery->where('is_active', true)->with('task:id,name'),
             'client'
-        ])
+        ])->whereHas('client')
             ->when(auth()->user()->is_client,
                 fn ($query) => $query->where('client_id', auth()->id()),
                 fn ($query) => $query
-                    ->whereIn('client_id', auth()->user()->clients->pluck('id')->toArray())
-                    ->when($request->client, fn ($query) => $query->where('client_id', $request->client))
+                ->when(auth()->user()->type === User::TYPE_ADMIN, function ($query) use ($request) {
+                    $query->whereIn('client_id', auth()->user()->clients->pluck('id')->toArray())
+                        ->when($request->client, fn ($query) => $query->where('client_id', $request->client));
+                })
             )
             ->latest()
             ->get();

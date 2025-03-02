@@ -36,6 +36,7 @@
                                             <td>{{ $admin->clients_count }}</td>
                                             <td class="text-nowrap">
                                                 <a href="{{ route('control.admin.edit', $admin->id) }}" class="btn btn-warning btn-sm">Edit Admin</a>
+                                                <a href="{{ route('control.researcher.index', $admin->id) }}" class="btn btn-warning btn-sm">Show Reserchers</a>
                                             </td>
                                         </tr>
                                     @endforeach

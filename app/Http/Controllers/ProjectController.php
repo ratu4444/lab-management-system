@@ -17,8 +17,9 @@ class ProjectController extends Controller
 {
     public function index(Request $request)
     {
-        $all_clients = auth()->user()->clients;
-        $client = $request->client ? $all_clients->where('id', $request->client)->first() : null;
+
+        $all_clients = auth()->user()->type === User::TYPE_ADMIN ? auth()->user()->clients : collect([]);
+        $client = $request->client ? User::where('type', User::TYPE_CLIENT)->where('id', $request->client)->first() : null;
 
         $projects = Project::with('client')
             ->when($client,
@@ -27,6 +28,7 @@ class ProjectController extends Controller
             )
             ->latest()
             ->paginate(10);
+
 
         $filter_data = $request->all();
         $projects->appends(array_filter($filter_data));
