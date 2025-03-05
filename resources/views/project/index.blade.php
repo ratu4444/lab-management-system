@@ -31,6 +31,23 @@
                                 </div>
                             </div>
                         @endif
+
+                        @if($all_projects->count() > 1)
+                            <div class="dropdown mb-4">
+                                <button class="btn btn-primary dropdown-toggle btn-lg" type="button" data-toggle="dropdown">
+                                    {{ $project ? 'Project : '.$project->name : 'Select Another Project' }}
+                                </button>
+                                <div class="dropdown-menu" style="max-height: 500px; min-width: fit-content; overflow-y: auto">
+                                    @foreach($all_projects as $single_project)
+                                        <a class="dropdown-item  {{ $single_project->id == $project?->id ? 'active' : '' }}" href="{{ route('project.index', array_merge(request()->query(), ['project' => $single_project->id])) }}">
+                                            {{ $single_project->name }}
+                                        </a>
+                                    @endforeach
+                                </div>
+                            </div>
+                        @endif
+
+
                         <div class="table-responsive">
                             <table class="table table-bordered table-striped">
                                 <thead>

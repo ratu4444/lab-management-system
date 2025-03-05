@@ -9,8 +9,15 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\SuperadminMailController;
 
 Route::middleware('auth')->group(function () {
+
+//    Mail
+    Route::get('/admin/{id}/mail', [SuperadminMailController::class, 'showMailForm'])->name('control.admin.mail-form');
+    Route::post('/admin/{id}/mail', [SuperadminMailController::class, 'sendMail'])->name('control.admin.mail-send');
+
+
 //  CLIENT DASHBOARD
     Route::get('project/dashboard', [DashboardController::class, 'clientIndex'])->name('dashboard.client-index'); // client dashboard
 
@@ -21,8 +28,11 @@ Route::middleware('auth')->group(function () {
     Route::middleware('auth.superadmin')->prefix('control')->name('control.')->group(function () {
         Route::get('/', [ControlCenterController::class, 'index'])->name('index');
         Route::resource('admin', AdminController::class);
+        Route::post('send-mail', [SuperadminMailController::class, 'sendMail'])->name('send-mail');
+
 
         Route::get('admin/{admin_id}/researcher', [ControlCenterController::class, 'researcherIndex'] )->name('researcher.index');
+
 
     });
 

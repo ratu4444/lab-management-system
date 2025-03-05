@@ -37,6 +37,8 @@
                                             <td class="text-nowrap">
                                                 <a href="{{ route('control.admin.edit', $admin->id) }}" class="btn btn-warning btn-sm">Edit Admin</a>
                                                 <a href="{{ route('control.researcher.index', $admin->id) }}" class="btn btn-warning btn-sm">Show Reserchers</a>
+                                                <a href="{{ route('control.admin.mail-form', $admin->id) }}" class="btn btn-info btn-sm">Mail</a>
+
                                             </td>
                                         </tr>
                                     @endforeach

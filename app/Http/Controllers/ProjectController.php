@@ -19,12 +19,19 @@ class ProjectController extends Controller
     {
 
         $all_clients = auth()->user()->type === User::TYPE_ADMIN ? auth()->user()->clients : collect([]);
+        $all_projects = Project::where('client_id', $request->client)->get();
         $client = $request->client ? User::where('type', User::TYPE_CLIENT)->where('id', $request->client)->first() : null;
+        $project = $request->project ? Project::where('id', $request->project)->first() : null;
+
+
 
         $projects = Project::with('client')
             ->when($client,
                 fn ($query) => $query->where('client_id', $client->id),
                 fn ($query) => $query->whereIn('client_id', $all_clients->pluck('id')->toArray())
+            )
+            ->when($project,
+                fn ($query) => $query->where('id', $project->id)
             )
             ->latest()
             ->paginate(10);
@@ -33,7 +40,7 @@ class ProjectController extends Controller
         $filter_data = $request->all();
         $projects->appends(array_filter($filter_data));
 
-        return view('project.index', compact('projects', 'all_clients', 'client'));
+        return view('project.index', compact('projects', 'all_clients', 'client', 'all_projects', 'project'));
     }
 
     public function create(Request $request)

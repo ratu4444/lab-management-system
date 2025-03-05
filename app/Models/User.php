@@ -56,6 +56,7 @@ class User extends Authenticatable
     }
 
 
+
     //Relations
     public function projects()
     {
@@ -65,4 +66,5 @@ class User extends Authenticatable
     {
         return $this->hasMany(User::class, 'parent_id');
     }
+
 }
